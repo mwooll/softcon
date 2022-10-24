@@ -8,6 +8,8 @@ public class Coordinate implements Comparable<Coordinate> {
      Drawback: Wrongly entered Coordiante throws error, this requires a real error handling...
      */
 
+    // todo: remove aRankGridOrder
+
 
     private final int aRow, aCol, aRankGridOrder;
 
@@ -16,6 +18,7 @@ public class Coordinate implements Comparable<Coordinate> {
         aRow = pRow;
         aCol = pCol;
         aRankGridOrder = GameUtils.gridOrderTopLeftToRightBottom(aRow, aCol);
+
     }
 
     public int getRow() {return aRow;}

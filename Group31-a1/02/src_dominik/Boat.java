@@ -85,6 +85,8 @@ public class Boat  {
 
     public boolean isDestroyed() {
 
+        // todo: isEmpty instaedt size()
+
         // if the boat is not placed, it is never destroyed
         if (!isPlaced()) {return false;}
 
