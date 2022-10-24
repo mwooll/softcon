@@ -1,0 +1,11 @@
+/* Intellij IDEA Files 
+.idea
+
+/* Java compiled files
+*.class
+
+/* .iml Files
+*.iml
+
+/* macOS Files
+*.DS_Store
