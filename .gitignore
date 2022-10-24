@@ -6,3 +6,6 @@
 
 /* .iml Files
 *.iml
+
+/* macOS Files
+*.DS_Store
