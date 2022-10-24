@@ -1,0 +1,8 @@
+/* Intellij IDEA Files 
+.idea
+
+/* Java compiled files
+*.class
+
+/* .iml Files
+*.iml
