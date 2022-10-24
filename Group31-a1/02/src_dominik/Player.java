@@ -6,7 +6,7 @@ public interface Player {
 
     /*
      todo: I think an abstract class instead of interface would make more sense here
-      Many functions like hasLost are identical
+      Many functions like hasLost, placeFleetFromList are identical
      */
 
     List<Coordinate> aTakenShots = new ArrayList<>();

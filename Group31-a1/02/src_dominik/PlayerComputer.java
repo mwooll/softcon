@@ -65,6 +65,7 @@ public class PlayerComputer {
 
         return randCoordinate;
     }
+
     public Coordinate callShot() {
 
         if (aTakenShots.isEmpty()) {
