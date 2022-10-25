@@ -54,7 +54,7 @@ public class GameUtils {
         }
 
         // convert to two coordinates
-        List<Coordinate> userInputStartEnd = GameUtils.convertUserInputPlacementToCoorindates(pString);
+        List<Coordinate> userInputStartEnd = GameUtils.convertUserInputPlacementToCoordinates(pString);
 
         // check if both coordinates are valid
         for (Coordinate c : userInputStartEnd) {
@@ -93,7 +93,7 @@ public class GameUtils {
        return (int) pLetter - (int) 'A';
     }
 
-    public static int convertIntToLetter(int pInt) {
+    public static char convertIntToLetter(int pInt) {
         /*
         Helper to convert pInt<int> from row/col integer to the letter (for printing)
         Se convertLetterToInt for example
@@ -112,7 +112,7 @@ public class GameUtils {
         return matcher.find();
     }
 
-    public static List<Coordinate> convertUserInputPlacementToCoorindates(String pString) {
+    public static List<Coordinate> convertUserInputPlacementToCoordinates(String pString) {
 
         /*
         Given a valid user input String for boat placement, convert to a list of two Coordiantes
@@ -219,7 +219,7 @@ public class GameUtils {
         }
 
         // convert to one coordinates
-        Coordinate userInputCoordinate = GameUtils.convertUserInputShotToCoorindates(pString);
+        Coordinate userInputCoordinate = GameUtils.convertUserInputShotToCoordinates(pString);
 
         // check if coordinate is valid
         if (!GameUtils.validCoordinate(userInputCoordinate)) {
@@ -242,7 +242,7 @@ public class GameUtils {
         return matcher.find();
     }
 
-    public static Coordinate convertUserInputShotToCoorindates(String pString) {
+    public static Coordinate convertUserInputShotToCoordinates(String pString) {
 
         /*
         Return a Coordinate from the valid string input for shot calling of the user

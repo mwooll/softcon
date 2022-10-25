@@ -72,7 +72,7 @@ public class PlayerHuman implements Player {
                 }
 
                 // user input is formally valid
-                List<Coordinate> tmpValidUserInputStartEnd = GameUtils.convertUserInputPlacementToCoorindates(tmpUserInput);
+                List<Coordinate> tmpValidUserInputStartEnd = GameUtils.convertUserInputPlacementToCoordinates(tmpUserInput);
                 List<Coordinate> tmpValidUserInputCoordinates = GameUtils.generateCoordinatesFromStartEnd(tmpValidUserInputStartEnd);
 
                 // now check with the fleet if the Coordinates are already in use
@@ -117,7 +117,7 @@ public class PlayerHuman implements Player {
             }
 
             // check if this positions has already been shot at
-            Coordinate tmpUserInputCoordinate = GameUtils.convertUserInputShotToCoorindates(tmpUserInput);
+            Coordinate tmpUserInputCoordinate = GameUtils.convertUserInputShotToCoordinates(tmpUserInput);
             if (aTakenShots.contains(tmpUserInputCoordinate)) {
                 System.out.println("You shot there already, choose another one");
             } else {
