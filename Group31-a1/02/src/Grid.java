@@ -1,46 +1,128 @@
-public class Grid {
-    //Parameters of Grid, Should width and height be final or is private enough?
-    private Block[][] Coordinate;
-    private int height;
-    private int width;
+import java.util.List;
+import java.util.ArrayList;
 
-    //Constructor with default height, width = 10,10
-    public Grid(){
-        this(10,10);
-    }
-    //Constructor   Input: #height, #width      Output: Grid of given size composed of Blocks
-    public Grid( int height, int width) {
-        this.height = height;
-        this.width = width;
-        this.Coordinate = new Block[height][width];
-        for (int i = 0; i<height; i++){
-            for (int j = 0; j<width; j++){
-                this.Coordinate[i][j] = new Block();
+/*
+todo: Implement printAsTarget, printAsOcean
+ */
+
+public class Grid {
+
+    /*
+    Consists of List of List of Blocks
+     */
+
+    private final List<List<Block>> aGrid = new ArrayList<>();
+
+    public Grid () {
+
+        // initialize an empty grid
+        for (int i = 0; i < GameUtils.GAMESIZE; i++) {
+            List<Block> tmpRow = new ArrayList<>();
+            aGrid.add(tmpRow);
+            for (int j = 0; j < GameUtils.GAMESIZE; j++) {
+                int rankBlock = GameUtils.gridOrderTopLeftToRightBottom(i, j);
+                Coordinate tmpCoordinate = new Coordinate(i,j);
+                Block tmpBlock = new Block(tmpCoordinate);
+                tmpBlock.updatePrintCharacter(Integer.toString(rankBlock));
+                aGrid.get(i).add(tmpBlock);
             }
         }
     }
-    //CoordInGrid()     USES:RowType, ColType   INPUT: coordinates  OUTPUT: true if coordinates in grid
-    public boolean coordInGrid(int row, int column){
-        return 0 < row && row < this.height && 0 < column && column < this.width;
+
+    private Block getBlock(Coordinate pCoordinate) {
+        /*
+        Return a Block for a given Coordinate
+         */
+        int aRow = pCoordinate.getRow();
+        int aCol = pCoordinate.getCol();
+
+        return aGrid.get(aRow).get(aCol);
     }
-    //IsShot()          USES:Block
-    public boolean isShot(int row, int column){
-        return this.Coordinate[row][column].giveStateShotAt();
-    }
-    //HasBoat()         USES:Block
-    public boolean hasBoat(int row, int column){
-        return this.Coordinate[row][column].giveStateHasBoat();
-    }
-    //#### ADDED ###### get boat type
-    public char getBoatType(int row, int column){
-        return this.Coordinate[row][column].giveBoatType();
-    }
-    //#### ADDED ##### set boat type
-    public void setBoatType(int row, int column, char boatType){
-        this.Coordinate[row][column].setBoatType(boatType);
-    }
+
+    public void updateGrid(Fleet pFleet, List<Coordinate> pReceivedShots) {
+        /*
+        Update the grid with all the information contained by pFleet as well as all the shots taken
+         */
+
+        // First go through all received shots
+        for (Coordinate c : pReceivedShots) {
+            Block b = getBlock(c);
+            b.updateStateShot();
+        }
+
+        // Then go thorugh all boats of the fleet and update where they are and whether they should be revealed
+        for (Boat b : pFleet) {
+
+            // List all Coordinate of the boat
+            List<Coordinate> bCoordinates = b.getCoordinates();
+            for (Coordinate c : bCoordinates) {
+                // For each Block at the Coordiante do
+                Block block = getBlock(c);
+
+                // Set stateBoat
+                block.updateStateBoat();
+
+                // Set print character
+                block.updatePrintCharacter(b.getTypePrintChar());
+
+                // Set stateReveal (if the boat is destroyed, reveal)
+                if (b.isDestroyed()) {
+                    block.updateStateReveal();
+                }
+
+            }
+        }
     }
 
 
 
 
+
+    public void printAllStatus() {
+        String tmp = "";
+        tmp += getGridStateBoat();
+        tmp += "\n" + getGridStateShot();
+        tmp += "\n" + getGridStateReveal();
+
+        System.out.println(tmp);
+    }
+
+    public String getGridStateBoat() {
+        String tmp = "Boat\n";
+        for (List<Block> innerlist : aGrid) {
+            int rowNumber = innerlist.get(0).getCoordinate().getRow() % GameUtils.GAMESIZE;
+            tmp += rowNumber + " ";
+            for (Block b : innerlist) {
+                tmp += b.getStateBoat() + "  ";
+            }
+            tmp += "\n";
+        }
+        return tmp;
+    }
+
+    public String getGridStateShot() {
+        String tmp = "Shot\n";
+        for (List<Block> innerlist : aGrid) {
+            int rowNumber = innerlist.get(0).getCoordinate().getRow() % GameUtils.GAMESIZE;
+            tmp += rowNumber + " ";
+            for (Block b : innerlist) {
+                tmp += b.getStateShot() + "  ";
+            }
+            tmp += "\n";
+        }
+        return tmp;
+    }
+
+    public String getGridStateReveal() {
+        String tmp = "Reveal\n";
+        for (List<Block> innerlist : aGrid) {
+            int rowNumber = innerlist.get(0).getCoordinate().getRow() % GameUtils.GAMESIZE;
+            tmp += rowNumber + " ";
+            for (Block b : innerlist) {
+                tmp += b.getStateReveal() + "  ";
+            }
+            tmp += "\n";
+        }
+        return tmp;
+    }
+}

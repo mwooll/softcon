@@ -1,44 +1,25 @@
-import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Player {
+public interface Player {
 
-    //private Fleet fleet;
-    private Scanner scanner;
-    //private Grid ocean;
+    /*
+     todo: I think an abstract class instead of interface would make more sense here
+      Many functions like hasLost, placeFleetFromList are identical
+     */
 
-    //only included right now for testing methods
-    public static void main(String[] args) {
-        Player player = new Player();
-        String shot = player.call_shot();
-        System.out.println(shot);
-    }
+    List<Coordinate> aTakenShots = new ArrayList<>();
 
-    public Player() { // need to pass grid as argument
-//        fleet = new Fleet();
-//        ocean = grid;
-        scanner = new Scanner(System.in);
-    }
+    void placeFleet();
 
-    public void place_fleet() {
-        for ()
-    }
+    void placeFleetFromList(HashMap<String, List<Coordinate>> pPlacement);
 
-    public String call_shot() {
-        System.out.println("Call your shot: ");
-        String shot = scanner.nextLine();
-        scanner.close();
-        return shot;
-    }
-    // returns a boolean which states if the shot is valid
-    public boolean receive_shot(String shot) {
-        // need to know the state of the block the shot is targeted at
-        // shot is invalid if the block was already shot at
-//        if (ocean.is_shot(shot)) return true;
-//        else
-        return false;
-    }
+    Coordinate callShot();
 
-    public void record_shot(String shot) {
-        ocean.
-    }
+    void recordShot(Coordinate pCoordinate);
+
+    boolean hasLost();
+
+
 }
