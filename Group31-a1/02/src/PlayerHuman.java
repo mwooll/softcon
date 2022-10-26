@@ -13,9 +13,9 @@ public class PlayerHuman implements Player {
 
 //    List <Coordinate> aTakenShots = new ArrayList<>();
 
-    public PlayerHuman() {
+    public PlayerHuman(Grid pGrid) {
         aFleet = new Fleet();
-        aGrid = new Grid();
+        aGrid = pGrid;
     }
 
     public boolean hasLost() {

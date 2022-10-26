@@ -15,9 +15,12 @@ public class PlayerComputer {
     public final List<Coordinate> aTakenShots = new ArrayList<>();
     public final List<Coordinate> aReceivedShots = new ArrayList<>();
 
-    public PlayerComputer() {
+    private final Random rand;
+
+    public PlayerComputer(Grid pGrid) {
         aFleet = new Fleet();
-        aGrid = new Grid();
+        aGrid = pGrid;
+        rand = new Random();
     }
 
     public void placeFleetFromList(HashMap<String, List<Coordinate>> pPlacement) {
@@ -36,11 +39,11 @@ public class PlayerComputer {
         Receive a valid Coordinate shot and check if a boat is hit. Update the Fleet and Boats accordingly
          */
 
-        // The Fleet records all coordinates used for the placements of boats. Hence it's sufficient to check that list
+        // The Fleet records all coordinates used for the placements of boats. Hence, it's sufficient to check that list
         // First check if there is a boat on that coordinate
         boolean isHit = aFleet.checkShot(pCoordinate);
 
-        // It it's a hit, record the hit on the boat
+        // If it's a hit, record the hit on the boat
         if (isHit) {
             for (Boat b : aFleet) {
                 b.recordHit(pCoordinate);
@@ -57,11 +60,9 @@ public class PlayerComputer {
         /*
         Generate random Coordinate within grid
          */
-        Random rand = new Random();
-
         int randRow = rand.nextInt(GameUtils.GAMESIZE-1);
         int randCol = rand.nextInt(GameUtils.GAMESIZE-1);
-        Coordinate randCoordinate = new Coordinate((int) randRow, randCol);
+        Coordinate randCoordinate = new Coordinate(randRow, randCol);
 
         return randCoordinate;
     }
