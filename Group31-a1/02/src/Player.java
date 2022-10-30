@@ -17,7 +17,7 @@ public interface Player {
 
     Coordinate callShot();
 
-    void recordShot(Coordinate pCoordinate);
+    boolean[] recordShot(Coordinate pCoordinate);
 
     boolean hasLost();
 

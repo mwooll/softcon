@@ -65,7 +65,7 @@ public class GameUtils {
         }
 
         // check if straight line
-        if (!GameUtils.isStraigthLine(userInputStartEnd)) {
+        if (!GameUtils.isStraightLine(userInputStartEnd)) {
             System.out.println("Coordinates not a straight line, try again");
             return false;
         }
@@ -133,7 +133,7 @@ public class GameUtils {
         return outListCoordiantes;
     }
 
-    public static boolean isStraigthLine(List<Coordinate> pListCoordinates) {
+    public static boolean isStraightLine(List<Coordinate> pListCoordinates) {
 
         /*
         Given a list of two Coordinate, check if they form a straight line. Does not check length
@@ -159,12 +159,12 @@ public class GameUtils {
         Assumes a list of two valid coordinates that form a line
         DOES NOT CHECK for those conditions
 
-        Returns a list of all the Coordiantes between the two suplied Coordinates
+        Returns a list of all the Coordinates between the two supplied Coordinates
          */
 
         // Check that length is 2
         assert pListCoordinates.size() == 2;
-        assert GameUtils.isStraigthLine(pListCoordinates) : "List of Coordinates is not a straight line";
+        assert GameUtils.isStraightLine(pListCoordinates) : "List of Coordinates is not a straight line";
 
         List<Coordinate> outListCoordiantes = new ArrayList<>();
 

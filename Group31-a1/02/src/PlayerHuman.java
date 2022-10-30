@@ -132,7 +132,7 @@ public class PlayerHuman implements Player {
         return validUserInputCoordinate.get(0);
     }
 
-    public void recordShot(Coordinate pCoordinate) {
+    public boolean[] recordShot(Coordinate pCoordinate) {
 
         /*
         Receive a valid Coordinate shot and check if a boat is hit. Update the Fleet and Boats accordingly
@@ -141,17 +141,20 @@ public class PlayerHuman implements Player {
         // The Fleet records all coordinates used for the placements of boats. Hence it's sufficient to check that list
         // First check if there is a boat on that coordinate
         boolean isHit = aFleet.checkShot(pCoordinate);
+        boolean gotDestroyed = false;
 
-        // It it's a hit, record the hit on the boat
+        // If it's a hit, record the hit on the boat
         if (isHit) {
-            for (Boat b : aFleet) {
-                b.recordHit(pCoordinate);
+            for (Boat boat : aFleet) {
+                boat.recordHit(pCoordinate);
+                // check whether the boat got destroyed
+                gotDestroyed = boat.isDestroyed();
             }
         }
 
         // Regardless of hit, record the shot taken at my grid
         aReceivedShots.add(pCoordinate);
-
+        return new boolean[] {isHit, gotDestroyed};
     }
 
 

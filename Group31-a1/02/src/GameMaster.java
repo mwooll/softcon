@@ -3,8 +3,8 @@ todo: Implement playGame, playTurn
  */
 
 public class GameMaster {
-    private final PlayerHuman human;
-    private final PlayerComputer computer;
+    private static PlayerHuman human;
+    private static PlayerComputer computer;
     private final Grid ocean;
     private final Grid target;
 
@@ -12,6 +12,8 @@ public class GameMaster {
     private boolean computerLost;
     private boolean humanLost;
     private Coordinate shot;
+    private boolean[] shotRecords;
+    private BoatType destroyedBoat;
 
     public GameMaster() {
         ocean = new Grid();
@@ -20,29 +22,48 @@ public class GameMaster {
         computer = new PlayerComputer(target);
     }
 
-    public static void main(String args[]){
+    public static void main(String[] args){
         GameMaster aGame = new GameMaster();
+
+        human.placeFleet();
+        computer.placeFleet();
         aGame.gameLoop();
     }
 
     private void gameLoop(){
         while(true){
+            // printGrid();
             computerLost = playTurn(human, computer);
-            if (computerLost) break;
+            if (computerLost) {
+                System.out.println("VICTORY! The computer's fleet got destroyed!");
+                break;
+            }
+            // printGrid();
             humanLost = playTurn(computer, human);
-            if (humanLost) break;
+            if (humanLost) {
+                System.out.println("DEFEAT! The human's fleet got destroyed!");
+                // printGrid();
+                break;
+            }
         }
     }
 
     private boolean playTurn(Player attacker, Player defender) {
         /*
-        Returns whether a next turn should be played.
+        Returns whether the defending player has lost
          */
         while(true) {
             shot = attacker.callShot(); // making a shot
             if (GameUtils.validCoordinate(shot)) break;// break if shot is in grid
         }
-        defender.recordShot(shot);
+        shotRecords = defender.recordShot(shot); // {boat hit, boat destroyed}
+        if (shotRecords[1]) {
+            //destroyedBoat = defender. ; //
+            System.out.println("The shot destroyed a _");
+        }
+        else if (shotRecords[0]) {
+            System.out.println("The shot hit a target!");
+        }
         return defender.hasLost();
     }
 

@@ -173,35 +173,6 @@ public class Main {
 
 
 
-        // Test Player having a Grid
-        PlayerHuman myPlayer = new PlayerHuman();
-        myPlayer.aGrid.printAllStatus();
-//        myPlayer.placeFleet(); // manually
-        myPlayer.placeFleetFromList(TestUtils.generatePlacement4by4());
-        myPlayer.aGrid.updateGrid(myPlayer.aFleet, myPlayer.aReceivedShots);
-        myPlayer.aGrid.printAllStatus();
-
-        // Make up shots
-        Coordinate shot1 = new Coordinate(0,1);
-        Coordinate shot2 = new Coordinate(0,2);
-        Coordinate shot3 = new Coordinate(0,3);
-        Coordinate shot4 = new Coordinate(2,1);
-//        Coordinate shot5 = new Coordinate(3,1);
-        Coordinate shot6 = new Coordinate(0,0);
-
-        // Test recordShot
-        myPlayer.recordShot(shot1);
-        myPlayer.recordShot(shot2);
-        myPlayer.recordShot(shot3);
-        myPlayer.recordShot(shot4);
-//        myPlayer.recordShot(shot5);
-        myPlayer.recordShot(shot6);
-
-        myPlayer.aGrid.updateGrid(myPlayer.aFleet, myPlayer.aReceivedShots);
-        myPlayer.aGrid.printAllStatus();
-
-
-
 //        // Test Player Computer
 //        PlayerComputer myPlayer = new PlayerComputer();
 //        System.out.println("\n\nGrid Status after initialization");
