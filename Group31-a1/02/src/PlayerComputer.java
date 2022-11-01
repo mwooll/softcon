@@ -101,26 +101,21 @@ public class PlayerComputer implements Player {
 
     public boolean[] recordShot(Coordinate pCoordinate) {
 
-        /*
-        Receive a valid Coordinate shot and check if a boat is hit. Update the Fleet and Boats accordingly
+        /**
+         * Receive a valid Coordinate shot and check if a boat is hit. Update the Fleet and Boats accordingly
+         * @param pCoordinate Coordinate of the valid shot taken at the Player
+         * @return [isHit, getDestroyed] True if a boat got hit, True if that hit destroyed the boat
+         *
+         * todo: How to return the BoatType or the BoatTypeName of the boat which got destroyed? List<Object>, HashMap?
          */
 
-        // The Fleet records all coordinates used for the placements of boats. Hence, it's sufficient to check that list
-        // First check if there is a boat on that coordinate
-        boolean isHit = aFleet.checkShot(pCoordinate);
-        boolean gotDestroyed = false;
-
-        // If it's a hit, record the hit on the boat
-        if (isHit) {
-            for (Boat boat : aFleet) {
-                boat.recordHit(pCoordinate);
-                gotDestroyed = boat.isDestroyed();
-            }
-        }
+        // Check the pCoordinate with the Fleet, receive if hit and if the boat got destroyed
+        // Fleet does update the boat within checkShot
+        boolean[] responseFleet = aFleet.checkShot(pCoordinate);
 
         // Regardless of hit, record the shot taken at my grid
         aReceivedShots.add(pCoordinate);
-        return new boolean[] {isHit, gotDestroyed};
+        return responseFleet;
     }
 
     private Coordinate generateRandomCoordinate() {
@@ -165,6 +160,7 @@ public class PlayerComputer implements Player {
         // finally, the valid shot is added to aTakenShots
         System.out.println("Adding shot " + outShot + " to list of aTakenShots");
         aTakenShots.add(outShot);
+        System.out.println("List of taken shots: " + aTakenShots);
 
         return outShot;
     }

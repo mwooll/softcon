@@ -74,7 +74,7 @@ public class GameMaster {
 
             if (GameUtils.validCoordinate(shot)) break;// break if shot is in grid
         }
-        shotRecords = defender.recordShot(shot); // {boat hit, boat destroyed}
+        shotRecords = defender.recordShot(shot); // {any boat hit, was boat destroyed}
         if (shotRecords[1]) {
             //destroyedBoat = defender. ; //
             System.out.println("The shot destroyed a _");
