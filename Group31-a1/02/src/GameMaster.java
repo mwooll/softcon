@@ -1,5 +1,6 @@
 /*
 todo: Implement playGame, playTurn
+todo: Select starting player at random instead of always human player first
  */
 
 public class GameMaster {
