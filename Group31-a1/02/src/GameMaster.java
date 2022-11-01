@@ -26,8 +26,8 @@ public class GameMaster {
     public static void main(String[] args){
         GameMaster aGame = new GameMaster();
 
-        human.placeFleet();
         computer.placeFleet();
+        human.placeFleet();
         aGame.gameLoop();
     }
 
@@ -61,6 +61,9 @@ public class GameMaster {
             System.out.println("Computers turn to shoot");
         }
 
+        /*
+        It should be printed at what target the computer shoots.
+         */
         while(true) {
             shot = attacker.callShot(); // making a shot
 

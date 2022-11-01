@@ -1,11 +1,7 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 
 /*
-Will implement Player
 todo: Implement placeFleet
  */
 public class PlayerComputer implements Player {
@@ -26,11 +22,76 @@ public class PlayerComputer implements Player {
     public boolean isHuman() {return false;}
 
     public void placeFleet() {
-        placeFleetFromList(TestUtils.generatePlacement4by4());
+        int length;
+        int tmp_ct;
+        int randRow;
+        int randCol;
+        Coordinate randomCoordinate; 
+        Coordinate verticalCoordinate;
+        Coordinate horizontalCoordinate;
+        List<Coordinate> verticalCoordinates;
+        List<Coordinate> horizontalCoordinates;
+        List<Coordinate> verticalBoat;
+        List<Coordinate> horizontalBoat;
+        boolean verticalOverlap;
+        boolean horizontalOverlap;
+        Random randNum = new Random();
+        int coinFlip;
+
+
+        for (Boat boat : aFleet) {
+            length = boat.getLen();
+            if (length > GameUtils.GAMESIZE) continue; // ignore boats that are too long
+            tmp_ct = 0;
+            List<Coordinate> validBoatCoordinates = new ArrayList<>();
+            while (tmp_ct < GameUtils.MAX_TRY_USER_INPUT) {
+                randRow = rand.nextInt(GameUtils.GAMESIZE - length + 1);
+                randCol = rand.nextInt(GameUtils.GAMESIZE - length + 1);
+                randomCoordinate = new Coordinate(randRow, randCol);
+
+                verticalCoordinate = new Coordinate(randRow, randCol + length - 1);
+                horizontalCoordinate = new Coordinate(randRow + length - 1, randCol);
+
+                verticalCoordinates = List.of(new Coordinate[]{randomCoordinate, verticalCoordinate});
+                horizontalCoordinates = List.of(new Coordinate[]{randomCoordinate, horizontalCoordinate});
+
+                verticalBoat = GameUtils.generateCoordinatesFromStartEnd(verticalCoordinates);
+                horizontalBoat = GameUtils.generateCoordinatesFromStartEnd(horizontalCoordinates);
+
+                // now check with the fleet if the Coordinates are already in use
+                verticalOverlap = aFleet.validateOverlap(verticalBoat);
+                horizontalOverlap = aFleet.validateOverlap(horizontalBoat);
+
+                if (!verticalOverlap && !horizontalOverlap) ++tmp_ct;
+                else {
+                    if (verticalOverlap && !horizontalOverlap) {
+                        validBoatCoordinates.addAll(verticalBoat);
+                    }
+                    else if (!verticalOverlap && horizontalOverlap){
+                        validBoatCoordinates.addAll(horizontalBoat);
+                    }
+                    else {
+                        coinFlip = randNum.nextInt(2);
+                        if (coinFlip == 0){
+                            validBoatCoordinates.addAll(horizontalBoat);
+                        }
+                        else {
+                            validBoatCoordinates.addAll(verticalBoat);
+                        }
+                    }
+                    break;
+                }
+            }
+
+            aFleet.placeBoat(boat, validBoatCoordinates);
+            // debug
+            System.out.println(String.format("Computer placed boat %s at: ", boat.getTypeName()));
+            System.out.println(Arrays.toString(validBoatCoordinates.toArray()));
+        }
     }
     public void placeFleetFromList(HashMap<String, List<Coordinate>> pPlacement) {
-        for (Boat b : aFleet) {
-            aFleet.placeBoat(b, pPlacement.get(b.getInstanceName()));
+        for (Boat boat : aFleet) {
+            aFleet.placeBoat(boat, pPlacement.get(boat.getInstanceName()));
         }
     }
 

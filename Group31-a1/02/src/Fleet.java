@@ -1,7 +1,6 @@
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
+import java.util.List;
 
 public class Fleet implements Iterable<Boat> {
 
@@ -76,6 +75,9 @@ public class Fleet implements Iterable<Boat> {
 
     // returns true if no overlap occurs, false otherwise
     public boolean validateOverlap(List<Coordinate> pListCoordinates) {
+        /*
+        Returns true if there is no overlap between pListCoordinates and the boats of the fleet
+         */
         for (Coordinate c : pListCoordinates) {
             if (aCoordinatesUsed.contains(c)) {
                 return false;
