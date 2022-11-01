@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class Fleet implements Iterable<Boat> {
 
     private final List<Boat> aBoats = new ArrayList<>();
+
+    // aCoordinatesUsed ONLY used for placement, not for shot recording!
     private final List<Coordinate> aCoordinatesUsed = new ArrayList<>();
 
     public Fleet() {
@@ -54,8 +56,29 @@ public class Fleet implements Iterable<Boat> {
 
 
 
-    public boolean checkShot(Coordinate pCoordinate) {
-        return aCoordinatesUsed.contains(pCoordinate);
+    /**
+     * Receive a Coordinate and check if a boat is hit.
+     * @param pCoordinate The Coordinate to check.
+     * @return [isHit, gotDestroyed] True if pCoordinate hit a boat, True if that hit destroyed to boat
+     */
+    public boolean[] checkShot(Coordinate pCoordinate) {
+
+        // for each Boat, check if its hit
+        for (Boat b : aBoats) {
+            // recordHit will remove the pCoordinate from that boats aCoordinatesLeft
+            if (b.recordHit(pCoordinate)) {
+                // if the hit destroyed the boat, return [true, true], otherwise [true, false]
+                if (b.isDestroyed()) {
+                    return new boolean[] {true, true};
+                } else {
+                    return new boolean[] {true, false};
+                }
+            }
+        }
+
+        // if no boat is hit, return [false, false]
+        return new boolean[] {false, false};
+
     }
 
 
