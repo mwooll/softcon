@@ -23,6 +23,8 @@ public class PlayerComputer implements Player {
         rand = new Random();
     }
 
+    public boolean isHuman() {return false;}
+
     public void placeFleet() {
         placeFleetFromList(TestUtils.generatePlacement4by4());
     }
@@ -62,8 +64,9 @@ public class PlayerComputer implements Player {
 
     private Coordinate generateRandomCoordinate() {
 
-        /*
+        /**
         Generate random Coordinate within grid
+        @return a VALID (in Grid) Coordinate
          */
         int randRow = rand.nextInt(GameUtils.GAMESIZE-1);
         int randCol = rand.nextInt(GameUtils.GAMESIZE-1);
@@ -74,16 +77,34 @@ public class PlayerComputer implements Player {
 
     public Coordinate callShot() {
 
+        /**
+        No check for validity (in Grid), generateRandomCoordinate makes sure it is in Grid
+        */
+
+        // init Coordinate
+        Coordinate outShot;
+
+        // if no shot was recorded yet, pick one at random
         if (aTakenShots.isEmpty()) {
-            return generateRandomCoordinate();
-        }
-        Coordinate randCoordinate = generateRandomCoordinate();
-        int tmp_ct = 0;
-        while (aTakenShots.contains(randCoordinate) && tmp_ct < GameUtils.MAX_TRY_COMP_SHOOT) {
-            tmp_ct++;
-            randCoordinate = generateRandomCoordinate();
+            outShot = generateRandomCoordinate();
+        } else {
+            // otherwise try to find a shot which has not been called yet
+            Coordinate randCoordinate = generateRandomCoordinate();
+            int tmp_ct = 0;
+            while (aTakenShots.contains(randCoordinate) && tmp_ct < GameUtils.MAX_TRY_COMP_SHOOT) {
+                tmp_ct++;
+                randCoordinate = generateRandomCoordinate();
+            }
+            // for debugging, print how many tries the computer needed to find a free Coordinate
+            System.out.println("Computer number of tries: " + tmp_ct);
+            outShot = randCoordinate;
+
         }
 
-        return randCoordinate;
+        // finally, the valid shot is added to aTakenShots
+        System.out.println("Adding shot " + outShot + " to list of aTakenShots");
+        aTakenShots.add(outShot);
+
+        return outShot;
     }
 }

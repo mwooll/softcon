@@ -11,6 +11,8 @@ public interface Player {
 
     List<Coordinate> aTakenShots = new ArrayList<>();
 
+    boolean isHuman();
+
     void placeFleet();
 
     void placeFleetFromList(HashMap<String, List<Coordinate>> pPlacement);

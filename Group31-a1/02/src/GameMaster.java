@@ -53,8 +53,22 @@ public class GameMaster {
         /*
         Returns whether the defending player has lost
          */
+
+        // for debugging, print Feedback on whose turn it is
+        if (attacker.isHuman()) {
+            System.out.println("Humans turn to shoot");
+        } else {
+            System.out.println("Computers turn to shoot");
+        }
+
         while(true) {
             shot = attacker.callShot(); // making a shot
+
+            // for debugging, see what Coordinate the computer calls
+            if (!attacker.isHuman()) {
+                System.out.println("Computer shoots at " + shot);
+            }
+
             if (GameUtils.validCoordinate(shot)) break;// break if shot is in grid
         }
         shotRecords = defender.recordShot(shot); // {boat hit, boat destroyed}

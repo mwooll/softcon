@@ -18,6 +18,8 @@ public class PlayerHuman implements Player {
         aGrid = pGrid;
     }
 
+    public boolean isHuman() {return true;}
+
     public boolean hasLost() {
         return aFleet.isDestroyed();
     }
