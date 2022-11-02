@@ -1,7 +1,4 @@
-/*
-todo: Implement playGame, playTurn
-todo: Select starting player at random instead of always human player first
- */
+import java.util.Random;
 
 public class GameMaster {
     private static PlayerHuman human;
@@ -14,7 +11,6 @@ public class GameMaster {
     private boolean humanLost;
     private Coordinate shot;
     private boolean[] shotRecords;
-    private BoatType destroyedBoat;
 
     public GameMaster() {
         ocean = new Grid();
@@ -32,19 +28,47 @@ public class GameMaster {
     }
 
     private void gameLoop(){
-        while(true){
-            // printGrid();
-            computerLost = playTurn(human, computer);
-            if (computerLost) {
-                System.out.println("VICTORY! The computer's fleet got destroyed!");
-                break;
-            }
-            // printGrid();
-            humanLost = playTurn(computer, human);
-            if (humanLost) {
-                System.out.println("DEFEAT! The human's fleet got destroyed!");
+
+        // Determine who starts at random
+        int coinFlip;
+        Random randNum = new Random();
+        coinFlip = randNum.nextInt(2);
+        if (coinFlip == 0){
+            // Human starts
+            System.out.println("Human Player starts");
+            while(true){
                 // printGrid();
-                break;
+                computerLost = playTurn(human, computer);
+                if (computerLost) {
+                    System.out.println("VICTORY! The computer's fleet got destroyed!");
+                    break;
+                }
+                // printGrid();
+                humanLost = playTurn(computer, human);
+                if (humanLost) {
+                    System.out.println("DEFEAT! The human's fleet got destroyed!");
+                    // printGrid();
+                    break;
+                }
+            }
+        }
+        else {
+            // Computer starts
+            System.out.println("Computer Player starts");
+            while(true){
+                // printGrid();
+                humanLost = playTurn(computer, human);
+                if (humanLost) {
+                    System.out.println("DEFEAT! The human's fleet got destroyed!");
+                    // printGrid();
+                    break;
+                }
+                // printGrid();
+                computerLost = playTurn(human, computer);
+                if (computerLost) {
+                    System.out.println("VICTORY! The computer's fleet got destroyed!");
+                    break;
+                }
             }
         }
     }
@@ -76,8 +100,9 @@ public class GameMaster {
         }
         shotRecords = defender.recordShot(shot); // {any boat hit, was boat destroyed}
         if (shotRecords[1]) {
-            //destroyedBoat = defender. ; //
-            System.out.println("The shot destroyed a _");
+            // If the shot destroyed a boat, ask the player for the type of the boat
+            String boatTypeDestroyed = defender.getBoatTypeString(shot);
+            System.out.println("The shot destroyed a " + boatTypeDestroyed);
         }
         else if (shotRecords[0]) {
             System.out.println("The shot hit a target!");

@@ -164,4 +164,31 @@ public class PlayerComputer implements Player {
 
         return outShot;
     }
+
+    public String getBoatTypeString(Coordinate pCoordinate) {
+        /**
+         * Return the Type of the Boat at the given Coordinate in the Fleet
+         * We assume that exactly one boat contains pCoordinate. Print Warning if nothing is found and return ""
+         *
+         * @param pCoordinate A Coordinate where a boat is placed
+         * @return String Type of the boat at Coordinate pCoordinate
+         */
+
+        String outString = "";
+        boolean foundBoat = false;
+
+        for (Boat b : aFleet) {
+            if (b.getCoordinates().contains(pCoordinate)) {
+                foundBoat = true;
+                outString = b.getTypeName();
+            }
+        }
+
+        if (!foundBoat) {
+            System.out.println("ERROR getBoatTypeString: No Boat found at " + pCoordinate + ". Returning empty String");
+
+        }
+
+        return outString;
+    }
 }

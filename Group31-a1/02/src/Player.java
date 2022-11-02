@@ -21,6 +21,8 @@ public interface Player {
 
     boolean[] recordShot(Coordinate pCoordinate);
 
+    String getBoatTypeString(Coordinate pCoordinate);
+
     boolean hasLost();
 
 
