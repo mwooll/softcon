@@ -27,8 +27,22 @@ public class PlayerHuman implements Player {
 
     public void placeFleetFromList(HashMap<String, List<Coordinate>> pPlacement) {
         for (Boat b : aFleet) {
+
+            // place boat
             aFleet.placeBoat(b, pPlacement.get(b.getInstanceName()));
+
+            // update the grid accordingly
+            for (Coordinate c : b.getCoordinates()) {
+                aGrid.updateHasBoat(c);
+                aGrid.updateBoatType(c, b.getTypePrintChar());
+            }
+
+            // debug
+            System.out.println("Human placed b " + b.getInstanceName() + " at: " + b.getCoordinates());
+
         }
+
+
     }
 
 
@@ -91,7 +105,14 @@ public class PlayerHuman implements Player {
 
             }
 
+            // place the boat
             aFleet.placeBoat(b, validUserInputCoordinates);
+
+            // update the grid accordingly
+            for (Coordinate c : b.getCoordinates()) {
+                aGrid.updateHasBoat(c);
+                aGrid.updateBoatType(c, b.getTypePrintChar());
+            }
         }
     }
 
@@ -141,16 +162,21 @@ public class PlayerHuman implements Player {
          * @param pCoordinate Coordinate of the valid shot taken at the Player
          * @return [isHit, getDestroyed] True if a boat got hit, True if that hit destroyed the boat
          *
-         * todo: How to return the BoatType or the BoatTypeName of the boat which got destroyed? List<Object>, HashMap?
          */
 
         // Check the pCoordinate with the Fleet, receive if hit and if the boat got destroyed
         // Fleet does update the boat within checkShot
         boolean[] responseFleet = aFleet.checkShot(pCoordinate);
 
-        // Regardless of hit, record the shot taken at my grid
+        // Regardless of hit, record the shot taken at my grid, update the grid
         aReceivedShots.add(pCoordinate);
+        aGrid.updateShotAt(pCoordinate);
+
+        // if the boat got destroyed with that shot, update the grid accordingly
+        if (responseFleet[1]) aGrid.updateShowDestroyed(pCoordinate);
+
         return responseFleet;
+
     }
 
     public String getBoatTypeString(Coordinate pCoordinate) {

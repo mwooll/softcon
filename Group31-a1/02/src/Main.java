@@ -10,15 +10,15 @@ public class Main {
 
 
 
-        // Test Game convertLetter and validCoordinate
-        int myRow = 0;
-        char myCol = 'J';
-        int myColConverted = GameUtils.convertLetterToInt(myCol);
-        Coordinate myCoordinate = new Coordinate(myRow, myColConverted);
-        System.out.println(myCoordinate);
-        System.out.println("Coordinate " + myCoordinate + " is " + GameUtils.validCoordinate(myCoordinate));
-        System.out.println("Convert back");
-        System.out.println(GameUtils.convertIntToLetter(myColConverted));
+//        // Test Game convertLetter and validCoordinate
+//        int myRow = 0;
+//        char myCol = 'J';
+//        int myColConverted = GameUtils.convertLetterToInt(myCol);
+//        Coordinate myCoordinate = new Coordinate(myRow, myColConverted);
+//        System.out.println(myCoordinate);
+//        System.out.println("Coordinate " + myCoordinate + " is " + GameUtils.validCoordinate(myCoordinate));
+//        System.out.println("Convert back");
+//        System.out.println(GameUtils.convertIntToLetter(myColConverted));
 
 
 
@@ -195,7 +195,21 @@ public class Main {
 
 
 
+        // Test Grid printing
+        Grid computerGrid = new Grid();
+        Grid humanGrid = new Grid();
+        PlayerComputer computerPlayer = new PlayerComputer(computerGrid);
+        PlayerHuman humanPlayer = new PlayerHuman(humanGrid);
 
+        computerPlayer.placeFleetFromList(TestUtils.generatePlacement4by4());
+        humanPlayer.placeFleetFromList(TestUtils.generatePlacement4by4());
+
+        humanPlayer.recordShot(new Coordinate(0,0));
+        humanPlayer.recordShot(new Coordinate(0,1));
+        humanPlayer.recordShot(new Coordinate(2,1));
+        humanPlayer.recordShot(new Coordinate(3,1));
+        humanPlayer.aGrid.printOcean();
+        computerPlayer.aGrid.printOcean();
 
     }
 }

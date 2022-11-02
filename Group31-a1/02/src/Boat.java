@@ -71,7 +71,7 @@ public class Boat  {
         return aType.getTypeName();
     }
 
-    public String getTypePrintChar() {
+    public char getTypePrintChar() {
         return aType.getTypePrintChar();
     }
 

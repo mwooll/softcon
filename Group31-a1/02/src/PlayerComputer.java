@@ -39,8 +39,8 @@ public class PlayerComputer implements Player {
         int coinFlip;
 
 
-        for (Boat boat : aFleet) {
-            length = boat.getLen();
+        for (Boat b : aFleet) {
+            length = b.getLen();
             if (length > GameUtils.GAMESIZE) continue; // ignore boats that are too long
             tmp_ct = 0;
             List<Coordinate> validBoatCoordinates = new ArrayList<>();
@@ -83,15 +83,34 @@ public class PlayerComputer implements Player {
                 }
             }
 
-            aFleet.placeBoat(boat, validBoatCoordinates);
+            // place the b
+            aFleet.placeBoat(b, validBoatCoordinates);
+
+            // update the grid accordingly
+            for (Coordinate c : b.getCoordinates()) {
+                aGrid.updateHasBoat(c);
+                aGrid.updateBoatType(c, b.getTypePrintChar());
+            }
+
             // debug
-            System.out.println(String.format("Computer placed boat %s at: ", boat.getTypeName()));
+            System.out.println("Computer placed b %s at: " + b.getTypeName());
             System.out.println(Arrays.toString(validBoatCoordinates.toArray()));
         }
     }
     public void placeFleetFromList(HashMap<String, List<Coordinate>> pPlacement) {
-        for (Boat boat : aFleet) {
-            aFleet.placeBoat(boat, pPlacement.get(boat.getInstanceName()));
+        for (Boat b : aFleet) {
+
+            // place boat
+            aFleet.placeBoat(b, pPlacement.get(b.getInstanceName()));
+
+            // update the grid accordingly
+            for (Coordinate c : b.getCoordinates()) {
+                aGrid.updateHasBoat(c);
+                aGrid.updateBoatType(c, b.getTypePrintChar());
+            }
+
+            // debug
+            System.out.println("Computer placed b " + b.getInstanceName() + " at: " + b.getCoordinates());
         }
     }
 
@@ -102,19 +121,22 @@ public class PlayerComputer implements Player {
     public boolean[] recordShot(Coordinate pCoordinate) {
 
         /**
-         * Receive a valid Coordinate shot and check if a boat is hit. Update the Fleet and Boats accordingly
+         * Receive a valid Coordinate shot and check if a boat is hit. Update the Fleet, Boats and Grid accordingly
          * @param pCoordinate Coordinate of the valid shot taken at the Player
          * @return [isHit, getDestroyed] True if a boat got hit, True if that hit destroyed the boat
-         *
-         * todo: How to return the BoatType or the BoatTypeName of the boat which got destroyed? List<Object>, HashMap?
          */
 
         // Check the pCoordinate with the Fleet, receive if hit and if the boat got destroyed
         // Fleet does update the boat within checkShot
         boolean[] responseFleet = aFleet.checkShot(pCoordinate);
 
-        // Regardless of hit, record the shot taken at my grid
+        // Regardless of hit, record the shot taken at my grid, update the grid
         aReceivedShots.add(pCoordinate);
+        aGrid.updateShotAt(pCoordinate);
+
+        // if the boat got destroyed with that shot, update the grid accordingly
+        if (responseFleet[1]) aGrid.updateShowDestroyed(pCoordinate);
+
         return responseFleet;
     }
 

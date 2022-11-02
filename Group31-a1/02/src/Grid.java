@@ -8,121 +8,159 @@ todo: Implement printAsTarget, printAsOcean
 public class Grid {
 
     /*
-    Consists of List of List of Blocks
+    Consists of nested Array (fixed length) of Blocks
      */
-
-    private final List<List<Block>> aGrid = new ArrayList<>();
+    private final Block[][] aGrid = new Block[GameUtils.GAMESIZE][GameUtils.GAMESIZE];
 
     public Grid () {
 
-        // initialize an empty grid
+        // initialize the empty grid
         for (int i = 0; i < GameUtils.GAMESIZE; i++) {
-            List<Block> tmpRow = new ArrayList<>();
-            aGrid.add(tmpRow);
             for (int j = 0; j < GameUtils.GAMESIZE; j++) {
-                int rankBlock = GameUtils.gridOrderTopLeftToRightBottom(i, j);
-                Coordinate tmpCoordinate = new Coordinate(i,j);
-                Block tmpBlock = new Block(tmpCoordinate);
-                tmpBlock.updatePrintCharacter(Integer.toString(rankBlock));
-                aGrid.get(i).add(tmpBlock);
+                aGrid[i][j] = new Block(new Coordinate(i,j));
             }
         }
     }
 
     private Block getBlock(Coordinate pCoordinate) {
-        /*
-        Return a Block for a given Coordinate
+        /**
+         * Return a Block for a given Coordinate
+         * @param pCoordinate Coordiante for which to return the corresponding Block
          */
-        int aRow = pCoordinate.getRow();
-        int aCol = pCoordinate.getCol();
 
-        return aGrid.get(aRow).get(aCol);
+        return aGrid[pCoordinate.getRow()][pCoordinate.getCol()];
     }
 
-    public void updateGrid(Fleet pFleet, List<Coordinate> pReceivedShots) {
-        /*
-        Update the grid with all the information contained by pFleet as well as all the shots taken
+    public void updateShotAt(Coordinate pCoordinate) {
+        /**
+         * Receive a Coordinate and update the corresponding Block
+         * We can assume a valid Coordinate
+         * @param pCoordinate A Coordinate where the Block should update its shotAt
          */
 
-        // First go through all received shots
-        for (Coordinate c : pReceivedShots) {
-            Block b = getBlock(c);
-            b.updateStateShot();
+        Block b = getBlock(pCoordinate);
+        b.updateShotAt();
+
+        // for debugging
+//        System.out.println("Updated shotAt at Block " + b);
+
+    }
+
+    public void updateHasBoat(Coordinate pCoordinate) {
+        /**
+         * Receive a Coordinate and update the corresponding Block
+         * We can assume a valid Coordinate
+         * @param pCoordinate A Coordinate where the Block should update its hasBoat
+         */
+
+        Block b = getBlock(pCoordinate);
+        b.updateHasBoat();
+
+        // for debugging
+//        System.out.println("Updated hasBoat at Block " + b);
+
+    }
+
+    public void updateShowDestroyed(Coordinate pCoordinate) {
+        /**
+         * Receive a Coordinate and update the corresponding Block
+         * We can assume a valid Coordinate
+         * @param pCoordinate A Coordinate where the Block should update its showDestroyed
+         */
+
+        Block b = getBlock(pCoordinate);
+        b.updateShowDestroyed();
+
+        // for debugging
+//        System.out.println("Updated showDestroyed at Block " + b);
+
+    }
+
+    public void updateBoatType(Coordinate pCoordinate, char pBoatType) {
+        /**
+         * Receive a Coordinate and update the corresponding Block
+         * We can assume a valid Coordinate
+         * @param pCoordinate A Coordinate where the Block should update its boatType
+         */
+
+        Block b = getBlock(pCoordinate);
+        b.updateBoatType(pBoatType);
+
+        // for debugging
+//        System.out.println("Updated boatType at Block " + b);
+
+    }
+
+    public void printOcean() {
+        /**
+         * Print the Gird as an Ocean Map
+         */
+
+        System.out.println("===== OCEAN GRID =====");
+        // A B C D E ...
+        System.out.print(" ");
+        for (int i = 0; i < GameUtils.GAMESIZE; i++) {
+            System.out.print(" " + GameUtils.convertIntToLetter(i));
         }
+        // +-+-+- ...
+        System.out.print("\n ");
+        for (int i = 0; i < GameUtils.GAMESIZE; i++) {
+            System.out.print("+-");
+        }
+        // rows and cols
+        System.out.print("+\n");
+        for (int i = 0; i < GameUtils.GAMESIZE; i++) {
+            System.out.print(i + "|");
+            for (int j = 0; j < GameUtils.GAMESIZE; j++) {
+                Block block_ij = getBlock(new Coordinate(i,j));
 
-        // Then go thorugh all boats of the fleet and update where they are and whether they should be revealed
-        for (Boat b : pFleet) {
+                boolean shotAt_ij = block_ij.getShotAt();
+                boolean hasBoat_ij = block_ij.getHasBoat();
+                boolean showDestroyed_ij = block_ij.getShowDestroyed();
 
-            // List all Coordinate of the boat
-            List<Coordinate> bCoordinates = b.getCoordinates();
-            for (Coordinate c : bCoordinates) {
-                // For each Block at the Coordiante do
-                Block block = getBlock(c);
-
-                // Set stateBoat
-                block.updateStateBoat();
-
-                // Set print character
-                block.updatePrintCharacter(b.getTypePrintChar());
-
-                // Set stateReveal (if the boat is destroyed, reveal)
-                if (b.isDestroyed()) {
-                    block.updateStateReveal();
+                // if shot at and ...
+                if (shotAt_ij) {
+                    // ... has boat
+                    if (hasBoat_ij) {
+                        // print lowercase x
+                        System.out.print("x|");
+                    } else {
+                        // print uppercase X
+                        System.out.print("X|");
+                    }
                 }
-
+                // if not shot at and ...
+                if (!shotAt_ij) {
+                    // .. has boat
+                    if (hasBoat_ij) {
+                        // print boatType
+                        System.out.print(block_ij.getBoatType() + "|");
+                    } else {
+                        System.out.print(" |");
+                    }
+                }
             }
+            System.out.print(i + "\n");
         }
+        System.out.print(" ");
+        // +-+-+- ...
+        for (int i = 0; i < GameUtils.GAMESIZE; i++) {
+            System.out.print("+-");
+        }
+        // A B C D E ...
+        System.out.print(" \n");
+        for (int i = 0; i < GameUtils.GAMESIZE; i++) {
+            System.out.print(" " + GameUtils.convertIntToLetter(i));
+        }
+        System.out.print("\n");
+
     }
 
+    public void printTarget() {
+        /**
+         * Print the Gird as a Target Map
+         */
 
-
-
-
-    public void printAllStatus() {
-        String tmp = "";
-        tmp += getGridStateBoat();
-        tmp += "\n" + getGridStateShot();
-        tmp += "\n" + getGridStateReveal();
-
-        System.out.println(tmp);
-    }
-
-    public String getGridStateBoat() {
-        String tmp = "Boat\n";
-        for (List<Block> innerlist : aGrid) {
-            int rowNumber = innerlist.get(0).getCoordinate().getRow() % GameUtils.GAMESIZE;
-            tmp += rowNumber + " ";
-            for (Block b : innerlist) {
-                tmp += b.getStateBoat() + "  ";
-            }
-            tmp += "\n";
-        }
-        return tmp;
-    }
-
-    public String getGridStateShot() {
-        String tmp = "Shot\n";
-        for (List<Block> innerlist : aGrid) {
-            int rowNumber = innerlist.get(0).getCoordinate().getRow() % GameUtils.GAMESIZE;
-            tmp += rowNumber + " ";
-            for (Block b : innerlist) {
-                tmp += b.getStateShot() + "  ";
-            }
-            tmp += "\n";
-        }
-        return tmp;
-    }
-
-    public String getGridStateReveal() {
-        String tmp = "Reveal\n";
-        for (List<Block> innerlist : aGrid) {
-            int rowNumber = innerlist.get(0).getCoordinate().getRow() % GameUtils.GAMESIZE;
-            tmp += rowNumber + " ";
-            for (Block b : innerlist) {
-                tmp += b.getStateReveal() + "  ";
-            }
-            tmp += "\n";
-        }
-        return tmp;
+//        todo: implement printTarget
     }
 }
