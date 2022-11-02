@@ -33,8 +33,8 @@ public class PlayerComputer implements Player {
         List<Coordinate> horizontalCoordinates;
         List<Coordinate> verticalBoat;
         List<Coordinate> horizontalBoat;
-        boolean verticalOverlap;
-        boolean horizontalOverlap;
+        boolean noVerticalOverlap;
+        boolean noHorizontalOverlap;
         Random randNum = new Random();
         int coinFlip;
 
@@ -59,15 +59,15 @@ public class PlayerComputer implements Player {
                 horizontalBoat = GameUtils.generateCoordinatesFromStartEnd(horizontalCoordinates);
 
                 // now check with the fleet if the Coordinates are already in use
-                verticalOverlap = aFleet.validateOverlap(verticalBoat);
-                horizontalOverlap = aFleet.validateOverlap(horizontalBoat);
+                noVerticalOverlap = aFleet.validateOverlap(verticalBoat);
+                noHorizontalOverlap = aFleet.validateOverlap(horizontalBoat);
 
-                if (!verticalOverlap && !horizontalOverlap) ++tmp_ct;
+                if (!noVerticalOverlap && !noHorizontalOverlap) ++tmp_ct;
                 else {
-                    if (verticalOverlap && !horizontalOverlap) {
+                    if (noVerticalOverlap && !noHorizontalOverlap) {
                         validBoatCoordinates.addAll(verticalBoat);
                     }
-                    else if (!verticalOverlap && horizontalOverlap){
+                    else if (!noVerticalOverlap && noHorizontalOverlap){
                         validBoatCoordinates.addAll(horizontalBoat);
                     }
                     else {
@@ -152,15 +152,15 @@ public class PlayerComputer implements Player {
                 randCoordinate = generateRandomCoordinate();
             }
             // for debugging, print how many tries the computer needed to find a free Coordinate
-            System.out.println("Computer number of tries: " + tmp_ct);
+            // System.out.println("Computer number of tries: " + tmp_ct);
             outShot = randCoordinate;
 
         }
 
         // finally, the valid shot is added to aTakenShots
-        System.out.println("Adding shot " + outShot + " to list of aTakenShots");
+        // System.out.println("Adding shot " + outShot + " to list of aTakenShots");
         aTakenShots.add(outShot);
-        System.out.println("List of taken shots: " + aTakenShots);
+        // System.out.println("List of taken shots: " + aTakenShots);
 
         return outShot;
     }

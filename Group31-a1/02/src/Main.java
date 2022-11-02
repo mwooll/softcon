@@ -10,15 +10,15 @@ public class Main {
 
 
 
-//        // Test Game convertLetter and validCoordinate
-//        int myRow = 0;
-//        char myCol = 'A';
-//        int myColConverted = GameUtils.convertLetterToInt(myCol);
-//        Coordinate myCoordinate = new Coordinate(myRow, myColConverted);
-//        System.out.println(myCoordinate);
-//        System.out.println("Coordinate " + myCoordinate + " is " + GameUtils.validCoordinate(myCoordinate));
-//        System.out.println("Convert back");
-//        System.out.println(GameUtils.convertIntToLetter(myColConverted));
+        // Test Game convertLetter and validCoordinate
+        int myRow = 0;
+        char myCol = 'J';
+        int myColConverted = GameUtils.convertLetterToInt(myCol);
+        Coordinate myCoordinate = new Coordinate(myRow, myColConverted);
+        System.out.println(myCoordinate);
+        System.out.println("Coordinate " + myCoordinate + " is " + GameUtils.validCoordinate(myCoordinate));
+        System.out.println("Convert back");
+        System.out.println(GameUtils.convertIntToLetter(myColConverted));
 
 
 
