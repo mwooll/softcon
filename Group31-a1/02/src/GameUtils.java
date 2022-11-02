@@ -11,7 +11,7 @@ public class GameUtils {
     todo: convertUserInputXXX could be repalced with one function that takes List of any length and outputs List
      */
 
-    public static final int GAMESIZE = 4, MAX_TRY_USER_INPUT = 20, MAX_TRY_COMP_SHOOT = 1000;
+    public static final int GAMESIZE = 4, MAX_TRY_USER_INPUT = 20, MAX_TRY_COMP_SHOOT = 1000, MAX_TRY_COMP_PLACE = 1000;
 
     public static int gridOrderTopLeftToRightBottom(int pRow, int pCol) {
         return pRow * GameUtils.GAMESIZE + pCol;

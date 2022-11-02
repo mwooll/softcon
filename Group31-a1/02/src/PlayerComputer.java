@@ -44,7 +44,7 @@ public class PlayerComputer implements Player {
             if (length > GameUtils.GAMESIZE) continue; // ignore boats that are too long
             tmp_ct = 0;
             List<Coordinate> validBoatCoordinates = new ArrayList<>();
-            while (tmp_ct < GameUtils.MAX_TRY_USER_INPUT) {
+            while (tmp_ct < GameUtils.MAX_TRY_COMP_PLACE) {
                 randRow = rand.nextInt(GameUtils.GAMESIZE - length + 1);
                 randCol = rand.nextInt(GameUtils.GAMESIZE - length + 1);
                 randomCoordinate = new Coordinate(randRow, randCol);
