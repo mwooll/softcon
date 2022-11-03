@@ -28,7 +28,7 @@ public class Main {
 //        System.out.println(c2.printPretty());
 
 
-        List lambda function
+          // List lambda function
 //        List<Coordinate> mylist = new ArrayList<>();
 //        List<String> mylistString = new ArrayList<>();
 //        Coordinate c1 = new Coordinate(0,0);

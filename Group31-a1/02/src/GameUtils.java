@@ -16,6 +16,11 @@ public class GameUtils {
     public static final int MAX_TRY_USER_INPUT = 20, MAX_TRY_COMP_SHOOT = 1000, MAX_TRY_COMP_PLACE = 1000;
 
     public static int gridOrderTopLeftToRightBottom(int pRow, int pCol) {
+
+        /**
+         * To make Coordinates in a Grid comparable, number them from top left to bottom right
+         */
+
         return pRow * GameUtils.GAMESIZE + pCol;
     }
 
@@ -37,12 +42,12 @@ public class GameUtils {
 
     public static boolean checkUserInputPlacement(String pString, BoatType pBoatType) {
 
-        /*
+        /**
         Receive a user input String of form A2,A5 for boat placement and the type of the boat to be placed
         Check if the string comes in the valid format
         Check if both coordinates are valid coordinates
         Check if they form a straight line
-        Check if length of the staright line matches the required lenght of the boat
+        Check if length of the straight line matches the required length of the boat
 
         Return false if any of the checks fails, true otherwise
          */
@@ -86,17 +91,17 @@ public class GameUtils {
     }
 
     public static int convertLetterToInt(char pLetter) {
-        /*
+        /**
         Helper to convert pLetter<char> to row/col integer representation.
         Uses Unicode decimal values.
         Example: A = 0, B = 1
-        Not checked: Maximal range is A-Z
+        todo: Checked: Maximal range is A-Z
          */
        return (int) pLetter - (int) 'A';
     }
 
     public static char convertIntToLetter(int pInt) {
-        /*
+        /**
         Helper to convert pInt<int> from row/col integer to the letter (for printing)
         Se convertLetterToInt for example
          */
@@ -105,9 +110,11 @@ public class GameUtils {
     }
 
     public static boolean validUserInputPlacement(String pString) {
-        /*
+        /**
         Check if a user input for placement fulfills pattern required, e.g. A2,A5
         Return false if string is not valid, true otherwise
+
+         We ONLY accept GAMESIZE <= 10, hence only one digit after letter!
          */
         Pattern patternExpected = Pattern.compile("^[A-Z]{1}[0-9]{1},[A-Z]{1}[0-9]{1}$");
         Matcher matcher = patternExpected.matcher(pString);
@@ -116,7 +123,7 @@ public class GameUtils {
 
     public static List<Coordinate> convertUserInputPlacementToCoordinates(String pString) {
 
-        /*
+        /**
         Given a valid user input String for boat placement, convert to a list of two Coordinates
         DOES NOT CHECK validity of the coordinates, only assumes valid regex e.g. A2,A5
          */
@@ -137,7 +144,7 @@ public class GameUtils {
 
     public static boolean isStraightLine(List<Coordinate> pListCoordinates) {
 
-        /*
+        /**
         Given a list of two Coordinate, check if they form a straight line. Does not check length
         Assumes valid Coordinates, hence DOES NOT CHECK for validity of coordinates
 
@@ -157,9 +164,9 @@ public class GameUtils {
 
     public static List<Coordinate> generateCoordinatesFromStartEnd (List<Coordinate> pListCoordinates) {
 
-        /*
+        /**
         Assumes a list of two valid coordinates that form a line
-        DOES NOT CHECK for those conditions
+        DOES NOT CHECK for those conditions, they have been checked before
 
         Returns a list of all the Coordinates between the two supplied Coordinates
          */
@@ -206,7 +213,7 @@ public class GameUtils {
 
     public static boolean checkUserInputShot(String pString) {
 
-        /*
+        /**
         Receive a user input String of form A0 for shot calling
         Check if the string comes in the valid format
         Check if the Coordinate is valid
@@ -234,9 +241,11 @@ public class GameUtils {
 
     public static boolean validUserInputShot(String pString) {
 
-        /*
+        /**
         Check if a user input for shot calling fulfills pattern required, e.g. A2
         Return false if string is not valid, true otherwise
+
+         We ONLY accept GAMESIZE <= 10, hence only one digit after letter!
          */
 
         Pattern patternExpected = Pattern.compile("^[A-Z]{1}[0-9]{1}$");
@@ -246,7 +255,7 @@ public class GameUtils {
 
     public static Coordinate convertUserInputShotToCoordinates(String pString) {
 
-        /*
+        /**
         Return a Coordinate from the valid string input for shot calling of the user
          */
 

@@ -2,14 +2,11 @@ import java.util.Objects;
 
 public class Coordinate implements Comparable<Coordinate> {
 
-    /*
-     Coordinate does not check if aRow und aCol are valid i.e. smaller than Game.GAMESIZE
-     todo: Constructor could in theory check if a Coordiante is valid.
-     Drawback: Wrongly entered Coordiante throws error, this requires a real error handling...
+    /**
+     Coordinate does not check if aRow und aCol are valid i.e. smaller than GameUtils.GAMESIZE
+     In another scenario, this would be included in the Constructor, do not allow invalid Coordinates to exist
+     However, we have no proper error handling for the game...
      */
-
-    // todo: remove aRankGridOrder
-
 
     private final int aRow, aCol, aRankGridOrder;
 

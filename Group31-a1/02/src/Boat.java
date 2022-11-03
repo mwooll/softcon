@@ -104,42 +104,12 @@ public class Boat  {
 
     public boolean isPlaced() {return aIsPlaced;}
 
-
-    public void printCoordinates() {
-        for (Coordinate c : getCoordinates()) {
-            System.out.println(c);
-        }
-    }
-
-    public void printCoordinatesLeft() {
-        for (Coordinate c : getCoordinatesLeft()) {
-            System.out.println(c);
-        }
-    }
-
-    public void printFullBoat() {
-        String tmpString = "";
-        tmpString += toString();
-        tmpString += " " + aInstanceName;
-        tmpString += " - Placed: " + isPlaced();
-        tmpString += " - (" + getCoordinates() + ")";
-        tmpString += " - (" + getCoordinatesLeft() + ")";
-        tmpString += " - Destroyed: " + isDestroyed();
-
-        System.out.println(tmpString);
-
-    }
-
-
-
     @Override
     public String toString() {
 
         return aType + " (len " + aLen + ")";
 
     }
-
-
 
     public Iterator<Coordinate> iterator() {
         return aCoordinates.iterator();
