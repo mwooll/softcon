@@ -4,16 +4,12 @@ import java.util.HashMap;
 
 public abstract class Player {
 
-    /*
-
+    /**
     Subclasses PlayerHuman, PlayerComputer
     Difference only in
     - human or computer
     - placeFleet
     - callShot
-
-     todo: I think an abstract class instead of interface would make more sense here
-      Many functions like hasLost, placeFleetFromList are identical
      */
 
     // all fields are by default protected. subclasses can access
