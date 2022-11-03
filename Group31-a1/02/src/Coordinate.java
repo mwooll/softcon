@@ -29,6 +29,19 @@ public class Coordinate implements Comparable<Coordinate> {
         return "(" + aRow + "," + aCol + ")";
     }
 
+    public String printPretty() {
+        /**
+         * Convert the int row and col into the game format, e.g. A0
+         * Example: B3 : col = B = 1, row = 3 -> Coordinate(3,1)
+         */
+
+        String rowPretty = Integer.toString(getRow());
+        String colPretty = Character.toString(GameUtils.convertIntToLetter(getCol()));
+
+        return colPretty + rowPretty;
+
+    }
+
     // the order is defined in the Game Class
     public int compareTo(Coordinate pCoordinate) {
         return Integer.compare(aRankGridOrder, pCoordinate.aRankGridOrder);

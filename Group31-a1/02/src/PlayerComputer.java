@@ -111,7 +111,12 @@ public class PlayerComputer extends Player {
                 tmpPlayerType = "Computer Player";
             }
             System.out.println(tmpPlayerType + " placed boat " + b.getInstanceName() + " of len " + b.getLen() + ":");
-            System.out.println(Arrays.toString(validBoatCoordinates.toArray()));
+            //System.out.println(Arrays.toString(validBoatCoordinates.toArray()));
+
+            List<String> validBoatCoordinatesPretty = new ArrayList<String>();
+            validBoatCoordinates.forEach((c) -> validBoatCoordinatesPretty.add(c.printPretty()));
+            System.out.println(String.join(",", validBoatCoordinatesPretty));
+
         }
     }
 

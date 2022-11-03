@@ -18,10 +18,6 @@ public class Fleet implements Iterable<Boat> {
         }
     }
 
-    public int nBoats() {
-        return aBoats.size();
-    }
-
     public boolean isDestroyed() {
         boolean fleetDestroyed = true;
         for (Boat b : aBoats) {
@@ -31,29 +27,6 @@ public class Fleet implements Iterable<Boat> {
         }
         return fleetDestroyed;
     }
-
-    public int nBoatsDestroyed() {
-        int ct = 0;
-        for (Boat b : aBoats) {
-            if (b.isDestroyed()) {
-                ct++;
-            }
-        }
-        return ct;
-    }
-
-    // todo: Is this neccessary? Does it break encapsulation?
-    public List<Boat> getBoatsDestroyed() {
-        List<Boat> boatsDestroyed = new ArrayList<>();
-        for (Boat b : aBoats) {
-            if (b.isDestroyed()) {
-                boatsDestroyed.add(b);
-            }
-        }
-        return boatsDestroyed;
-    }
-
-
 
     /**
      * Receive a Coordinate and check if a boat is hit.
@@ -82,7 +55,6 @@ public class Fleet implements Iterable<Boat> {
 
 
 
-    // todo: Where should checks for already placed boats be? I think here in the fleet.
     public void placeBoat(Boat pBoat, List<Coordinate> pListCoordinates) {
 
         // check inputs
@@ -107,18 +79,6 @@ public class Fleet implements Iterable<Boat> {
             }
         }
         return true;
-    }
-
-
-
-    public void printFleetStatus() {
-
-        System.out.println("Fleet destroyed: " + isDestroyed());
-
-        for (Boat b : aBoats) {
-            b.printFullBoat();
-        }
-
     }
 
 

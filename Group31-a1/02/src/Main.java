@@ -21,6 +21,26 @@ public class Main {
 //        System.out.println(GameUtils.convertIntToLetter(myColConverted));
 
 
+//        // Test Coordinate printPretty
+//        Coordinate c1 = new Coordinate(0,0);
+//        Coordinate c2 = new Coordinate(9,9);
+//        System.out.println(c1.printPretty());
+//        System.out.println(c2.printPretty());
+
+
+        List lambda function
+//        List<Coordinate> mylist = new ArrayList<>();
+//        List<String> mylistString = new ArrayList<>();
+//        Coordinate c1 = new Coordinate(0,0);
+//        Coordinate c2 = new Coordinate(9,9);
+//        mylist.add(c1);
+//        mylist.add(c2);
+//
+//        mylist.forEach( (c) -> mylistString.add(c.printPretty()) );
+//
+//        System.out.prin
+//        // Test tln(String.join(", ", mylistString));
+
 
 
 

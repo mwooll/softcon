@@ -113,7 +113,7 @@ public class GameMaster {
         // debugging
         // print what Coordinate the computer calls
         if (!attacker.isHuman()) {
-            System.out.println("Computer shoots at " + shot);
+            System.out.println("Computer shoots at " + shot.printPretty());
         }
 
         shotRecords = defender.recordShot(shot); // {any boat hit, was boat destroyed}
