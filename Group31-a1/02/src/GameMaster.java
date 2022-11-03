@@ -1,33 +1,40 @@
 import java.util.Random;
 
 public class GameMaster {
-    private static PlayerHuman human;
-    private static PlayerComputer computer;
-    private final Grid ocean;
-    private final Grid target;
+    private final PlayerHuman aHuman;
+    private final PlayerComputer aComputer;
 
-    // variables for game loop
-    private boolean computerLost;
-    private boolean humanLost;
-    private Coordinate shot;
-    private boolean[] shotRecords;
+    private Player attacker;
+    private Player defender;
 
     public GameMaster() {
-        ocean = new Grid();
-        target = new Grid();
-        human = new PlayerHuman(ocean);
-        computer = new PlayerComputer(target);
+        Grid humanGrid = new Grid();
+        Grid computerGrid = new Grid();
+        aHuman = new PlayerHuman(humanGrid);
+        aComputer = new PlayerComputer(computerGrid);
     }
 
     public static void main(String[] args){
         GameMaster aGame = new GameMaster();
 
-        computer.placeFleet();
-        human.placeFleet();
+        // After starting the game, print the empty grids
+        System.out.println("Starting the Game");
+        aGame.aComputer.aGrid.printTarget();
+        aGame.aHuman.aGrid.printOcean();
+
+        aGame.aComputer.placeFleet();
+        aGame.aHuman.placeFleet();
+
+        // After placement, print the grids again
+        aGame.aComputer.aGrid.printTarget();
+        aGame.aHuman.aGrid.printOcean();
+
         aGame.gameLoop();
     }
 
     private void gameLoop(){
+
+        boolean defenderLost;
 
         // Determine who starts at random
         int coinFlip;
@@ -37,64 +44,61 @@ public class GameMaster {
         // Human start
         if (coinFlip == 0) {
             System.out.println("Human Player starts");
-            Player attacker = human;
-            Player defender = computer;
+            attacker = aHuman;
+            defender = aComputer;
         }
         // Computer start
         else {
             System.out.println("Computer Player starts");
-            Player attacker = computer;
-            Player defender = human;
+            attacker = aComputer;
+            defender = aHuman;
         }
 
-        // todo: setup player attacker and defender
+        while (true) {
+            defenderLost = playTurn(attacker, defender);
 
+            // at the end of each turn, print the grids for the human
+            aComputer.aGrid.printTarget();
+            aHuman.aGrid.printOcean();
 
-        // old, with duplicated code
-//        if (coinFlip == 0){
-//            // Human starts
-//            System.out.println("Human Player starts");
-//            while(true){
-//                // printGrid();
-//                computerLost = playTurn(human, computer);
-//                if (computerLost) {
-//                    System.out.println("VICTORY! The computer's fleet got destroyed!");
-//                    break;
-//                }
-//                // printGrid();
-//                humanLost = playTurn(computer, human);
-//                if (humanLost) {
-//                    System.out.println("DEFEAT! The human's fleet got destroyed!");
-//                    // printGrid();
-//                    break;
-//                }
-//            }
-//        }
-//        else {
-//            // Computer starts
-//            System.out.println("Computer Player starts");
-//            while(true){
-//                // printGrid();
-//                humanLost = playTurn(computer, human);
-//                if (humanLost) {
-//                    System.out.println("DEFEAT! The human's fleet got destroyed!");
-//                    // printGrid();
-//                    break;
-//                }
-//                // printGrid();
-//                computerLost = playTurn(human, computer);
-//                if (computerLost) {
-//                    System.out.println("VICTORY! The computer's fleet got destroyed!");
-//                    break;
-//                }
-//            }
-//        }
+            if (defenderLost) {
+
+                // if the defender lost, the game is over
+                // determine if the human or computer lost
+                String defenderPlayerType;
+                if (defender.isHuman()) {
+                    defenderPlayerType = "Human";
+                } else {
+                    defenderPlayerType = "Computer";
+                }
+                System.out.println("GAME OVER! " + defenderPlayerType + " Player lost!");
+
+                // if the human lost, show him the remaining ships
+                if (defender.isHuman()) {
+                    System.out.println("Showing the remaining boats of the opponent");
+                    attacker.aGrid.printTargetRemaining();
+                }
+
+                break;
+
+            } else {
+                // swap the roles of attacker and defender
+                Player tmp = attacker;
+                attacker = defender;
+                defender = tmp;
+            }
+        }
     }
 
     private boolean playTurn(Player attacker, Player defender) {
-        /*
-        Returns whether the defending player has lost
+        /**
+         * Play a turn where the attacker could be either human or computer
+         *
+         * @return If the defending player has lost
          */
+
+        Coordinate shot;
+        boolean[] shotRecords;
 
         // for debugging, print Feedback on whose turn it is
         if (attacker.isHuman()) {
@@ -103,19 +107,15 @@ public class GameMaster {
             System.out.println("Computers turn to shoot");
         }
 
-        /*
-        It should be printed at what target the computer shoots.
-         */
-        while(true) {
-            shot = attacker.callShot(); // making a shot
+        // callShot ensures validity of the shot, is not checked again
+        shot = attacker.callShot();
 
-            // for debugging, see what Coordinate the computer calls
-            if (!attacker.isHuman()) {
-                System.out.println("Computer shoots at " + shot);
-            }
-
-            if (GameUtils.validCoordinate(shot)) break;// break if shot is in grid
+        // debugging
+        // print what Coordinate the computer calls
+        if (!attacker.isHuman()) {
+            System.out.println("Computer shoots at " + shot);
         }
+
         shotRecords = defender.recordShot(shot); // {any boat hit, was boat destroyed}
         if (shotRecords[1]) {
             // If the shot destroyed a boat, ask the player for the type of the boat

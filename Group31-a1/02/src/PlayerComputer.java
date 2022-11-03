@@ -4,24 +4,35 @@ import java.util.*;
 /*
 todo: Implement placeFleet
  */
-public class PlayerComputer implements Player {
-
-    public final Fleet aFleet;
-    public final Grid aGrid;
-    public final List<Coordinate> aTakenShots = new ArrayList<>();
-    public final List<Coordinate> aReceivedShots = new ArrayList<>();
+public class PlayerComputer extends Player {
 
     private final Random rand;
 
     public PlayerComputer(Grid pGrid) {
-        aFleet = new Fleet();
-        aGrid = pGrid;
+        super(pGrid, false);
         rand = new Random();
     }
 
-    public boolean isHuman() {return false;}
+    private Coordinate generateRandomCoordinate() {
+
+        /**
+         Generate random Coordinate within grid
+         @return a VALID (in Grid) Coordinate
+         */
+        int randRow = rand.nextInt(GameUtils.GAMESIZE-1);
+        int randCol = rand.nextInt(GameUtils.GAMESIZE-1);
+        Coordinate randCoordinate = new Coordinate(randRow, randCol);
+
+        return randCoordinate;
+    }
 
     public void placeFleet() {
+        /**
+         * Place all boats of the fleet, amount and length determined in BoatType, FleetSpec
+         * No check if there are too many boats for the GAMESIZE
+         *
+         * Computer places each boat of his fleet randomly
+         */
         int length;
         int tmp_ct;
         int randRow;
@@ -93,87 +104,23 @@ public class PlayerComputer implements Player {
             }
 
             // debug
-            System.out.println("Computer placed b %s at: " + b.getTypeName());
+            String tmpPlayerType;
+            if (isHuman()) {
+                tmpPlayerType = "Human Player";
+            } else {
+                tmpPlayerType = "Computer Player";
+            }
+            System.out.println(tmpPlayerType + " placed boat " + b.getInstanceName() + " of len " + b.getLen() + ":");
             System.out.println(Arrays.toString(validBoatCoordinates.toArray()));
         }
-    }
-    public void placeFleetFromList(HashMap<String, List<Coordinate>> pPlacement) {
-        for (Boat b : aFleet) {
-
-            // place boat
-            aFleet.placeBoat(b, pPlacement.get(b.getInstanceName()));
-
-            // update the grid accordingly
-            for (Coordinate c : b.getCoordinates()) {
-                aGrid.updateHasBoat(c);
-                aGrid.updateBoatType(c, b.getTypePrintChar());
-            }
-
-            // debug
-            System.out.println("Computer placed b " + b.getInstanceName() + " at: " + b.getCoordinates());
-        }
-    }
-
-    public boolean hasLost() {
-        return aFleet.isDestroyed();
-    }
-
-    public boolean[] recordShot(Coordinate pCoordinate) {
-
-        /**
-         * Receive a valid Coordinate shot and check if a boat is hit. Update the Fleet, Boats and Grid accordingly
-         * @param pCoordinate Coordinate of the valid shot taken at the Player
-         * @return [isHit, getDestroyed] True if a boat got hit, True if that hit destroyed the boat
-         */
-
-        // Check the pCoordinate with the Fleet, receive if hit and if the boat got destroyed
-        // Fleet does update the boat within checkShot
-        boolean[] responseFleet = aFleet.checkShot(pCoordinate);
-
-        // Regardless of hit, record the shot taken at my grid, update the grid with the taken shot
-        aReceivedShots.add(pCoordinate);
-        aGrid.updateShotAt(pCoordinate);
-
-        // if the boat got destroyed with that shot, update the grid accordingly FOR ALL BLOCKS of that boat
-        if (responseFleet[1]) {
-
-            Boat boatDestroyed = null;
-
-            // if a boat got destroyed, fetch the boat
-            // checkShot makes sure that pCoordinate belongs to a boat
-            for (Boat b : aFleet) {
-                if (b.getCoordinates().contains(pCoordinate)) {
-                    boatDestroyed = b;
-                }
-            }
-
-            // For each Coordinate of the boatDestroyed, update the Block in Grid
-            for (Coordinate c : boatDestroyed.getCoordinates()) {
-                aGrid.updateShowDestroyed(c);
-            }
-        }
-
-        return responseFleet;
-    }
-
-    private Coordinate generateRandomCoordinate() {
-
-        /**
-        Generate random Coordinate within grid
-        @return a VALID (in Grid) Coordinate
-         */
-        int randRow = rand.nextInt(GameUtils.GAMESIZE-1);
-        int randCol = rand.nextInt(GameUtils.GAMESIZE-1);
-        Coordinate randCoordinate = new Coordinate(randRow, randCol);
-
-        return randCoordinate;
     }
 
     public Coordinate callShot() {
 
         /**
-        No check for validity (in Grid), generateRandomCoordinate makes sure it is in Grid
-        */
+         * No check for validity (in Grid), generateRandomCoordinate makes sure it is in Grid
+         * @returns Valid Coordinate
+         */
 
         // init Coordinate
         Coordinate outShot;
@@ -196,37 +143,8 @@ public class PlayerComputer implements Player {
         }
 
         // finally, the valid shot is added to aTakenShots
-        // System.out.println("Adding shot " + outShot + " to list of aTakenShots");
         aTakenShots.add(outShot);
-        // System.out.println("List of taken shots: " + aTakenShots);
 
         return outShot;
-    }
-
-    public String getBoatTypeString(Coordinate pCoordinate) {
-        /**
-         * Return the Type of the Boat at the given Coordinate in the Fleet
-         * We assume that exactly one boat contains pCoordinate. Print Warning if nothing is found and return ""
-         *
-         * @param pCoordinate A Coordinate where a boat is placed
-         * @return String Type of the boat at Coordinate pCoordinate
-         */
-
-        String outString = "";
-        boolean foundBoat = false;
-
-        for (Boat b : aFleet) {
-            if (b.getCoordinates().contains(pCoordinate)) {
-                foundBoat = true;
-                outString = b.getTypeName();
-            }
-        }
-
-        if (!foundBoat) {
-            System.out.println("ERROR getBoatTypeString: No Boat found at " + pCoordinate + ". Returning empty String");
-
-        }
-
-        return outString;
     }
 }

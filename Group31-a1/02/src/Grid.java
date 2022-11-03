@@ -208,8 +208,83 @@ public class Grid {
                 // if not shot at
                 if (!shotAt_ij) {
                     // print empty
-                    // print empty
                     System.out.print(" |");
+                }
+            }
+            System.out.print(i + "\n");
+        }
+        System.out.print(" ");
+        // +-+-+- ...
+        for (int i = 0; i < GameUtils.GAMESIZE; i++) {
+            System.out.print("+-");
+        }
+        // A B C D E ...
+        System.out.print(" \n");
+        for (int i = 0; i < GameUtils.GAMESIZE; i++) {
+            System.out.print(" " + GameUtils.convertIntToLetter(i));
+        }
+        System.out.print("\n");
+    }
+
+    public void printTargetRemaining() {
+
+        /**
+         * Print the Grid as Target map when the game is over
+         * Show all the Boats which have not yet been shot at
+         */
+
+        System.out.println("===== FINAL TARGET GRID =====");
+        // A B C D E ...
+        System.out.print(" ");
+        for (int i = 0; i < GameUtils.GAMESIZE; i++) {
+            System.out.print(" " + GameUtils.convertIntToLetter(i));
+        }
+        // +-+-+- ...
+        System.out.print("\n ");
+        for (int i = 0; i < GameUtils.GAMESIZE; i++) {
+            System.out.print("+-");
+        }
+        // rows and cols
+        System.out.print("+\n");
+        for (int i = 0; i < GameUtils.GAMESIZE; i++) {
+            System.out.print(i + "|");
+            for (int j = 0; j < GameUtils.GAMESIZE; j++) {
+                Block block_ij = getBlock(new Coordinate(i,j));
+
+                boolean shotAt_ij = block_ij.getShotAt();
+                boolean hasBoat_ij = block_ij.getHasBoat();
+                boolean showDestroyed_ij = block_ij.getShowDestroyed();
+
+                // if shot at and ...
+                if (shotAt_ij) {
+                    // ... has boat
+                    if (hasBoat_ij) {
+                        // ... show destroyed
+                        if (showDestroyed_ij) {
+                            // print boatType
+                            System.out.print(block_ij.getBoatType() + "|");
+                        }
+                        // ... not destroyed yet
+                        else {
+                            // print uppercase X
+                            System.out.print("X|");
+                        }
+                        // ... no boat
+                    } else {
+                        // print missed shot o
+                        System.out.print("o|");
+                    }
+                }
+                // if not shot at
+                if (!shotAt_ij) {
+                    // if there is a boat, show it
+                    if (hasBoat_ij) {
+                        System.out.print(block_ij.getBoatType() + "|");
+                    }
+                    // else print empty
+                    else {
+                        System.out.print(" |");
+                    }
                 }
             }
             System.out.print(i + "\n");
