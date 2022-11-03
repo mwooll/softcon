@@ -130,12 +130,28 @@ public class PlayerComputer implements Player {
         // Fleet does update the boat within checkShot
         boolean[] responseFleet = aFleet.checkShot(pCoordinate);
 
-        // Regardless of hit, record the shot taken at my grid, update the grid
+        // Regardless of hit, record the shot taken at my grid, update the grid with the taken shot
         aReceivedShots.add(pCoordinate);
         aGrid.updateShotAt(pCoordinate);
 
-        // if the boat got destroyed with that shot, update the grid accordingly
-        if (responseFleet[1]) aGrid.updateShowDestroyed(pCoordinate);
+        // if the boat got destroyed with that shot, update the grid accordingly FOR ALL BLOCKS of that boat
+        if (responseFleet[1]) {
+
+            Boat boatDestroyed = null;
+
+            // if a boat got destroyed, fetch the boat
+            // checkShot makes sure that pCoordinate belongs to a boat
+            for (Boat b : aFleet) {
+                if (b.getCoordinates().contains(pCoordinate)) {
+                    boatDestroyed = b;
+                }
+            }
+
+            // For each Coordinate of the boatDestroyed, update the Block in Grid
+            for (Coordinate c : boatDestroyed.getCoordinates()) {
+                aGrid.updateShowDestroyed(c);
+            }
+        }
 
         return responseFleet;
     }

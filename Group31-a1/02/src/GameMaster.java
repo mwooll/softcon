@@ -33,44 +33,62 @@ public class GameMaster {
         int coinFlip;
         Random randNum = new Random();
         coinFlip = randNum.nextInt(2);
-        if (coinFlip == 0){
-            // Human starts
+
+        // Human start
+        if (coinFlip == 0) {
             System.out.println("Human Player starts");
-            while(true){
-                // printGrid();
-                computerLost = playTurn(human, computer);
-                if (computerLost) {
-                    System.out.println("VICTORY! The computer's fleet got destroyed!");
-                    break;
-                }
-                // printGrid();
-                humanLost = playTurn(computer, human);
-                if (humanLost) {
-                    System.out.println("DEFEAT! The human's fleet got destroyed!");
-                    // printGrid();
-                    break;
-                }
-            }
+            Player attacker = human;
+            Player defender = computer;
         }
+        // Computer start
         else {
-            // Computer starts
             System.out.println("Computer Player starts");
-            while(true){
-                // printGrid();
-                humanLost = playTurn(computer, human);
-                if (humanLost) {
-                    System.out.println("DEFEAT! The human's fleet got destroyed!");
-                    // printGrid();
-                    break;
-                }
-                // printGrid();
-                computerLost = playTurn(human, computer);
-                if (computerLost) {
-                    System.out.println("VICTORY! The computer's fleet got destroyed!");
-                    break;
-                }
-            }
+            Player attacker = computer;
+            Player defender = human;
         }
+
+        // todo: setup player attacker and defender
+
+
+        // old, with duplicated code
+//        if (coinFlip == 0){
+//            // Human starts
+//            System.out.println("Human Player starts");
+//            while(true){
+//                // printGrid();
+//                computerLost = playTurn(human, computer);
+//                if (computerLost) {
+//                    System.out.println("VICTORY! The computer's fleet got destroyed!");
+//                    break;
+//                }
+//                // printGrid();
+//                humanLost = playTurn(computer, human);
+//                if (humanLost) {
+//                    System.out.println("DEFEAT! The human's fleet got destroyed!");
+//                    // printGrid();
+//                    break;
+//                }
+//            }
+//        }
+//        else {
+//            // Computer starts
+//            System.out.println("Computer Player starts");
+//            while(true){
+//                // printGrid();
+//                humanLost = playTurn(computer, human);
+//                if (humanLost) {
+//                    System.out.println("DEFEAT! The human's fleet got destroyed!");
+//                    // printGrid();
+//                    break;
+//                }
+//                // printGrid();
+//                computerLost = playTurn(human, computer);
+//                if (computerLost) {
+//                    System.out.println("VICTORY! The computer's fleet got destroyed!");
+//                    break;
+//                }
+//            }
+//        }
     }
 
     private boolean playTurn(Player attacker, Player defender) {

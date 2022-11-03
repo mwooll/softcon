@@ -195,21 +195,33 @@ public class Main {
 
 
 
-        // Test Grid printing
-        Grid computerGrid = new Grid();
-        Grid humanGrid = new Grid();
-        PlayerComputer computerPlayer = new PlayerComputer(computerGrid);
-        PlayerHuman humanPlayer = new PlayerHuman(humanGrid);
+//        // Test Grid printing
+//        Grid computerGrid = new Grid();
+//        Grid humanGrid = new Grid();
+//        PlayerComputer computerPlayer = new PlayerComputer(computerGrid);
+//        PlayerHuman humanPlayer = new PlayerHuman(humanGrid);
+//
+//        computerPlayer.placeFleetFromList(TestUtils.generatePlacement4by4());
+//        humanPlayer.placeFleetFromList(TestUtils.generatePlacement4by4());
+//
+//        // some shots on the computers grid
+//        computerPlayer.recordShot(new Coordinate(0,0));
+//        computerPlayer.recordShot(new Coordinate(0,1));
+//        computerPlayer.recordShot(new Coordinate(0,2));
+//        computerPlayer.recordShot(new Coordinate(0,3));
+//        computerPlayer.recordShot(new Coordinate(2,1));
+//        computerPlayer.recordShot(new Coordinate(3,1));
+//        computerPlayer.recordShot(new Coordinate(5,5));
+//
+//        // some shots on the players grid
+//        humanPlayer.recordShot(new Coordinate(0,0));
+//        humanPlayer.recordShot(new Coordinate(0,1));
+//
+//        // showing grids
+//        computerPlayer.aGrid.printTarget();
+//        humanPlayer.aGrid.printOcean();
 
-        computerPlayer.placeFleetFromList(TestUtils.generatePlacement4by4());
-        humanPlayer.placeFleetFromList(TestUtils.generatePlacement4by4());
 
-        humanPlayer.recordShot(new Coordinate(0,0));
-        humanPlayer.recordShot(new Coordinate(0,1));
-        humanPlayer.recordShot(new Coordinate(2,1));
-        humanPlayer.recordShot(new Coordinate(3,1));
-        humanPlayer.aGrid.printOcean();
-        computerPlayer.aGrid.printOcean();
 
     }
 }
