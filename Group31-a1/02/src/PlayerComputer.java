@@ -1,9 +1,5 @@
 import java.util.*;
 
-
-/*
-todo: Implement placeFleet
- */
 public class PlayerComputer extends Player {
 
     private final Random rand;
@@ -19,8 +15,8 @@ public class PlayerComputer extends Player {
          Generate random Coordinate within grid
          @return a VALID (in Grid) Coordinate
          */
-        int randRow = rand.nextInt(GameUtils.GAMESIZE-1);
-        int randCol = rand.nextInt(GameUtils.GAMESIZE-1);
+        int randRow = rand.nextInt(GameUtils.GAMESIZE);
+        int randCol = rand.nextInt(GameUtils.GAMESIZE);
         Coordinate randCoordinate = new Coordinate(randRow, randCol);
 
         return randCoordinate;
@@ -142,7 +138,14 @@ public class PlayerComputer extends Player {
                 randCoordinate = generateRandomCoordinate();
             }
             // for debugging, print how many tries the computer needed to find a free Coordinate
-            // System.out.println("Computer number of tries: " + tmp_ct);
+            // System.out.println("Computer number of tries to callShot: " + tmp_ct);
+
+            // debugging, throw error if the called shot is in the list of already taken shots
+            if (aTakenShots.contains(randCoordinate)) {
+                System.out.println("Computer has no more Coordinates to shoot at!");
+                System.exit(0);
+            }
+
             outShot = randCoordinate;
 
         }
