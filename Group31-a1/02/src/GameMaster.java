@@ -4,6 +4,8 @@ public class GameMaster {
     private final PlayerHuman aHuman;
     private final PlayerComputer aComputer;
 
+    private int aCountTurns = 1;
+
     private Player attacker;
     private Player defender;
 
@@ -55,6 +57,10 @@ public class GameMaster {
         }
 
         while (true) {
+
+            // Print which turn is played
+            System.out.print(String.format("\n\n===== TURN %d =====\n", aCountTurns));
+
             defenderLost = playTurn(attacker, defender);
 
             // at the end of each turn, print the grids for the human
@@ -87,6 +93,8 @@ public class GameMaster {
                 attacker = defender;
                 defender = tmp;
             }
+
+            aCountTurns++;
         }
     }
 
