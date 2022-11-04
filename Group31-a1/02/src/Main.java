@@ -12,7 +12,7 @@ public class Main {
 
 //        // Test Game convertLetter and validCoordinate
 //        int myRow = 0;
-//        char myCol = 'A';
+//        char myCol = 'J';
 //        int myColConverted = GameUtils.convertLetterToInt(myCol);
 //        Coordinate myCoordinate = new Coordinate(myRow, myColConverted);
 //        System.out.println(myCoordinate);
@@ -20,6 +20,26 @@ public class Main {
 //        System.out.println("Convert back");
 //        System.out.println(GameUtils.convertIntToLetter(myColConverted));
 
+
+//        // Test Coordinate printPretty
+//        Coordinate c1 = new Coordinate(0,0);
+//        Coordinate c2 = new Coordinate(9,9);
+//        System.out.println(c1.printPretty());
+//        System.out.println(c2.printPretty());
+
+
+          // List lambda function
+//        List<Coordinate> mylist = new ArrayList<>();
+//        List<String> mylistString = new ArrayList<>();
+//        Coordinate c1 = new Coordinate(0,0);
+//        Coordinate c2 = new Coordinate(9,9);
+//        mylist.add(c1);
+//        mylist.add(c2);
+//
+//        mylist.forEach( (c) -> mylistString.add(c.printPretty()) );
+//
+//        System.out.prin
+//        // Test tln(String.join(", ", mylistString));
 
 
 
@@ -173,35 +193,6 @@ public class Main {
 
 
 
-        // Test Player having a Grid
-        PlayerHuman myPlayer = new PlayerHuman();
-        myPlayer.aGrid.printAllStatus();
-//        myPlayer.placeFleet(); // manually
-        myPlayer.placeFleetFromList(TestUtils.generatePlacement4by4());
-        myPlayer.aGrid.updateGrid(myPlayer.aFleet, myPlayer.aReceivedShots);
-        myPlayer.aGrid.printAllStatus();
-
-        // Make up shots
-        Coordinate shot1 = new Coordinate(0,1);
-        Coordinate shot2 = new Coordinate(0,2);
-        Coordinate shot3 = new Coordinate(0,3);
-        Coordinate shot4 = new Coordinate(2,1);
-//        Coordinate shot5 = new Coordinate(3,1);
-        Coordinate shot6 = new Coordinate(0,0);
-
-        // Test recordShot
-        myPlayer.recordShot(shot1);
-        myPlayer.recordShot(shot2);
-        myPlayer.recordShot(shot3);
-        myPlayer.recordShot(shot4);
-//        myPlayer.recordShot(shot5);
-        myPlayer.recordShot(shot6);
-
-        myPlayer.aGrid.updateGrid(myPlayer.aFleet, myPlayer.aReceivedShots);
-        myPlayer.aGrid.printAllStatus();
-
-
-
 //        // Test Player Computer
 //        PlayerComputer myPlayer = new PlayerComputer();
 //        System.out.println("\n\nGrid Status after initialization");
@@ -223,6 +214,32 @@ public class Main {
 //        myPlayer.aGrid.printAllStatus();
 
 
+
+//        // Test Grid printing
+//        Grid computerGrid = new Grid();
+//        Grid humanGrid = new Grid();
+//        PlayerComputer computerPlayer = new PlayerComputer(computerGrid);
+//        PlayerHuman humanPlayer = new PlayerHuman(humanGrid);
+//
+//        computerPlayer.placeFleetFromList(TestUtils.generatePlacement4by4());
+//        humanPlayer.placeFleetFromList(TestUtils.generatePlacement4by4());
+//
+//        // some shots on the computers grid
+//        computerPlayer.recordShot(new Coordinate(0,0));
+//        computerPlayer.recordShot(new Coordinate(0,1));
+//        computerPlayer.recordShot(new Coordinate(0,2));
+//        computerPlayer.recordShot(new Coordinate(0,3));
+//        computerPlayer.recordShot(new Coordinate(2,1));
+//        computerPlayer.recordShot(new Coordinate(3,1));
+//        computerPlayer.recordShot(new Coordinate(5,5));
+//
+//        // some shots on the players grid
+//        humanPlayer.recordShot(new Coordinate(0,0));
+//        humanPlayer.recordShot(new Coordinate(0,1));
+//
+//        // showing grids
+//        computerPlayer.aGrid.printTarget();
+//        humanPlayer.aGrid.printOcean();
 
 
 

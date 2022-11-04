@@ -1,64 +1,23 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 
 /*
-Will implement Player
 todo: Implement placeFleet
  */
-public class PlayerComputer {
-
-    public final Fleet aFleet;
-    public final Grid aGrid;
-    public final List<Coordinate> aTakenShots = new ArrayList<>();
-    public final List<Coordinate> aReceivedShots = new ArrayList<>();
+public class PlayerComputer extends Player {
 
     private final Random rand;
 
     public PlayerComputer(Grid pGrid) {
-        aFleet = new Fleet();
-        aGrid = pGrid;
+        super(pGrid, false);
         rand = new Random();
-    }
-
-    public void placeFleetFromList(HashMap<String, List<Coordinate>> pPlacement) {
-        for (Boat b : aFleet) {
-            aFleet.placeBoat(b, pPlacement.get(b.getInstanceName()));
-        }
-    }
-
-    public boolean hasLost() {
-        return aFleet.isDestroyed();
-    }
-
-    public void recordShot(Coordinate pCoordinate) {
-
-        /*
-        Receive a valid Coordinate shot and check if a boat is hit. Update the Fleet and Boats accordingly
-         */
-
-        // The Fleet records all coordinates used for the placements of boats. Hence, it's sufficient to check that list
-        // First check if there is a boat on that coordinate
-        boolean isHit = aFleet.checkShot(pCoordinate);
-
-        // If it's a hit, record the hit on the boat
-        if (isHit) {
-            for (Boat b : aFleet) {
-                b.recordHit(pCoordinate);
-            }
-        }
-
-        // Regardless of hit, record the shot taken at my grid
-        aReceivedShots.add(pCoordinate);
-
     }
 
     private Coordinate generateRandomCoordinate() {
 
-        /*
-        Generate random Coordinate within grid
+        /**
+         Generate random Coordinate within grid
+         @return a VALID (in Grid) Coordinate
          */
         int randRow = rand.nextInt(GameUtils.GAMESIZE-1);
         int randCol = rand.nextInt(GameUtils.GAMESIZE-1);
@@ -67,18 +26,130 @@ public class PlayerComputer {
         return randCoordinate;
     }
 
+    public void placeFleet() {
+        /**
+         * Place all boats of the fleet, amount and length determined in BoatType, FleetSpec
+         * No check if there are too many boats for the GAMESIZE
+         *
+         * Computer places each boat of his fleet randomly
+         */
+        int length;
+        int tmp_ct;
+        int randRow;
+        int randCol;
+        Coordinate randomCoordinate; 
+        Coordinate verticalCoordinate;
+        Coordinate horizontalCoordinate;
+        List<Coordinate> verticalCoordinates;
+        List<Coordinate> horizontalCoordinates;
+        List<Coordinate> verticalBoat;
+        List<Coordinate> horizontalBoat;
+        boolean noVerticalOverlap;
+        boolean noHorizontalOverlap;
+        Random randNum = new Random();
+        int coinFlip;
+
+
+        for (Boat b : aFleet) {
+            length = b.getLen();
+            if (length > GameUtils.GAMESIZE) continue; // ignore boats that are too long
+            tmp_ct = 0;
+            List<Coordinate> validBoatCoordinates = new ArrayList<>();
+            while (tmp_ct < GameUtils.MAX_TRY_COMP_PLACE) {
+                randRow = rand.nextInt(GameUtils.GAMESIZE - length + 1);
+                randCol = rand.nextInt(GameUtils.GAMESIZE - length + 1);
+                randomCoordinate = new Coordinate(randRow, randCol);
+
+                verticalCoordinate = new Coordinate(randRow, randCol + length - 1);
+                horizontalCoordinate = new Coordinate(randRow + length - 1, randCol);
+
+                verticalCoordinates = List.of(new Coordinate[]{randomCoordinate, verticalCoordinate});
+                horizontalCoordinates = List.of(new Coordinate[]{randomCoordinate, horizontalCoordinate});
+
+                verticalBoat = GameUtils.generateCoordinatesFromStartEnd(verticalCoordinates);
+                horizontalBoat = GameUtils.generateCoordinatesFromStartEnd(horizontalCoordinates);
+
+                // now check with the fleet if the Coordinates are already in use
+                noVerticalOverlap = aFleet.validateOverlap(verticalBoat);
+                noHorizontalOverlap = aFleet.validateOverlap(horizontalBoat);
+
+                if (!noVerticalOverlap && !noHorizontalOverlap) ++tmp_ct;
+                else {
+                    if (noVerticalOverlap && !noHorizontalOverlap) {
+                        validBoatCoordinates.addAll(verticalBoat);
+                    }
+                    else if (!noVerticalOverlap && noHorizontalOverlap){
+                        validBoatCoordinates.addAll(horizontalBoat);
+                    }
+                    else {
+                        coinFlip = randNum.nextInt(2);
+                        if (coinFlip == 0){
+                            validBoatCoordinates.addAll(horizontalBoat);
+                        }
+                        else {
+                            validBoatCoordinates.addAll(verticalBoat);
+                        }
+                    }
+                    break;
+                }
+            }
+
+            // place the b
+            aFleet.placeBoat(b, validBoatCoordinates);
+
+            // update the grid accordingly
+            for (Coordinate c : b.getCoordinates()) {
+                aGrid.updateHasBoat(c);
+                aGrid.updateBoatType(c, b.getTypePrintChar());
+            }
+
+            // debug
+            String tmpPlayerType;
+            if (isHuman()) {
+                tmpPlayerType = "Human Player";
+            } else {
+                tmpPlayerType = "Computer Player";
+            }
+            System.out.println(tmpPlayerType + " placed boat " + b.getInstanceName() + " of len " + b.getLen() + ":");
+            //System.out.println(Arrays.toString(validBoatCoordinates.toArray()));
+
+            List<String> validBoatCoordinatesPretty = new ArrayList<String>();
+            validBoatCoordinates.forEach((c) -> validBoatCoordinatesPretty.add(c.printPretty()));
+            System.out.println(String.join(",", validBoatCoordinatesPretty));
+
+        }
+    }
+
     public Coordinate callShot() {
 
+        /**
+         * No check for validity (in Grid), generateRandomCoordinate makes sure it is in Grid
+         * @returns Valid Coordinate
+         */
+
+        // init Coordinate
+        Coordinate outShot;
+
+        // if no shot was recorded yet, pick one at random
         if (aTakenShots.isEmpty()) {
-            return generateRandomCoordinate();
-        }
-        Coordinate randCoordinate = generateRandomCoordinate();
-        int tmp_ct = 0;
-        while (aTakenShots.contains(randCoordinate) && tmp_ct < GameUtils.MAX_TRY_COMP_SHOOT) {
-            tmp_ct++;
-            randCoordinate = generateRandomCoordinate();
+            outShot = generateRandomCoordinate();
+        } else {
+            // otherwise try to find a shot which has not been called yet
+            Coordinate randCoordinate = generateRandomCoordinate();
+            int tmp_ct = 0;
+            while (aTakenShots.contains(randCoordinate) && tmp_ct < GameUtils.MAX_TRY_COMP_SHOOT) {
+                tmp_ct++;
+                randCoordinate = generateRandomCoordinate();
+            }
+            // for debugging, print how many tries the computer needed to find a free Coordinate
+            // System.out.println("Computer number of tries: " + tmp_ct);
+            outShot = randCoordinate;
+
         }
 
-        return randCoordinate;
+        // finally, the valid shot is added to aTakenShots
+        aTakenShots.add(outShot);
+
+        return outShot;
     }
 }

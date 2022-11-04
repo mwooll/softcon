@@ -1,77 +1,72 @@
 public class Block {
 
-    private Coordinate aCoordinate;
-    private boolean aStateShot, aStateBoat, aStateReveal;
-    private String aPrintChar = "";
+    /**
+     * A Block contains a Coordinate, knows if
+     * it's shot at
+     * if there is a boat
+     * if the boat is destroyed
+     * and the boatType
+     */
+
+    private boolean shotAt = false;
+    private boolean hasBoat = false;
+    private boolean showDestroyed = false;
+
+    private char boatType;
+    private final Coordinate aCoordinate;
 
     public Block(Coordinate pCoordinate) {
-
+        // set the Coordinate
         aCoordinate = pCoordinate;
-
-        // init with no Shot
-        aStateShot = false;
-
-        // init with no Boat
-        aStateBoat = false;
-
-        // init without revealing
-        aStateReveal = false;
-
     };
 
-    public Coordinate getCoordinate() {
-        return aCoordinate;
-    };
+    public boolean getShotAt() {return shotAt;}
 
-    public boolean getStateShot() {return aStateShot;}
+    public boolean getHasBoat() {return hasBoat;}
 
-    public boolean getStateBoat() {return aStateBoat;}
+    public boolean getShowDestroyed() {return showDestroyed;}
 
-    public boolean getStateReveal() {return aStateReveal;}
+    public char getBoatType() {return boatType;}
 
-    public void updateStateShot() {
+    public Coordinate getCoordinate() {return aCoordinate;}
+
+    public void updateShotAt() {
         /*
         A shot can only change from false to true, once true its final
          */
-        if (!aStateShot) {
-            aStateShot = !aStateShot;
+        if (!shotAt) {
+            shotAt = true;
         }
 
     }
 
-    public void updateStateBoat() {
+    public void updateHasBoat() {
         /*
-        A boat can only change from false to true, once true its final
+        Having a boat can only change from false to true, once true its final
          */
-        if (!aStateBoat) {
-            aStateBoat = !aStateBoat;
+        if (!hasBoat) {
+            hasBoat = true;
         }
+
     }
 
-    public void updateStateReveal() {
+    public void updateShowDestroyed() {
         /*
-        A reveal can only change from false to true, once true its final
+        Having showing destroyed can only change from false to true, once true its final
          */
-        if (!aStateReveal) {
-            aStateReveal = !aStateReveal;
+        if (!showDestroyed) {
+            showDestroyed = true;
         }
+
     }
 
-    public String returnPrintCharacter() {return aPrintChar;}
-
-    public void updatePrintCharacter(String pPrintChar) {aPrintChar = pPrintChar;}
-
-    public void printBlockStatus() {
-        String tmpString = toString();
-        tmpString += "\nStatus Shot: " + getStateShot();
-        tmpString += "\nStatus Boat: " + getStateBoat();
-        tmpString += "\nStatus Reveal: " + getStateReveal();
-        System.out.println(tmpString);
+    public void updateBoatType(char pBoatType) {
+        boatType = pBoatType;
     }
 
     @Override
     public String toString() {
-        return "Block with Coordinates (" + aCoordinate.getRow() + "," + aCoordinate.getCol() + ")";
+        return "Block at " + aCoordinate + " with shotAt:" + shotAt + ", hasBoat: " + hasBoat + ", boatType: " + boatType + ", showDestroyed: " + showDestroyed;
     }
 
 }

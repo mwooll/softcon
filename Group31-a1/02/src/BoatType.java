@@ -1,15 +1,15 @@
 public enum BoatType {
 
-    CARRIER("CARRIER", "C", 6),
-    BATTLESHIP("BATTLESHIP", "B", 4),
-    SUBMARINE("SUBMARINE", "S", 3),
-    PATROL("PATROL", "P", 2);
+    CARRIER("CARRIER", 'C', 6),
+    BATTLESHIP("BATTLESHIP", 'B', 4),
+    SUBMARINE("SUBMARINE", 'S', 3),
+    PATROL("PATROL", 'P', 2);
 
     private final String aTypeName;
-    private final String aTypePrintChar;
+    private final char aTypePrintChar;
     private final int aTypeLen;
 
-    private BoatType(String pTypeName, String pTypePrintChar, int pTypeLen) {
+    private BoatType(String pTypeName, char pTypePrintChar, int pTypeLen) {
         aTypeName = pTypeName;
         aTypePrintChar = pTypePrintChar;
         aTypeLen = pTypeLen;
@@ -19,7 +19,7 @@ public enum BoatType {
         return aTypeName;
     }
 
-    public String getTypePrintChar() {
+    public char getTypePrintChar() {
         return aTypePrintChar;
     }
 
