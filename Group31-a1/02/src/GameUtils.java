@@ -66,7 +66,7 @@ public class GameUtils {
         // check if both coordinates are valid
         for (Coordinate c : userInputStartEnd) {
             if (!GameUtils.validCoordinate(c)) {
-                System.out.println("Coordinate " + c + " from userInput is outside grid, try again");
+                System.out.println("Coordinate " + c.printPretty() + " from userInput is outside grid, try again");
                 return false;
             }
         }
@@ -95,7 +95,7 @@ public class GameUtils {
         Helper to convert pLetter<char> to row/col integer representation.
         Uses Unicode decimal values.
         Example: A = 0, B = 1
-        todo: Checked: Maximal range is A-Z
+        todo: Checked: Maximal range is A-Z?
          */
        return (int) pLetter - (int) 'A';
     }
@@ -171,10 +171,6 @@ public class GameUtils {
         Returns a list of all the Coordinates between the two supplied Coordinates
          */
 
-        // Check that length is 2
-        assert pListCoordinates.size() == 2;
-        assert GameUtils.isStraightLine(pListCoordinates) : "List of Coordinates is not a straight line";
-
         List<Coordinate> outListCoordinates = new ArrayList<>();
 
         int row1 = pListCoordinates.get(0).getRow();
@@ -232,7 +228,7 @@ public class GameUtils {
 
         // check if coordinate is valid
         if (!GameUtils.validCoordinate(userInputCoordinate)) {
-                System.out.println("Coordinate shot " + userInputCoordinate + " from userInput is outside grid (Gridsize " + GameUtils.GAMESIZE + ")" + ", try again");
+                System.out.println("Coordinate shot " + userInputCoordinate.printPretty() + " from userInput is outside grid (Gridsize " + GameUtils.GAMESIZE + ")" + ", try again");
                 return false;
         }
 
