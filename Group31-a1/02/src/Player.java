@@ -35,7 +35,11 @@ public abstract class Player {
     }
 
     void placeFleetFromList(HashMap<String, List<Coordinate>> pPlacement) {
-
+        /**
+         * FOR DEBUGGING ONLY
+         * Place a Fleet according to a list of placements for boats
+         * Used to quickly test specific situations and placements
+         */
         for (Boat b : aFleet) {
 
             // place boat
