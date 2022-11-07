@@ -42,7 +42,7 @@ public class PlayerHuman extends Player {
             int tmp_ct = 0;
             // We will put the valid Coordinate in this List
             List<Coordinate> validUserInputCoordinates = new ArrayList<>();
-            while (tmp_ct < GameUtils.MAX_TRY_USER_INPUT) {
+            while (true) {
 
                 // user inputs positions
                 String tmpUserInput = inputUser();
@@ -96,7 +96,7 @@ public class PlayerHuman extends Player {
         System.out.println("Enter your Shot, e.g. A2");
         int tmp_ct = 0;
         List<Coordinate> validUserInputCoordinate = new ArrayList<>();
-        while (tmp_ct < GameUtils.MAX_TRY_USER_INPUT) {
+        while (true) {
 
             // user inputs positions
             String tmpUserInput = inputUser();

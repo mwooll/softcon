@@ -13,7 +13,6 @@ public class GameUtils {
 
     // Maximum GAMESIZE supported: 10
     public static final int GAMESIZE = 10;
-    public static final int MAX_TRY_USER_INPUT = 20, MAX_TRY_COMP_SHOOT = 1000, MAX_TRY_COMP_PLACE = 1000;
 
     public static int gridOrderTopLeftToRightBottom(int pRow, int pCol) {
 

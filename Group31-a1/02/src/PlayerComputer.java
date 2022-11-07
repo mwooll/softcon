@@ -51,7 +51,7 @@ public class PlayerComputer extends Player {
             if (length > GameUtils.GAMESIZE) continue; // ignore boats that are too long
             tmp_ct = 0;
             List<Coordinate> validBoatCoordinates = new ArrayList<>();
-            while (tmp_ct < GameUtils.MAX_TRY_COMP_PLACE) {
+            while (true) {
                 randRow = rand.nextInt(GameUtils.GAMESIZE - length + 1);
                 randCol = rand.nextInt(GameUtils.GAMESIZE - length + 1);
                 randomCoordinate = new Coordinate(randRow, randCol);
@@ -100,18 +100,18 @@ public class PlayerComputer extends Player {
             }
 
             // debug
-            String tmpPlayerType;
-            if (isHuman()) {
-                tmpPlayerType = "Human Player";
-            } else {
-                tmpPlayerType = "Computer Player";
-            }
+//            String tmpPlayerType;
+//            if (isHuman()) {
+//                tmpPlayerType = "Human Player";
+//            } else {
+//                tmpPlayerType = "Computer Player";
+//            }
 
             // debugging - show computers placed fleet
-            //System.out.println(tmpPlayerType + " placed boat " + b.getInstanceName() + " of len " + b.getLen() + ":");
-            //List<String> validBoatCoordinatesPretty = new ArrayList<String>();
-            //validBoatCoordinates.forEach((c) -> validBoatCoordinatesPretty.add(c.printPretty()));
-            //System.out.println(String.join(",", validBoatCoordinatesPretty));
+//            System.out.println(tmpPlayerType + " placed boat " + b.getInstanceName() + " of len " + b.getLen() + ":");
+//            List<String> validBoatCoordinatesPretty = new ArrayList<String>();
+//            validBoatCoordinates.forEach((c) -> validBoatCoordinatesPretty.add(c.printPretty()));
+//            System.out.println(String.join(",", validBoatCoordinatesPretty));
 
         }
     }
@@ -133,7 +133,7 @@ public class PlayerComputer extends Player {
             // otherwise try to find a shot which has not been called yet
             Coordinate randCoordinate = generateRandomCoordinate();
             int tmp_ct = 0;
-            while (aTakenShots.contains(randCoordinate) && tmp_ct < GameUtils.MAX_TRY_COMP_SHOOT) {
+            while (aTakenShots.contains(randCoordinate)) {
                 tmp_ct++;
                 randCoordinate = generateRandomCoordinate();
             }
@@ -142,7 +142,7 @@ public class PlayerComputer extends Player {
 
             // debugging, throw error if the called shot is in the list of already taken shots
             if (aTakenShots.contains(randCoordinate)) {
-                System.out.println("Computer has no more Coordinates to shoot at!");
+                System.out.println("Computer has no more Coordinates to shoot at, abort the game");
                 System.exit(0);
             }
 
