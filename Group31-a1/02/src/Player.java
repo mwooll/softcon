@@ -34,35 +34,6 @@ public abstract class Player {
         return aIsHuman;
     }
 
-    void placeFleetFromList(HashMap<String, List<Coordinate>> pPlacement) {
-        /**
-         * FOR DEBUGGING ONLY
-         * Place a Fleet according to a list of placements for boats
-         * Used to quickly test specific situations and placements
-         */
-        for (Boat b : aFleet) {
-
-            // place boat
-            aFleet.placeBoat(b, pPlacement.get(b.getInstanceName()));
-
-            // update the grid accordingly
-            for (Coordinate c : b.getCoordinates()) {
-                aGrid.updateHasBoat(c);
-                aGrid.updateBoatType(c, b.getTypePrintChar());
-            }
-
-            // debug
-            String tmpPlayerType;
-            if (isHuman()) {
-                tmpPlayerType = "Human Player";
-            } else {
-                tmpPlayerType = "Computer Player";
-            }
-            System.out.println(tmpPlayerType + " placed b " + b.getInstanceName() + " at: " + b.getCoordinates());
-
-        }
-    }
-
     boolean[] recordShot(Coordinate pCoordinate) {
 
         /**
