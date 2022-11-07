@@ -88,7 +88,7 @@ public class GameMaster {
                 break;
 
             } else {
-                // swap the roles of attacker and defender
+                // swap the roles of attacker and defender1
                 Player tmp = attacker;
                 attacker = defender;
                 defender = tmp;
