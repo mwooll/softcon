@@ -57,6 +57,10 @@ public class Fleet implements Iterable<Boat> {
 
     public void placeBoat(Boat pBoat, List<Coordinate> pListCoordinates) {
 
+        /**
+         * Place pBoat and add Coordinates to the list aCoordinatesUsed of used coordinates of the Fleet
+         * @pre pBoat has not been placed yet. Rightfully thorw error if pBoat is placed already
+         */
         // check inputs
         assert !pBoat.isPlaced() : "Boat is already placed";
 

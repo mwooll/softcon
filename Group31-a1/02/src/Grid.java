@@ -121,12 +121,12 @@ public class Grid {
                 if (shotAt_ij) {
                     // ... has boat
                     if (hasBoat_ij) {
-                        // print dash -
-                        System.out.print("-|");
-                    // ... no boat
-                    } else {
                         // print uppercase X
                         System.out.print("X|");
+                    // ... no boat
+                    } else {
+                        // print missed shot o
+                        System.out.print("o|");
                     }
                 }
                 // if not shot at and ...
@@ -149,8 +149,9 @@ public class Grid {
         for (int i = 0; i < GameUtils.GAMESIZE; i++) {
             System.out.print("+-");
         }
+        System.out.print("+");
         // A B C D E ...
-        System.out.print(" \n");
+        System.out.print("\n ");
         for (int i = 0; i < GameUtils.GAMESIZE; i++) {
             System.out.print(" " + GameUtils.convertIntToLetter(i));
         }
@@ -218,8 +219,9 @@ public class Grid {
         for (int i = 0; i < GameUtils.GAMESIZE; i++) {
             System.out.print("+-");
         }
+        System.out.print("+");
         // A B C D E ...
-        System.out.print(" \n");
+        System.out.print("\n ");
         for (int i = 0; i < GameUtils.GAMESIZE; i++) {
             System.out.print(" " + GameUtils.convertIntToLetter(i));
         }
@@ -294,8 +296,9 @@ public class Grid {
         for (int i = 0; i < GameUtils.GAMESIZE; i++) {
             System.out.print("+-");
         }
+        System.out.print("+");
         // A B C D E ...
-        System.out.print(" \n");
+        System.out.print("\n ");
         for (int i = 0; i < GameUtils.GAMESIZE; i++) {
             System.out.print(" " + GameUtils.convertIntToLetter(i));
         }

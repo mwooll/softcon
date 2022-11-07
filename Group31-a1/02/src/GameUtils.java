@@ -8,11 +8,11 @@ public class GameUtils {
 
     /*
     todo: validUserInputXXX could be replaced with one function that takes pattern as input
-    todo: convertUserInputXXX could be repalced with one function that takes List of any length and outputs List
+    todo: convertUserInputXXX could be replaced with one function that takes List of any length and outputs List
      */
 
     // Maximum GAMESIZE supported: 10
-    public static final int GAMESIZE = 4;
+    public static final int GAMESIZE = 3;
     public static final int MAX_TRY_USER_INPUT = 20, MAX_TRY_COMP_SHOOT = 1000, MAX_TRY_COMP_PLACE = 1000;
 
     public static int gridOrderTopLeftToRightBottom(int pRow, int pCol) {
@@ -24,7 +24,28 @@ public class GameUtils {
         return pRow * GameUtils.GAMESIZE + pCol;
     }
 
-    public static boolean validCoordinate(Coordinate pCoordinate) {
+    public static int convertLetterToInt(char pLetter) {
+        /**
+         Helper to convert pLetter<char> to row/col integer representation.
+         Uses Unicode decimal values.
+         Example: A = 0, B = 1
+         todo: Checked: Maximal range is A-Z?
+         */
+        return (int) pLetter - (int) 'A';
+    }
+
+    public static char convertIntToLetter(int pInt) {
+        /**
+         Helper to convert pInt<int> from row/col integer to the letter (for printing)
+         Se convertLetterToInt for example
+         */
+        int pIntWithBaseline = pInt + (int) 'A';
+        return (char) pIntWithBaseline;
+    }
+
+
+
+    private static boolean validCoordinate(Coordinate pCoordinate) {
 
         // no negative numbers
         if (pCoordinate.getRow() < 0 || pCoordinate.getCol() < 0) {return false;}
@@ -36,8 +57,6 @@ public class GameUtils {
             return true;
         }
     }
-
-
 
 
     public static boolean checkUserInputPlacement(String pString, BoatType pBoatType) {
@@ -66,7 +85,7 @@ public class GameUtils {
         // check if both coordinates are valid
         for (Coordinate c : userInputStartEnd) {
             if (!GameUtils.validCoordinate(c)) {
-                System.out.println("Coordinate " + c + " from userInput is outside grid, try again");
+                System.out.println("Coordinate " + c.printPretty() + " from userInput is outside grid, try again");
                 return false;
             }
         }
@@ -90,26 +109,7 @@ public class GameUtils {
 
     }
 
-    public static int convertLetterToInt(char pLetter) {
-        /**
-        Helper to convert pLetter<char> to row/col integer representation.
-        Uses Unicode decimal values.
-        Example: A = 0, B = 1
-        todo: Checked: Maximal range is A-Z
-         */
-       return (int) pLetter - (int) 'A';
-    }
-
-    public static char convertIntToLetter(int pInt) {
-        /**
-        Helper to convert pInt<int> from row/col integer to the letter (for printing)
-        Se convertLetterToInt for example
-         */
-        int pIntWithBaseline = pInt + (int) 'A';
-        return (char) pIntWithBaseline;
-    }
-
-    public static boolean validUserInputPlacement(String pString) {
+    private static boolean validUserInputPlacement(String pString) {
         /**
         Check if a user input for placement fulfills pattern required, e.g. A2,A5
         Return false if string is not valid, true otherwise
@@ -142,7 +142,7 @@ public class GameUtils {
         return outListCoordiantes;
     }
 
-    public static boolean isStraightLine(List<Coordinate> pListCoordinates) {
+    private static boolean isStraightLine(List<Coordinate> pListCoordinates) {
 
         /**
         Given a list of two Coordinate, check if they form a straight line. Does not check length
@@ -170,10 +170,6 @@ public class GameUtils {
 
         Returns a list of all the Coordinates between the two supplied Coordinates
          */
-
-        // Check that length is 2
-        assert pListCoordinates.size() == 2;
-        assert GameUtils.isStraightLine(pListCoordinates) : "List of Coordinates is not a straight line";
 
         List<Coordinate> outListCoordinates = new ArrayList<>();
 
@@ -232,14 +228,14 @@ public class GameUtils {
 
         // check if coordinate is valid
         if (!GameUtils.validCoordinate(userInputCoordinate)) {
-                System.out.println("Coordinate shot " + userInputCoordinate + " from userInput is outside grid (Gridsize " + GameUtils.GAMESIZE + ")" + ", try again");
+                System.out.println("Coordinate shot " + userInputCoordinate.printPretty() + " from userInput is outside grid (Gridsize " + GameUtils.GAMESIZE + ")" + ", try again");
                 return false;
         }
 
         return true;
     }
 
-    public static boolean validUserInputShot(String pString) {
+    private static boolean validUserInputShot(String pString) {
 
         /**
         Check if a user input for shot calling fulfills pattern required, e.g. A2
