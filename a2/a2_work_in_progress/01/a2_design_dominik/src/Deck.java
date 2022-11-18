@@ -1,5 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
 
 public class Deck {
 
@@ -10,20 +12,23 @@ public class Deck {
 
     private List<Card> aCards = new ArrayList<>();
 
-    public Deck() {
+    /**
+     * Constructor creates all the Cards in DeckSpec and shuffles them
+     * @param pDebug If true create only small subset of Cardtypes for debugging, else create
+     *               original set of Cards
+     */
+    public Deck(boolean pDebug) {
 
-        /**
-         * Pseudocode, cant wrap my head around it yet
-         */
-        for CardType do:
-            for
+        DeckSpec tmpDeckSpec = new DeckSpec(pDebug);
+
+        for (CardType ct : tmpDeckSpec.keySet()) {
+
+        }
+
+        aCards.add(new Card(cardtype.getRuleset()))
+        Collections.shuffle(aCards);
 
     }
-
-    /**
-     * Constructor uses shuffle to reinitialize and shuffle
-     */
-//    public Deck () {shuffle();}
 
     /**
      * Draw the top Card from the Deck and return it.
@@ -31,37 +36,20 @@ public class Deck {
      * @pre Deck is not empty
      * @return A Card instance
      */
-//    public Card draw() {
-//        assert !isEmpty();
-//        return aCards.remove(length(aCards)-1);
-//    }
+    public Card draw() {
+        assert !isEmpty();
+        return aCards.remove(aCards.size()-1);
+    }
 
-    /**
-     * Add a card to the Deck.
-     * There is no limit on how many cards a Deck can contain
-     * @pre pCard must be a valid Card instance
-     */
-//    private void add(Card pCard) {
-//        assert pCars != NULL;
-//
-//    }
-
-    /**
-     * Reinitialize the Deck with the correct amounts of cards
-     * of each CardType defined in constants
-     */
-//    public void shuffle() {
-//        // todo: Implement shuffle. How to determine CardTypes and amounts?
-//    }
 
     /**
      * Check if the deck is empty
      * @return True if empty, False otherwise
      */
-//    private boolean isEmpty() {
-//        if (aCards.size() == 0) {
-//            return true;
-//        }
-//        return false;
-//    }
+    private boolean isEmpty() {
+        if (aCards.size() == 0) {
+            return true;
+        }
+        return false;
+    }
 }
