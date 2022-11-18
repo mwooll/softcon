@@ -8,7 +8,17 @@ public class Deck {
      * to draw the top card from and reshuffle if needed
      */
 
-//    private List<Card> aCards = ArrayList<>();
+    private List<Card> aCards = new ArrayList<>();
+
+    public Deck() {
+
+        /**
+         * Pseudocode, cant wrap my head around it yet
+         */
+        for CardType do:
+            for
+
+    }
 
     /**
      * Constructor uses shuffle to reinitialize and shuffle
