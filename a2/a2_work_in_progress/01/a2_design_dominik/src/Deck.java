@@ -11,23 +11,33 @@ public class Deck {
      */
 
     private List<Card> aCards = new ArrayList<>();
+    // Debug DeckSpec
 
     /**
      * Constructor creates all the Cards in DeckSpec and shuffles them
-     * @param pDebug If true create only small subset of Cardtypes for debugging, else create
-     *               original set of Cards
+     * Creates Cards specified in pDeckSpec
+     * After creation shuffles the Deck
+     *
+     * @param pDebug If true use debug subset of cards, otherwise full game spec
      */
     public Deck(boolean pDebug) {
 
-        DeckSpec tmpDeckSpec = new DeckSpec(pDebug);
+        DeckSpec pDeckSpec = new DeckSpec(pDebug);
 
-        for (CardType ct : tmpDeckSpec.keySet()) {
+        // each ct is a CardType instance
+        for (CardType ct : pDeckSpec) {
+            // DeckSpec specifies how many Cards of CardType ct
+            Integer ctCount = pDeckSpec.getCount(ct);
+            // each CardType has an associated Ruleset
+            Ruleset ctRuleset = ct.getRuleset();
 
+            // create the needed amount of Cards
+            for (int i = 0; i < ctCount; i++) {
+                aCards.add(new Card(ctRuleset));
+            }
         }
 
-        aCards.add(new Card(cardtype.getRuleset()))
         Collections.shuffle(aCards);
-
     }
 
     /**
@@ -41,6 +51,17 @@ public class Deck {
         return aCards.remove(aCards.size()-1);
     }
 
+    /**
+     * Return how many Cards are left in Deck
+     * @return int How many cards left?
+     */
+    public int cardsLeft() {
+        if (isEmpty()) {
+            return 0;
+        } else {
+            return aCards.size();
+        }
+    }
 
     /**
      * Check if the deck is empty
