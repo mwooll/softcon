@@ -5,7 +5,7 @@ public class Bonus extends Ruleset {
     /**
      * Construct a Bonus Ruleset
      * @pre pBonusPoints must be a positive integer
-     * @param pBonusPoints
+     * @param pBonusPoints integer specifying how many bonus points
      */
     public Bonus(int pBonusPoints) {
 
@@ -20,5 +20,7 @@ public class Bonus extends Ruleset {
     String explainRules() {
         return String.format("The BONUS card gives an extra %s points if a Tutto is accomplished", aBonusPoints);
     };
+
+    int handleTutto() {return aBonusPoints;}
 
 }

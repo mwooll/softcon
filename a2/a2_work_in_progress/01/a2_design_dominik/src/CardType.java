@@ -2,6 +2,9 @@ public enum CardType {
 
     /**
      * CardTypes lists all possible Cards with a Ruleset attached
+     *
+     * todo: BONUS Types could be enum (200, 300, 400, 500, 600) to make
+     *  absolutely sure only those are created (and not e.g. 100)
      */
 
     BONUS200(new Bonus(200)),

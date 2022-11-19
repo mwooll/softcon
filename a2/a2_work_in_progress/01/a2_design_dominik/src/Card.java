@@ -12,6 +12,13 @@ public class Card {
         aRuleset = pRuleset;
     }
 
+    /**
+     * Copy Constructor to return a new instance which is a deep copy
+     */
+    public Card(Card pCard) {
+        this.aRuleset = pCard.aRuleset;
+    }
+
     public String returnName() {return aRuleset.returnName();}
 
 }

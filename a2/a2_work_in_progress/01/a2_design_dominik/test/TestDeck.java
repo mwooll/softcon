@@ -4,12 +4,22 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestDeck {
 
     @Test
-    public void testCreation() {
+    public void testCreationDebug() {
 
         // use debug deckspec
         Deck deck = new Deck(true);
 
         assertEquals(2, deck.cardsLeft());
+
+    }
+
+    @Test
+    public void testCreation() {
+
+        // use full deckspec
+        Deck deck = new Deck(false);
+
+        assertEquals(35, deck.cardsLeft());
 
     }
 

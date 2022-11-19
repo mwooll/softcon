@@ -1,7 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
 
 public class Deck {
 
@@ -10,8 +9,7 @@ public class Deck {
      * to draw the top card from and reshuffle if needed
      */
 
-    private List<Card> aCards = new ArrayList<>();
-    // Debug DeckSpec
+    private final List<Card> aCards = new ArrayList<>();
 
     /**
      * Constructor creates all the Cards in DeckSpec and shuffles them

@@ -4,11 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestRuleset {
 
     @Test
-    public void testStop_explanation() {
+    public void testDefault_name() {
 
-        Ruleset rs = new Stop();
+        Ruleset rs = new Default();
 
-        assertEquals("The STOP Card stops the turn when drawn", rs.explainRules());
+        assertEquals("PLACEHOLDER", rs.returnName());
 
     }
 
