@@ -66,9 +66,6 @@ public class Deck {
      * @return True if empty, False otherwise
      */
     private boolean isEmpty() {
-        if (aCards.size() == 0) {
-            return true;
-        }
-        return false;
+        return aCards.size() == 0;
     }
 }

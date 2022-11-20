@@ -6,12 +6,18 @@ public class DiscardPile {
     /**
      * A pile of cards representing the used cards from the game
      * Is initialized empty, filled with cards one by one
-     * Does have an order
+     * Does respect the order in which Cards are added, like a Stack
      *
      * todo: Would a CardStack (aka Solitaire) be better? Easy to implement?
      */
 
     private final List<Card> aCards = new ArrayList<>();
+
+    /**
+     * Constructor creates empty DiscardPile
+     */
+    public DiscardPile() {}
+
 
     /**
      * Return a copy of the last discarded card
@@ -22,7 +28,19 @@ public class DiscardPile {
     public Card peek() {
         assert !isEmpty();
 
-        // todo: implement peek. Make sure aCards is not altered!
+        return new Card(aCards.get(aCards.size()-1));
+    }
+
+    /**
+     * Add a Card to the discard pile
+     * Does alter the state of aCards
+     * @pre pCard must be a valid Card instance
+     */
+    public void add(Card pCard) {
+        assert pCard != null;
+
+        aCards.add(pCard);
+
     }
 
     /**
@@ -42,10 +60,7 @@ public class DiscardPile {
      * @return True if empty, False otherwise
      */
     private boolean isEmpty() {
-        if (aCards.size() == 0) {
-            return true;
-        }
-        return false;
+        return aCards.size() == 0;
     }
 
 }
