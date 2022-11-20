@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 
 public class Die {
@@ -9,14 +10,27 @@ public class Die {
      */
 
     private final Random rand = new Random();
-    private DieValue faceValue;
+    private DieValue aDieValue;
 
     /**
-     * Create a new Die instance with a random faceValue
+     * Create a new Die instance with a random DieValue
      */
     public Die() {
-        // random generation of 0 to size(DieValue)
-        // set faceValue
+        aDieValue = Arrays.asList(DieValue.values()).get(
+                rand.nextInt(DieValue.values().length-1)
+        );
     }
+
+    /**
+     * Constructor which uses a seed for debugging
+     */
+    public Die(int pSeed) {
+        rand.setSeed(pSeed);
+        aDieValue = Arrays.asList(DieValue.values()).get(
+                rand.nextInt(DieValue.values().length-1)
+        );
+    }
+
+    public DieValue getDieValue() {return aDieValue;}
 
 }
