@@ -4,8 +4,9 @@ import org.junit.jupiter.api.Test;
 class TestDie {
 
     @Test
-    public void testDieCreation() {
+    public void testCreation() {
+        Die die = new Die(1);
 
+        assertEquals(DieValue.ONE, die.getDieValue());
     }
-
 }

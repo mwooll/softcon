@@ -6,10 +6,9 @@ public class Die {
     /**
      * Represents a single Die in the game
      * Can represent one of the enum values in DieValue
-     * It is not possible to roll the Die, instead a new instance is created
      */
 
-    private final Random rand = new Random();
+    protected final Random rand = new Random();
     private DieValue aDieValue;
 
     /**
@@ -22,10 +21,21 @@ public class Die {
     }
 
     /**
-     * Constructor which uses a seed for debugging
+     * Constructor with seed for debugging
      */
     public Die(int pSeed) {
+
         rand.setSeed(pSeed);
+
+        aDieValue = Arrays.asList(DieValue.values()).get(
+                rand.nextInt(DieValue.values().length-1)
+        );
+    }
+
+    /**
+     * Roll the die and set a new DieValue
+     */
+    public void rollDie() {
         aDieValue = Arrays.asList(DieValue.values()).get(
                 rand.nextInt(DieValue.values().length-1)
         );
