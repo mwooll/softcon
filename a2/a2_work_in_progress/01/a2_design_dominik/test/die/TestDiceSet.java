@@ -2,6 +2,11 @@ package die;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TestDiceSet {
@@ -14,6 +19,13 @@ class TestDiceSet {
 
     DiceSet diceset = new DiceSet(1);
     DiceSet dicesetRandom = new DiceSet();
+    HashMap<DieValue, Integer> testDieValueCount = new HashMap<>();
+    {
+        for (DieValue dv : DieValue.values()) {
+            testDieValueCount.put(dv, 0);
+        }
+        testDieValueCount.put(DieValue.ONE, 6);
+    }
 
     @Test
     public void testCreationSize_random() {
@@ -66,6 +78,38 @@ class TestDiceSet {
         diceset.refresh();
 
         assertEquals(6, diceset.getLeftSize());
+
+    }
+
+    @Test
+    public void test_returnCombos() {
+        List<DiceCombo> expected = Arrays.asList(DiceCombo.SINGLE_ONE, DiceCombo.TRIPLET_ONE);
+        assertEquals(expected, diceset.returnCombos());
+    }
+
+    @Test
+    public void test_returnCombos_onlyOne() {
+        List<DiceCombo> expected = Arrays.asList(DiceCombo.SINGLE_ONE);
+
+        // move all dies to the used
+        for (int i = 0; i < diceset.getSize()-1; i++) {
+            diceset.moveDie(DieValue.ONE);
+        }
+
+        assertEquals(expected, diceset.returnCombos());
+
+    }
+
+    @Test
+    public void test_returnCombos_empty() {
+        List<DiceCombo> expected = new ArrayList<>();
+
+        // move all dies to the used
+        for (int i = 0; i < diceset.getSize(); i++) {
+            diceset.moveDie(DieValue.ONE);
+        }
+
+        assertEquals(expected, diceset.returnCombos());
 
     }
 

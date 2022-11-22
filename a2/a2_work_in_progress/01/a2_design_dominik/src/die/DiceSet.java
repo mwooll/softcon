@@ -1,5 +1,7 @@
 package die;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -81,6 +83,57 @@ public class DiceSet {
 
         // clear all used dice
         aDiceUsed.clear();
+    }
+
+    /**
+     * Return a list of all possible DiceCombos the remaining dice can form
+     */
+    public List<DiceCombo> returnCombos() {
+
+        List<DiceCombo> possibleCombos = new ArrayList<>();
+
+        // get the counts that are currently possible
+        HashMap<DieValue, Integer> available = getDieValueCount();
+
+
+        // for each possible DiceComb
+        for (DiceCombo dicecombo : DiceCombo.values()) {
+            // get the counts how many of which DieValue are necessary
+            HashMap<DieValue, Integer> needed = dicecombo.returnCounts();
+
+            // For all of of the DieValues in needed, the count in available must be at least as big as in needed
+            boolean tmpCombo = true;
+            for (DieValue dievalue : needed.keySet()) {
+                if (available.get(dievalue) < needed.get(dievalue)) {
+                    tmpCombo = false;
+                }
+            }
+
+            // if available has all the counts, add it to the output list
+            if (tmpCombo) {
+                possibleCombos.add(dicecombo);
+            }
+        }
+
+        return possibleCombos;
+    }
+
+    /**
+     * Return a HashMap with DieValue,count specifying how many DieValues there are in aDiceLeft
+     */
+    private HashMap<DieValue, Integer> getDieValueCount() {
+
+        HashMap<DieValue, Integer> counts = new HashMap<>();
+
+        for (DieValue dievalue : DieValue.values()) {
+            counts.put(dievalue, 0);
+        }
+
+        for (Die die : aDiceLeft) {
+            counts.put(die.getDieValue(), counts.get(die.getDieValue()) + 1);
+        }
+
+        return counts;
     }
 
     /**

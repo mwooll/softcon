@@ -1,11 +1,19 @@
 package ruleset;
 
+import die.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Ruleset {
 
     /**
-     * A class subtyping the ruleset.Ruleset needs to
+     * A class subtyping the ruleset. Ruleset needs to
      * know how to handle game rules
      */
+
+    // which DiceCombos are valid for the given ruleset?
+    protected List<DiceCombo> aValidCombos;
 
     public Ruleset(){};
 
@@ -23,13 +31,20 @@ public abstract class Ruleset {
     }
 
     /**
-     * Given a list of dice, determine all valid combinations
-     * given the ruleset.Ruleset
-     *
-     * @pre Valid list with dice
-     * @return A list containing all dice combos that are valid, empty if none found
+     * Given the ruleset, set the list with all possible valid combos
+     * The default adds the most commonly used
+     * The subclasses can override this method to accommodate a specific ruleset
      */
-//    abstract ArrayList<DiceCombo> determineValid(ArrayList<Die.Die>);
+    public void setValidCombos() {
+        aValidCombos.add(DiceCombo.SINGLE_FIVE);
+        aValidCombos.add(DiceCombo.SINGLE_ONE);
+        aValidCombos.add(DiceCombo.TRIPLET_ONE);
+        aValidCombos.add(DiceCombo.TRIPLET_TWO);
+        aValidCombos.add(DiceCombo.TRIPLET_THREE);
+        aValidCombos.add(DiceCombo.TRIPLET_FOUR);
+        aValidCombos.add(DiceCombo.TRIPLET_FIVE);
+        aValidCombos.add(DiceCombo.TRIPLET_SIX);
+    };
 
     /**
      * Given a list of dice combos, sum up the points according to the rules

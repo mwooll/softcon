@@ -1,7 +1,10 @@
 import card.Card;
+import die.DiceCombo;
 import die.DiceSet;
 import die.DieValue;
 import ruleset.Default;
+
+import java.util.Iterator;
 
 public class Main {
 
@@ -13,11 +16,7 @@ public class Main {
         DiceSet diceset = new DiceSet(1);
 //        System.out.println(diceset);
 
-        for (int i = 0; i < diceset.getSize(); i++) {
-            diceset.moveDie(DieValue.ONE);
-        }
-
-        diceset.refresh();
+        diceset.returnCombos();
 
     }
 }
