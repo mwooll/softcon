@@ -1,7 +1,10 @@
+package card;
+import ruleset.*;
+
 public enum CardType {
 
     /**
-     * CardTypes lists all possible Cards with a Ruleset attached
+     * CardTypes lists all possible Cards with a ruleset.Ruleset attached
      *
      * todo: BONUS Types could be enum (200, 300, 400, 500, 600) to make
      *  absolutely sure only those are created (and not e.g. 100)
@@ -15,7 +18,7 @@ public enum CardType {
 
     STOP(new Stop());
 
-    private Ruleset aRuleset;
+    private final Ruleset aRuleset;
 
     CardType(Ruleset pRuleset) {
         aRuleset = pRuleset;

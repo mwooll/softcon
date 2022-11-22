@@ -1,9 +1,13 @@
+package card;
+
+import ruleset.Ruleset;
+
 public class Card {
 
     /**
-     * A Card represents on of the Cards which the player
+     * A card.Card represents on of the Cards which the player
      * can draw from the pile.
-     * A Card has a Ruleset
+     * A card.Card has a ruleset.Ruleset
      */
 
     private final Ruleset aRuleset;

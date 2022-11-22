@@ -1,18 +1,20 @@
+package die;
+
 import java.util.Arrays;
 import java.util.Random;
 
 public class Die {
 
     /**
-     * Represents a single Die in the game
-     * Can represent one of the enum values in DieValue
+     * Represents a single Die.Die in the game
+     * Can represent one of the enum values in Die.DieValue
      */
 
     protected final Random rand = new Random();
     private DieValue aDieValue;
 
     /**
-     * Create a new Die instance with a random DieValue
+     * Create a new Die.Die instance with a random Die.DieValue
      */
     public Die() {
         aDieValue = Arrays.asList(DieValue.values()).get(
@@ -33,7 +35,7 @@ public class Die {
     }
 
     /**
-     * Roll the die and set a new DieValue
+     * Roll the die and set a new Die.DieValue
      */
     public void rollDie() {
         aDieValue = Arrays.asList(DieValue.values()).get(
@@ -42,5 +44,10 @@ public class Die {
     }
 
     public DieValue getDieValue() {return aDieValue;}
+
+    @Override
+    public String toString() {
+        return aDieValue.name();
+    }
 
 }

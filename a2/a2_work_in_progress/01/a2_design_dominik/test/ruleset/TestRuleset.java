@@ -1,4 +1,9 @@
+package ruleset;
+
 import org.junit.jupiter.api.Test;
+import ruleset.Default;
+import ruleset.Ruleset;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestRuleset {

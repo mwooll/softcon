@@ -1,5 +1,9 @@
+package ruleset;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import ruleset.Bonus;
+import ruleset.Ruleset;
 
 import static org.junit.jupiter.api.Assertions.*;
 

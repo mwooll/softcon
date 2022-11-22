@@ -1,4 +1,8 @@
+package ruleset;
+
 import org.junit.jupiter.api.Test;
+import ruleset.Ruleset;
+import ruleset.Stop;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +22,7 @@ class TestStop {
 
         Ruleset rs = new Stop();
 
-        assertEquals("The STOP Card stops the turn when drawn", rs.explainRules());
+        assertEquals("The STOP card.Card stops the turn when drawn", rs.explainRules());
 
     }
 

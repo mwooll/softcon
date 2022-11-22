@@ -1,3 +1,7 @@
+package card;
+
+import ruleset.*;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,9 +16,9 @@ public class Deck {
     private final List<Card> aCards = new ArrayList<>();
 
     /**
-     * Constructor creates all the Cards in DeckSpec and shuffles them
+     * Constructor creates all the Cards in card.DeckSpec and shuffles them
      * Creates Cards specified in pDeckSpec
-     * After creation shuffles the Deck
+     * After creation shuffles the card.Deck
      *
      * @param pDebug If true use debug subset of cards, otherwise full game spec
      */
@@ -22,11 +26,11 @@ public class Deck {
 
         DeckSpec pDeckSpec = new DeckSpec(pDebug);
 
-        // each ct is a CardType instance
+        // each ct is a card.CardType instance
         for (CardType ct : pDeckSpec) {
-            // DeckSpec specifies how many Cards of CardType ct
+            // card.DeckSpec specifies how many Cards of card.CardType ct
             Integer ctCount = pDeckSpec.getCount(ct);
-            // each CardType has an associated Ruleset
+            // each card.CardType has an associated ruleset.Ruleset
             Ruleset ctRuleset = ct.getRuleset();
 
             // create the needed amount of Cards
@@ -39,10 +43,10 @@ public class Deck {
     }
 
     /**
-     * Draw the top Card from the Deck and return it.
-     * This draw acts like pop, it does remove the Card from the Deck
-     * @pre Deck is not empty
-     * @return A Card instance
+     * Draw the top card.Card from the card.Deck and return it.
+     * This draw acts like pop, it does remove the card.Card from the card.Deck
+     * @pre card.Deck is not empty
+     * @return A card.Card instance
      */
     public Card draw() {
         assert !isEmpty();
@@ -50,7 +54,7 @@ public class Deck {
     }
 
     /**
-     * Return how many Cards are left in Deck
+     * Return how many Cards are left in card.Deck
      * @return int How many cards left?
      */
     public int cardsLeft() {

@@ -1,5 +1,11 @@
+package card;
+
 import static org.junit.jupiter.api.Assertions.*;
+
+import card.Card;
+import card.DiscardPile;
 import org.junit.jupiter.api.Test;
+import ruleset.Default;
 
 class TestDiscardPile {
 

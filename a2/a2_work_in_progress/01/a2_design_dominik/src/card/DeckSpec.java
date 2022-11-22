@@ -1,10 +1,12 @@
+package card;
+
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class DeckSpec implements Iterable<CardType> {
 
     /**
-     * A DeckSpec is a specific setup of Cardtypes for the Deck to initialize
+     * A card.DeckSpec is a specific setup of Cardtypes for the card.Deck to initialize
      * It contains CardTypes and respective Numbers
      */
 
@@ -12,7 +14,7 @@ public class DeckSpec implements Iterable<CardType> {
 
     /**
      * Constructor creates an instance containing Cardtype and number of Cards
-     * @param pDebug If true only use small subset of all Cards, otherwise use full game specs
+     * @param pDebug If true only use small subset of all Cards, otherwise use the full game specs
      */
     public DeckSpec(boolean pDebug) {
 

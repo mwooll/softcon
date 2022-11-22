@@ -1,4 +1,11 @@
+package card;
+
+import card.Card;
 import org.junit.jupiter.api.Test;
+import ruleset.Bonus;
+import ruleset.Ruleset;
+import ruleset.Stop;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestCard {

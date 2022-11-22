@@ -1,9 +1,11 @@
+package ruleset;
+
 public class Bonus extends Ruleset {
 
     private final int aBonusPoints;
 
     /**
-     * Construct a Bonus Ruleset
+     * Construct a ruleset.Bonus ruleset.Ruleset
      * @pre pBonusPoints must be a positive integer
      * @param pBonusPoints integer specifying how many bonus points
      */
@@ -16,11 +18,11 @@ public class Bonus extends Ruleset {
         aBonusPoints = pBonusPoints;
     }
 
-    String returnName() {return String.format("BONUS %s", aBonusPoints);}
-    String explainRules() {
+    public String returnName() {return String.format("BONUS %s", aBonusPoints);}
+    public String explainRules() {
         return String.format("The BONUS card gives an extra %s points if a Tutto is accomplished", aBonusPoints);
     };
 
-    int handleTutto() {return aBonusPoints;}
+    public int handleTutto() {return aBonusPoints;}
 
 }

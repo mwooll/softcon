@@ -1,3 +1,7 @@
+package card;
+
+import card.Card;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +18,7 @@ public class DiscardPile {
     private final List<Card> aCards = new ArrayList<>();
 
     /**
-     * Constructor creates empty DiscardPile
+     * Constructor creates empty card.DiscardPile
      */
     public DiscardPile() {}
 
@@ -23,7 +27,7 @@ public class DiscardPile {
      * Return a copy of the last discarded card
      * Does not alter the discard pile
      * @pre Discard pile cannot be empty
-     * @return Card instance last discarded card
+     * @return card.Card instance last discarded card
      */
     public Card peek() {
         assert !isEmpty();
@@ -32,9 +36,9 @@ public class DiscardPile {
     }
 
     /**
-     * Add a Card to the discard pile
+     * Add a card.Card to the discard pile
      * Does alter the state of aCards
-     * @pre pCard must be a valid Card instance
+     * @pre pCard must be a valid card.Card instance
      */
     public void add(Card pCard) {
         assert pCard != null;
