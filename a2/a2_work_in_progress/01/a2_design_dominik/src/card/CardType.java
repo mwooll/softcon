@@ -10,6 +10,8 @@ public enum CardType {
      *  absolutely sure only those are created (and not e.g. 100)
      */
 
+
+    DEFAULT(new Default()),
     BONUS200(new Bonus(200)),
     BONUS300(new Bonus(300)),
     BONUS400(new Bonus(400)),

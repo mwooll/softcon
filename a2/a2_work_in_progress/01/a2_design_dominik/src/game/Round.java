@@ -1,5 +1,7 @@
 package game;
 
+import card.CardType;
+import die.*;
 import ruleset.*;
 
 public class Round {
@@ -11,7 +13,31 @@ public class Round {
      */
 
     private int aScore = 0;
-    private Ruleset aCurrentRuleset = new Default();
+    private final CardType aCurrentCard = CardType.DEFAULT;
+    private final Ruleset aCurrentRuleset = new Default();
+    private final DiceSet aDiceSet;
 
+    public Round() {
+        aDiceSet = DiceSet.get();
+        // aDiceSet = DiceSet.getDebug();
+
+        // Always refresh the dice set at the initialization of a new round
+        aDiceSet.refresh();
+
+    }
+
+    public void playRound() {
+
+        // Draw a card or not
+
+        // Current card sets the Ruleset
+
+        // Throw dice until Tutto or NULL
+
+    }
+
+    private void setRuleset() {
+        // Set the current Ruleset
+    }
 
 }
