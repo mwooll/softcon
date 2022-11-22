@@ -1,10 +1,5 @@
-import card.Card;
-import die.DiceCombo;
 import die.DiceSet;
 import die.DieValue;
-import ruleset.Default;
-
-import java.util.Iterator;
 
 public class Main {
 
@@ -12,11 +7,16 @@ public class Main {
 
 //        System.out.println("Main executed.");
 
-        // Test the Seed
-        DiceSet diceset = new DiceSet(1);
-//        System.out.println(diceset);
+        // Test the Seed vs Random
+        DiceSet diceset = DiceSet.getDebug();
+        DiceSet diceset_random = DiceSet.get();
+        System.out.println(diceset);
+        System.out.println(diceset_random);
 
-        diceset.returnCombos();
+        diceset.moveDie(DieValue.ONE);
+
+        System.out.println(diceset.getLeftSize());
+        System.out.println(diceset);
 
     }
 }

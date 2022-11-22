@@ -49,10 +49,21 @@ public abstract class Ruleset {
     /**
      * Given a list of dice combos, sum up the points according to the rules
      * Accepts also empty lists
+     * Default is applicable to majority (Bonus, x2), must be overridden for other Rulesets
      *
-     * @return Integer value of points the input generated
+     * @return Integer value of summed points the input generated
      */
-//    abstract int sumUpPoints(ArrayList<DiceCombo>);
+    public int sumUpPoints(List<DiceCombo> pListDiceCombo){
+
+        int outPoints = 0;
+
+        for (DiceCombo dicecombo : pListDiceCombo) {
+            outPoints += dicecombo.returnPoints();
+        }
+
+        return outPoints;
+
+    };
 
     /**
      * Specify the amounts of points to add when a Tutto happens

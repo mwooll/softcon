@@ -12,35 +12,35 @@ public class Die {
 
     protected final Random rand = new Random();
     private DieValue aDieValue;
+    private boolean aDebug;
 
     /**
      * Create a new Die.Die instance with a random Die.DieValue
      */
-    public Die() {
-        aDieValue = Arrays.asList(DieValue.values()).get(
-                rand.nextInt(DieValue.values().length-1)
-        );
-    }
+    public Die(boolean pDebug) {
 
-    /**
-     * Constructor with seed for debugging
-     */
-    public Die(int pSeed) {
+        // set Debug Parameter
+        aDebug = pDebug;
 
-        rand.setSeed(pSeed);
+        // roll the die
+        rollDie();
 
-        aDieValue = Arrays.asList(DieValue.values()).get(
-                rand.nextInt(DieValue.values().length-1)
-        );
     }
 
     /**
      * Roll the die and set a new Die.DieValue
      */
     public void rollDie() {
-        aDieValue = Arrays.asList(DieValue.values()).get(
-                rand.nextInt(DieValue.values().length-1)
-        );
+
+        // pick value at random
+        int randIndex = rand.nextInt(DieValue.values().length-1);
+
+        // if debug active, always set same index
+        if (aDebug) {
+            randIndex = 0;
+        }
+
+        aDieValue = Arrays.asList(DieValue.values()).get(randIndex);
     }
 
     public DieValue getDieValue() {return aDieValue;}

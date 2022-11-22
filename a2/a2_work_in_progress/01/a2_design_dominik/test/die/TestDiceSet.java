@@ -1,5 +1,6 @@
 package die;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -17,8 +18,8 @@ class TestDiceSet {
     FOUR
      */
 
-    DiceSet diceset = new DiceSet(1);
-    DiceSet dicesetRandom = new DiceSet();
+    DiceSet diceset_debug = DiceSet.getDebug();
+    DiceSet diceset = DiceSet.get();
     HashMap<DieValue, Integer> testDieValueCount = new HashMap<>();
     {
         for (DieValue dv : DieValue.values()) {
@@ -27,64 +28,76 @@ class TestDiceSet {
         testDieValueCount.put(DieValue.ONE, 6);
     }
 
-    @Test
-    public void testCreationSize_random() {
-        assertEquals(6, dicesetRandom.getLeftSize());
+    /**
+     * FLYWEIGHT, must be refreshed before each test
+     */
+    @BeforeEach
+    void init() {
+        diceset_debug.refresh();
+        diceset.refresh();
     }
 
     @Test
-    public void testCreationSize() {
+    public void testCreationSize_random() {
         assertEquals(6, diceset.getLeftSize());
     }
 
     @Test
-    public void testMoveDie() {
-        diceset.moveDie(DieValue.ONE);
+    public void testCreationSize() {
+        assertEquals(6, diceset_debug.getLeftSize());
+    }
 
-        assertEquals(5, diceset.getLeftSize());
+    @Test
+    public void testMoveDie() {
+
+        System.out.println(diceset_debug);
+
+        diceset_debug.moveDie(DieValue.ONE);
+
+        assertEquals(5, diceset_debug.getLeftSize());
 
     }
 
     @Test
     public void testMoveDie_moveAllDice() {
-        for (int i = 0; i < diceset.getSize(); i++) {
-            diceset.moveDie(DieValue.ONE);
+        for (int i = 0; i < diceset_debug.getSize(); i++) {
+            diceset_debug.moveDie(DieValue.ONE);
         }
 
-        assertEquals(0, diceset.getLeftSize());
+        assertEquals(0, diceset_debug.getLeftSize());
 
     }
 
     @Test
     public void testMoveDie_assertion_empty() {
-        for (int i = 0; i < diceset.getSize(); i++) {
-            diceset.moveDie(DieValue.ONE);
+        for (int i = 0; i < diceset_debug.getSize(); i++) {
+            diceset_debug.moveDie(DieValue.ONE);
         }
 
-        assertThrows(AssertionError.class, () -> diceset.moveDie(DieValue.ONE));
+        assertThrows(AssertionError.class, () -> diceset_debug.moveDie(DieValue.ONE));
     }
 
     @Test
     public void testMoveDie_assertion_DieValueNotFound() {
-        assertThrows(AssertionError.class, () -> diceset.moveDie(DieValue.TWO));
+        assertThrows(AssertionError.class, () -> diceset_debug.moveDie(DieValue.TWO));
     }
 
     @Test
     public void testRefresh() {
-        for (int i = 0; i < diceset.getSize(); i++) {
-            diceset.moveDie(DieValue.ONE);
+        for (int i = 0; i < diceset_debug.getSize(); i++) {
+            diceset_debug.moveDie(DieValue.ONE);
         }
 
-        diceset.refresh();
+        diceset_debug.refresh();
 
-        assertEquals(6, diceset.getLeftSize());
+        assertEquals(6, diceset_debug.getLeftSize());
 
     }
 
     @Test
     public void test_returnCombos() {
         List<DiceCombo> expected = Arrays.asList(DiceCombo.SINGLE_ONE, DiceCombo.TRIPLET_ONE);
-        assertEquals(expected, diceset.returnCombos());
+        assertEquals(expected, diceset_debug.returnCombos());
     }
 
     @Test
@@ -92,11 +105,11 @@ class TestDiceSet {
         List<DiceCombo> expected = Arrays.asList(DiceCombo.SINGLE_ONE);
 
         // move all dies to the used
-        for (int i = 0; i < diceset.getSize()-1; i++) {
-            diceset.moveDie(DieValue.ONE);
+        for (int i = 0; i < diceset_debug.getSize()-1; i++) {
+            diceset_debug.moveDie(DieValue.ONE);
         }
 
-        assertEquals(expected, diceset.returnCombos());
+        assertEquals(expected, diceset_debug.returnCombos());
 
     }
 
@@ -105,11 +118,11 @@ class TestDiceSet {
         List<DiceCombo> expected = new ArrayList<>();
 
         // move all dies to the used
-        for (int i = 0; i < diceset.getSize(); i++) {
-            diceset.moveDie(DieValue.ONE);
+        for (int i = 0; i < diceset_debug.getSize(); i++) {
+            diceset_debug.moveDie(DieValue.ONE);
         }
 
-        assertEquals(expected, diceset.returnCombos());
+        assertEquals(expected, diceset_debug.returnCombos());
 
     }
 

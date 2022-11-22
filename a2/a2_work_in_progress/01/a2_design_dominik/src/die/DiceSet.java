@@ -1,7 +1,6 @@
 package die;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -10,32 +9,42 @@ public class DiceSet {
     /**
      * A DiceSet contains six Dice which can be rerolled
      * It remembers which Dice are still available to roll and which ones are already rolled
-     * There will only be one DiceSet instance for the entire game
+     * It DOES NOT remember the DiceCombos rolled, that's the rounds task
+     * There will only be one DiceSet instance for the entire game, implements FLYWEIGHT
      *
-     * todo: Remove toString method, only there to check seed
+     * todo: Remove toString method, only there to visually debug
      */
 
     private final List<Die> aDiceLeft = new ArrayList<>();
     private final List<Die> aDiceUsed = new ArrayList<>();
     private final int N_DIE = 6;
 
-    /**
-     * Constructor to create a DiceSet
-     */
-    public DiceSet() {
-        for (int i = 0; i < N_DIE; i++) {
-            aDiceLeft.add(new Die());
-        }
+    // Flyweight Store
+    private static final DiceSet[] DICE_SETS = new DiceSet[1];
+    private static final DiceSet[] DICE_SETS_DEBUG = new DiceSet[1];
+
+    // Static constructor
+    static {
+        DICE_SETS[0] = new DiceSet(false);
+        DICE_SETS_DEBUG[0] = new DiceSet(true);
     }
 
     /**
-     * Constructor with seed for debugging
+     * Private Constructor to create a DiceSet
      */
-    public DiceSet(int pSeed) {
+    private DiceSet(boolean pDebug) {
         for (int i = 0; i < N_DIE; i++) {
-            aDiceLeft.add(new Die(pSeed));
+            aDiceLeft.add(new Die(pDebug));
         }
     }
+
+
+    /**
+     * Public static getter for the one DiceSet, either with or without debug
+     * @returns DiceSet instance
+     */
+    public static DiceSet get() {return DICE_SETS[0];}
+    public static DiceSet getDebug() {return DICE_SETS_DEBUG[0];}
 
     /**
      * Move a single Die with the given DieValue from aDiceLeft to aDiceUsed
@@ -59,6 +68,7 @@ public class DiceSet {
         for (Die die : aDiceLeft) {
             if (die.getDieValue() == pDieValue) {
                 dieIndex = aDiceLeft.indexOf(die);
+                break;
             }
         }
 
@@ -79,7 +89,7 @@ public class DiceSet {
         aDiceLeft.addAll(aDiceUsed);
 
         // roll all Dice in aDiceLeft
-        aDiceLeft.forEach((d) -> d.rollDie());
+        aDiceLeft.forEach(Die::rollDie);
 
         // clear all used dice
         aDiceUsed.clear();
@@ -101,7 +111,7 @@ public class DiceSet {
             // get the counts how many of which DieValue are necessary
             HashMap<DieValue, Integer> needed = dicecombo.returnCounts();
 
-            // For all of of the DieValues in needed, the count in available must be at least as big as in needed
+            // For all the DieValues in needed, the count in available must be at least as big as in needed
             boolean tmpCombo = true;
             for (DieValue dievalue : needed.keySet()) {
                 if (available.get(dievalue) < needed.get(dievalue)) {

@@ -9,7 +9,7 @@ class TestDie {
     public void testCreation() {
 
         // Test with seed 1 -> yields DieValue.ONE
-        Die die = new Die(1);
+        Die die = new Die(true);
 
         assertEquals(DieValue.ONE, die.getDieValue());
     }
