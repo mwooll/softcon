@@ -15,6 +15,7 @@ public class Round {
 
     private boolean aNull = false;
     private int aScore = 0;
+    private final InputParser aParser = new DebugParser();
     private final Ruleset aCurrentRuleset;
     private final DiceSet aDiceSet;
     private List<DiceCombo> aRolledDiceCombos;
@@ -45,8 +46,13 @@ public class Round {
 
     }
 
-    public void playRound() {
+    /**
+     *
+     * @return An integer with the total of points
+     */
+    public int playRound() {
 
+        int roundSum = 0;
         boolean isTutto = false;
 
         // Determine if the current roll is a null
@@ -55,37 +61,45 @@ public class Round {
         while(!aNull && !isTutto) {
 
             // - Tell player that he has not rolled a null and show him all possible DiceCombos
+            System.out.println("Your remaining dice:");
+            System.out.println(aDiceSet);
 
             // - Ask player if stop or continue
-//            boolean doContinue = inputParser.askStopContinue()
-//            if (!doContinue) {break;]
+            boolean doContinue = aParser.askStop();
+            if (!doContinue) {break;}
 
             // - Ask player which DiceCombo to remove, only possible if there are DiceCombos to remove
-//            boolean keepRemoving = true;
-//            while (keepRemoving && !isNull()) {
-//                DiceCombo toRemove = inputParser.askWhichRemove();
-            // Remove that DiceCombo from the DiceSet, refresh the removable DiceCombos
-//                for (DieValue dievalue : toRemove) {
-//                    aDiceSet.moveDie(dievalue)
-//                }
-//                aRemovableDiceCombos = returnRemovableDiceCombos();
-            // Add the removed DiceSet to the aRolledDiceSet
-//                aRolledDiceCombos.add(toRemove);
-            // Ask player if he wants to remove another DiceCombo
-//                keepRemoving = inputParser.askKeepRemoving();
-//            }
+            boolean keepRemoving = true;
+            while (keepRemoving && !isNull()) {
+                DiceCombo toRemove = aParser.askWhichRemove(aRemovableDiceCombos);
+                // Remove that DiceCombo from the DiceSet, refresh the removable DiceCombos
+                for (DieValue dievalue : toRemove) {
+                    aDiceSet.moveDie(dievalue);
+                }
+                aRemovableDiceCombos = returnRemovableDiceCombos();
+                // Add the removed DiceSet to the aRolledDiceSet
+                aRolledDiceCombos.add(toRemove);
+                // Ask player if he wants to remove another DiceCombo
+                keepRemoving = aParser.askKeepRemoving();
+            }
 
             // - After removing is done, check if is Tutto (if there are no remaining Dice)
             // - otherwise roll remaining Dice
-//            if (aDiceSet.getSizeLeft() == 0) {
-//                isTutto = true;
-//            } else {
-//                aDiceSet.rollRemaining();
-//                aNull = isNull();
-//            }
+            if (aDiceSet.getSizeLeft() == 0) {
+                isTutto = true;
+                aCurrentRuleset.handleTutto();
+            } else {
+                aDiceSet.rollRemaining();
+                aNull = isNull();
+            }
 
         }
 
+        // either when null or when tutto sum up the points
+        roundSum += aCurrentRuleset.sumUpPoints(aRolledDiceCombos);
+
+        // return the points
+        return roundSum;
     }
 
     /**

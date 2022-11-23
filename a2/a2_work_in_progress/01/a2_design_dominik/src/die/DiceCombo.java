@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-public enum DiceCombo implements Iterable {
+public enum DiceCombo implements Iterable<DieValue> {
 
     /**
      * Represents all possible Combinations the Dice can form according to the game rules
