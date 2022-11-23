@@ -23,7 +23,7 @@ public enum DiceCombo implements Iterable<DieValue> {
     TRIPLET_THREE(new ArrayList<>(List.of(DieValue.THREE,DieValue.THREE,DieValue.THREE)), 300),
     TRIPLET_FOUR(new ArrayList<>(List.of(DieValue.FOUR,DieValue.FOUR,DieValue.FOUR)), 400),
     TRIPLET_FIVE(new ArrayList<>(List.of(DieValue.FIVE,DieValue.FIVE,DieValue.FIVE)), 500),
-    TRIPLET_SIX(new ArrayList<>(List.of(DieValue.SIX,DieValue.SIX,DieValue.SIX)),1000),
+    TRIPLET_SIX(new ArrayList<>(List.of(DieValue.SIX,DieValue.SIX,DieValue.SIX)),600),
     STRAIGHT(new ArrayList<>(List.of(DieValue.ONE,DieValue.TWO,DieValue.THREE,DieValue.FOUR,DieValue.FIVE,DieValue.SIX)), 0);
 
     private final List<DieValue> aListDieValues = new ArrayList<>();
