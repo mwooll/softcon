@@ -39,12 +39,12 @@ class TestDiceSet {
 
     @Test
     public void testCreationSize_random() {
-        assertEquals(6, diceset.getLeftSize());
+        assertEquals(6, diceset.getSizeLeft());
     }
 
     @Test
     public void testCreationSize() {
-        assertEquals(6, diceset_debug.getLeftSize());
+        assertEquals(6, diceset_debug.getSizeLeft());
     }
 
     @Test
@@ -54,7 +54,7 @@ class TestDiceSet {
 
         diceset_debug.moveDie(DieValue.ONE);
 
-        assertEquals(5, diceset_debug.getLeftSize());
+        assertEquals(5, diceset_debug.getSizeLeft());
 
     }
 
@@ -64,7 +64,7 @@ class TestDiceSet {
             diceset_debug.moveDie(DieValue.ONE);
         }
 
-        assertEquals(0, diceset_debug.getLeftSize());
+        assertEquals(0, diceset_debug.getSizeLeft());
 
     }
 
@@ -90,7 +90,31 @@ class TestDiceSet {
 
         diceset_debug.refresh();
 
-        assertEquals(6, diceset_debug.getLeftSize());
+        assertEquals(6, diceset_debug.getSizeLeft());
+
+    }
+
+    @Test
+    public void testRollRemaining() {
+
+        // ! IN THEORY its possible that two DiceSet yield the same Combos possible to remove
+
+        // do not use the debug set, instead make sure two lists of DiceCombos are not identical
+        List<DiceCombo> dc1 = diceset.returnCombos();
+        diceset.rollRemaining();
+        List<DiceCombo> dc2 = diceset.returnCombos();
+
+        assertNotEquals(dc1, dc2);
+
+    }
+
+    @Test
+    public void testRollRemaining_empty() {
+        for (int i = 0; i < diceset_debug.getSize(); i++) {
+            diceset_debug.moveDie(DieValue.ONE);
+        }
+
+        assertThrows(AssertionError.class, () -> diceset_debug.rollRemaining());
 
     }
 

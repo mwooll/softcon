@@ -15,7 +15,7 @@ public class DiceSet {
      * todo: Remove toString method, only there to visually debug
      */
 
-    private final List<Die> aDiceLeft = new ArrayList<>();
+    private final List<Die> aDiceRemaining = new ArrayList<>();
     private final List<Die> aDiceUsed = new ArrayList<>();
     private final int N_DIE = 6;
 
@@ -34,7 +34,7 @@ public class DiceSet {
      */
     private DiceSet(boolean pDebug) {
         for (int i = 0; i < N_DIE; i++) {
-            aDiceLeft.add(new Die(pDebug));
+            aDiceRemaining.add(new Die(pDebug));
         }
     }
 
@@ -55,7 +55,7 @@ public class DiceSet {
         assert !isEmpty();
         // check that any Die in aDiceLeft has DieValue pDieValue
         boolean tmpAssert = false;
-        for (Die die : aDiceLeft) {
+        for (Die die : aDiceRemaining) {
             if (die.getDieValue() == pDieValue) {
                 tmpAssert = true;
                 break;
@@ -65,16 +65,28 @@ public class DiceSet {
 
         // find first Die that has DieValue pDieValue
         int dieIndex = -1;
-        for (Die die : aDiceLeft) {
+        for (Die die : aDiceRemaining) {
             if (die.getDieValue() == pDieValue) {
-                dieIndex = aDiceLeft.indexOf(die);
+                dieIndex = aDiceRemaining.indexOf(die);
                 break;
             }
         }
 
         // remove that Die from aDiceLeft and add it to aDiceUsed
-        aDiceUsed.add(aDiceLeft.remove(dieIndex));
+        aDiceUsed.add(aDiceRemaining.remove(dieIndex));
 
+    }
+
+    /**
+     * Roll all the remaining Dice without altering the used Dice
+     * @pre There must be Dice remaining
+     */
+    public void rollRemaining() {
+        assert !isEmpty();
+
+        for (Die die : aDiceRemaining) {
+            die.rollDie();
+        }
     }
 
     /**
@@ -83,13 +95,13 @@ public class DiceSet {
      */
     public void refresh() {
 
-        assert aDiceUsed.size() + aDiceLeft.size() == N_DIE;
+        assert aDiceUsed.size() + aDiceRemaining.size() == N_DIE;
 
         // copy all objects from aDiceUsed to aDiceLeft
-        aDiceLeft.addAll(aDiceUsed);
+        aDiceRemaining.addAll(aDiceUsed);
 
         // roll all Dice in aDiceLeft
-        aDiceLeft.forEach(Die::rollDie);
+        aDiceRemaining.forEach(Die::rollDie);
 
         // clear all used dice
         aDiceUsed.clear();
@@ -139,7 +151,7 @@ public class DiceSet {
             counts.put(dievalue, 0);
         }
 
-        for (Die die : aDiceLeft) {
+        for (Die die : aDiceRemaining) {
             counts.put(die.getDieValue(), counts.get(die.getDieValue()) + 1);
         }
 
@@ -150,14 +162,14 @@ public class DiceSet {
      * Check if all Dice are used
      */
     private boolean isEmpty() {
-        return aDiceLeft.size() == 0;
+        return aDiceRemaining.size() == 0;
     }
 
     /**
      * Return how many Dice are left to roll
      */
-    public int getLeftSize() {
-        return aDiceLeft.size();
+    public int getSizeLeft() {
+        return aDiceRemaining.size();
     }
 
     /**
@@ -169,7 +181,7 @@ public class DiceSet {
 
     @Override
     public String toString() {
-        return String.format("Dice Left : %s\nDice Used : %s", aDiceLeft, aDiceUsed);
+        return String.format("Dice Left : %s\nDice Used : %s", aDiceRemaining, aDiceUsed);
     }
 
 

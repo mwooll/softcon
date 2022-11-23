@@ -47,6 +47,11 @@ public abstract class Ruleset {
     };
 
     /**
+     * Return a list with all valid DiceCombos for the Ruleset
+     */
+    public List<DiceCombo> returnValidCombos() {return aValidCombos;}
+
+    /**
      * Given a list of dice combos, sum up the points according to the rules
      * Accepts also empty lists
      * Default is applicable to majority (Bonus, x2), must be overridden for other Rulesets
