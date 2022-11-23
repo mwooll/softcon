@@ -3,6 +3,7 @@ package ruleset;
 import die.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class Ruleset {
@@ -13,7 +14,7 @@ public abstract class Ruleset {
      */
 
     // which DiceCombos are valid for the given ruleset?
-    protected List<DiceCombo> aValidCombos;
+    protected List<DiceCombo> aValidCombos = new ArrayList<>();
 
     public Ruleset(){};
 
@@ -49,7 +50,7 @@ public abstract class Ruleset {
     /**
      * Return a list with all valid DiceCombos for the Ruleset
      */
-    public List<DiceCombo> returnValidCombos() {return aValidCombos;}
+    public List<DiceCombo> returnValidCombos() {return Collections.unmodifiableList(aValidCombos);}
 
     /**
      * Given a list of dice combos, sum up the points according to the rules

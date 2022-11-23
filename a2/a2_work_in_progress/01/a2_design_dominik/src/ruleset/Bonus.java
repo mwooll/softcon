@@ -16,6 +16,8 @@ public class Bonus extends Ruleset {
         assert pBonusPoints > 0;
 
         aBonusPoints = pBonusPoints;
+
+        setValidCombos();
     }
 
     public String returnName() {return String.format("BONUS %s", aBonusPoints);}

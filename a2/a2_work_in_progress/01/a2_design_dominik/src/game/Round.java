@@ -18,8 +18,8 @@ public class Round {
     private final InputParser aParser = new DebugParser();
     private final Ruleset aCurrentRuleset;
     private final DiceSet aDiceSet;
-    private List<DiceCombo> aRolledDiceCombos;
-    private List<DiceCombo> aRemovableDiceCombos;
+    private final List<DiceCombo> aRolledDiceCombos = new ArrayList<>();
+    private List<DiceCombo> aRemovableDiceCombos = new ArrayList<>();
 
     /**
      * Constructor initializes fresh DiceSet and takes a Ruleset as given
@@ -44,6 +44,9 @@ public class Round {
         // Determine if first throw was a null roll
         aNull = isNull();
 
+        // Show the initial roll
+        System.out.println(aDiceSet);
+
     }
 
     /**
@@ -52,7 +55,8 @@ public class Round {
      */
     public int playRound() {
 
-        int roundSum = 0;
+        int pointsTotal = 0;
+
         boolean isTutto = false;
 
         // Determine if the current roll is a null
@@ -65,12 +69,13 @@ public class Round {
             System.out.println(aDiceSet);
 
             // - Ask player if stop or continue
-            boolean doContinue = aParser.askStop();
-            if (!doContinue) {break;}
+            if (aParser.askStop()) {break;}
 
             // - Ask player which DiceCombo to remove, only possible if there are DiceCombos to remove
             boolean keepRemoving = true;
             while (keepRemoving && !isNull()) {
+                System.out.println("Your remaining dice:");
+                System.out.println(aDiceSet);
                 DiceCombo toRemove = aParser.askWhichRemove(aRemovableDiceCombos);
                 // Remove that DiceCombo from the DiceSet, refresh the removable DiceCombos
                 for (DieValue dievalue : toRemove) {
@@ -87,7 +92,6 @@ public class Round {
             // - otherwise roll remaining Dice
             if (aDiceSet.getSizeLeft() == 0) {
                 isTutto = true;
-                aCurrentRuleset.handleTutto();
             } else {
                 aDiceSet.rollRemaining();
                 aNull = isNull();
@@ -95,11 +99,27 @@ public class Round {
 
         }
 
+        // inform if null
+        if (aNull) {
+            System.out.println("Your roll was a null, calculating points and ending the turn");
+        }
+
+        // inform if Tutto
+        if (isTutto) {
+            System.out.println("You accomplished a Tutto, calculating points and ending the turn");
+            int pointsTutto = aCurrentRuleset.handleTutto();
+            System.out.println(String.format("Your Tutto scored you %s points", pointsTutto));
+            pointsTotal += pointsTutto;
+        }
+
         // either when null or when tutto sum up the points
-        roundSum += aCurrentRuleset.sumUpPoints(aRolledDiceCombos);
+        int pointsRound = aCurrentRuleset.sumUpPoints(aRolledDiceCombos);
+        System.out.println(String.format("Your rolls scored you %s points", pointsRound));
+        pointsTotal += pointsRound;
 
         // return the points
-        return roundSum;
+        System.out.println(String.format("Your total round scored you %s points", pointsTotal));
+        return pointsTotal;
     }
 
     /**
@@ -107,8 +127,15 @@ public class Round {
      * @return a list with DiceCombos currently removable
      */
     private List<DiceCombo> returnRemovableDiceCombos() {
-        List<DiceCombo> tmp = new ArrayList<>(aDiceSet.returnCombos());
-        tmp.retainAll(aCurrentRuleset.returnValidCombos());
+        List<DiceCombo> allPossibleDiceCombos = new ArrayList<>(aDiceSet.returnCombos());
+        List<DiceCombo> allValidDiceCombos = aCurrentRuleset.returnValidCombos();
+        List<DiceCombo> tmp = new ArrayList<>();
+
+        for (DiceCombo dicecombo : allPossibleDiceCombos) {
+            if (allValidDiceCombos.contains(dicecombo)) {
+                tmp.add(dicecombo);
+            }
+        }
 
         return tmp;
     }
