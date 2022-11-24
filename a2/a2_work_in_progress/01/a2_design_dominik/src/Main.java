@@ -1,13 +1,6 @@
-import die.DiceCombo;
 import die.DiceSet;
-import die.DieValue;
-import game.DebugParser;
-import game.InputParser;
 import game.Round;
 import ruleset.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
 
@@ -34,10 +27,9 @@ public class Main {
 
         Ruleset rs = new Bonus(200);
         Round round = new Round(rs);
+        round.setDiceSet(DiceSet.getDebug());
 
         int mypoints = round.playRound();
-        System.out.println(mypoints);
-
 
     }
 }

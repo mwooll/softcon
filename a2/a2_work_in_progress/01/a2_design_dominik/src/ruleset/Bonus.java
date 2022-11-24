@@ -29,6 +29,6 @@ public class Bonus extends Ruleset {
     };
 
     @Override
-    public int handleTutto(int pPoints) {return pPoints + aBonusPoints;}
+    public int handleTutto(int pPoints) {return aBonusPoints;}
 
 }

@@ -19,7 +19,7 @@ public abstract class Ruleset {
     public Ruleset(){};
 
     /**
-     * Return the name of the ruleset.Ruleset
+     * Return the name of the ruleset
      */
     public String returnName() {return "PLACEHOLDER";}
 

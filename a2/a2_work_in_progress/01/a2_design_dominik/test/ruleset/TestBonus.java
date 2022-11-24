@@ -40,6 +40,16 @@ class TestBonus {
     }
 
     @Test
+    public void testBonus_handleTutto2() {
+
+        int pBonusPoints = 100;
+        Ruleset rs = new Bonus(pBonusPoints);
+
+        assertEquals(100, rs.handleTutto(1000));
+
+    }
+
+    @Test
     public void testBonus_invalidConstructor() {
 
         int pBonusPoints = -100;

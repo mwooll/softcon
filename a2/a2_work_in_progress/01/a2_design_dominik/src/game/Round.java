@@ -3,6 +3,8 @@ package game;
 import die.*;
 import ruleset.*;
 
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +18,10 @@ public class Round {
      */
 
     private boolean aNull = false;
-    private int aScore = 0;
-    private final InputParser aParser = new DebugParser();
+    private InputParser aParser = new DefaultParser();
     private final Ruleset aCurrentRuleset;
-    private final DiceSet aDiceSet;
+    private DiceSet aDiceSet;
     private final List<DiceCombo> aRolledDiceCombos = new ArrayList<>();
-    private List<DiceCombo> aRemovableDiceCombos = new ArrayList<>();
 
     /**
      * Constructor initializes fresh DiceSet and takes a Ruleset as given
@@ -31,8 +31,11 @@ public class Round {
 
         assert pRuleset != null;
 
-//        aDiceSet = DiceSet.get();
-        aDiceSet = DiceSet.getDebug();
+        // Default is the non debug DiceSet
+        setDiceSet(DiceSet.get());
+
+        // Default is the non debug Parser
+        setParser(new DefaultParser());
 
         // Always refresh the dice set at the initialization of a new round
         aDiceSet.refresh();
@@ -40,26 +43,44 @@ public class Round {
         // Set the current Ruleset
         aCurrentRuleset = pRuleset;
 
-        // Calculate all initially removable DiceCombos from the refreshed DiceSet
-        aRemovableDiceCombos = returnRemovableDiceCombos();
-
-        // Determine if first throw was a null roll
-        aNull = isNull();
-
         // Show the initial roll
+        System.out.println(String.format("Fresh round initialized with ruleset %s", aCurrentRuleset.returnName()));
         System.out.println(aDiceSet);
 
     }
 
     /**
-     *
+     * Set a InputParser for the Round instance
+     */
+    public void setParser(InputParser pInputParser) {
+        aParser = pInputParser;
+    }
+
+    /**
+     * Set a DiceSet for the Round instance
+     */
+    public void setDiceSet(DiceSet pDiceSet) {
+        aDiceSet = pDiceSet;
+    }
+
+    /**
+     * Play a round consisting of a Ruleset and a fresh set of Dice
      * @return An integer with the total of points
      */
     public int playRound() {
 
+        // At the start of the round, refresh the DiceSet
+        aDiceSet.refresh();
+
         int pointsTotal = 0;
 
         boolean isTutto = false;
+
+        // Re Roll all Dice at the start of the Round
+        aDiceSet.rollRemaining();
+
+        // Determine the initial valid combinations
+        List<DiceCombo> aRemovableDiceCombos = returnRemovableDiceCombos();
 
         // Determine if the current roll is a null
         aNull = isNull();
@@ -86,8 +107,17 @@ public class Round {
                 aRemovableDiceCombos = returnRemovableDiceCombos();
                 // Add the removed DiceSet to the aRolledDiceSet
                 aRolledDiceCombos.add(toRemove);
-                // Ask player if he wants to remove another DiceCombo
-                keepRemoving = aParser.askKeepRemoving();
+
+                // If there are more removable combos, show him and ask if he wants to remove more
+                // Otherwise inform that there are no more combos to remove and the remaining dice are rerolled
+                if (aRemovableDiceCombos.size() > 0) {
+                    System.out.println("Your remaining dice:");
+                    System.out.println(aDiceSet);
+                    keepRemoving = aParser.askKeepRemoving();
+                } else {
+                    System.out.println("No more combinations to remove");
+                }
+
             }
 
             // - After removing is done, check if is Tutto (if there are no remaining Dice)
@@ -95,6 +125,7 @@ public class Round {
             if (aDiceSet.getSizeLeft() == 0) {
                 isTutto = true;
             } else {
+                System.out.println("Re-rolling remaining dice ...");
                 aDiceSet.rollRemaining();
                 aNull = isNull();
             }

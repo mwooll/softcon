@@ -4,11 +4,10 @@ import die.DiceCombo;
 
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class DebugParser implements InputParser {
+public class DefaultParser implements InputParser {
 
     private final Scanner aScanner;
     private final PrintStream aPrintStream;
@@ -16,7 +15,7 @@ public class DebugParser implements InputParser {
     /**
      * Default Constructor which uses System.in and System.out
      */
-    public DebugParser() {
+    public DefaultParser() {
         aScanner = new Scanner(System.in);
         aPrintStream = System.out;
     }
@@ -24,7 +23,7 @@ public class DebugParser implements InputParser {
     /**
      * Constructor where input and output stream can be specified for tests
      */
-    public DebugParser(InputStream pInputStream, PrintStream pPrintStream) {
+    public DefaultParser(InputStream pInputStream, PrintStream pPrintStream) {
         aScanner = new Scanner(pInputStream);
         aPrintStream = pPrintStream;
     }
