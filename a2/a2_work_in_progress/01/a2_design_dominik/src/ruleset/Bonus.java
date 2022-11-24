@@ -20,11 +20,15 @@ public class Bonus extends Ruleset {
         setValidCombos();
     }
 
+    @Override
     public String returnName() {return String.format("BONUS %s", aBonusPoints);}
+
+    @Override
     public String explainRules() {
         return String.format("The BONUS card gives an extra %s points if a Tutto is accomplished", aBonusPoints);
     };
 
-    public int handleTutto() {return aBonusPoints;}
+    @Override
+    public int handleTutto(int pPoints) {return pPoints + aBonusPoints;}
 
 }

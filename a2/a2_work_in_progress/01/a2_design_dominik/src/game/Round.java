@@ -11,6 +11,8 @@ public class Round {
     /**
      * Represents a part of a players turn, one fresh DiceSet and one current Ruleset
      * Ends either when a Tutto happens or when a NULL is rolled
+     *
+     * todo: Does Round need an int aPreviousScore? For the x2 card?
      */
 
     private boolean aNull = false;
@@ -104,18 +106,20 @@ public class Round {
             System.out.println("Your roll was a null, calculating points and ending the turn");
         }
 
+        // independently of null or tutto, sum up the rolled points
+        int pointsRoll = aCurrentRuleset.sumUpPoints(aRolledDiceCombos);
+        System.out.println(String.format("Your rolls scored you %s points", pointsRoll));
+        pointsTotal += pointsRoll;
+
         // inform if Tutto
         if (isTutto) {
             System.out.println("You accomplished a Tutto, calculating points and ending the turn");
-            int pointsTutto = aCurrentRuleset.handleTutto();
+            int pointsTutto = aCurrentRuleset.handleTutto(pointsTotal);
             System.out.println(String.format("Your Tutto scored you %s points", pointsTutto));
             pointsTotal += pointsTutto;
         }
 
-        // either when null or when tutto sum up the points
-        int pointsRound = aCurrentRuleset.sumUpPoints(aRolledDiceCombos);
-        System.out.println(String.format("Your rolls scored you %s points", pointsRound));
-        pointsTotal += pointsRound;
+
 
         // return the points
         System.out.println(String.format("Your total round scored you %s points", pointsTotal));

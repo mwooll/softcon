@@ -73,8 +73,9 @@ public abstract class Ruleset {
 
     /**
      * Specify the amounts of points to add when a Tutto happens
+     * Receives the current points in case an operation on those points is needed
      */
-    public int handleTutto(){
+    public int handleTutto(int pPoints){
         return 0;
     };
 

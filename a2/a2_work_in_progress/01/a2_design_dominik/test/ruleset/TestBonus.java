@@ -35,7 +35,7 @@ class TestBonus {
         int pBonusPoints = 100;
         Ruleset rs = new Bonus(pBonusPoints);
 
-        assertEquals(100, rs.handleTutto());
+        assertEquals(100, rs.handleTutto(0));
 
     }
 

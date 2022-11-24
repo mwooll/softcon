@@ -6,18 +6,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 
-public class Straight {
+public class Straight extends Ruleset {
 
     protected List<DiceCombo> aValidCombos = new ArrayList<>();
 
+    @Override
     public String returnName() {return "STRAIGHT";}
 
+    @Override
     public String explainRules() {
         return "You have to accomplish a 'Straight', which consists of the numbers: 1, 2, 3, 4, 5, 6. "
                 + "You may not end your turn prematurely and rolling a Null scores you no points. "
                 + "But if you accomplish a 'Straight' you get 2000 points and may continue.";
     }
 
+    @Override
     public void setValidCombos() {
         aValidCombos.add(DiceCombo.SINGLE_ONE);
         aValidCombos.add(DiceCombo.SINGLE_TWO);
@@ -32,6 +35,7 @@ public class Straight {
         setValidCombos();
     }
 
+    @Override
     public int sumUpPoints(List<DiceCombo> pListDiceCombo) {
         if (aValidCombos.size() != 0) {return 0;}
 
@@ -39,6 +43,7 @@ public class Straight {
         return 2000;
     }
 
+    @Override
     // 0 bonus points for a Tutto
-    public int handleTutto() { return 0; }
+    public int handleTutto(int pPoints) { return 0; }
 }
