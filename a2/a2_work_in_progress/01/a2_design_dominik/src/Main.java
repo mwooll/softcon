@@ -28,10 +28,12 @@ public class Main {
 //        Ruleset rs = new Bonus(200);
 //        Ruleset rs = new Fireworks();
 //        Ruleset rs = new Cloverleaf();
-//        Round round = new Round(rs);
+        Ruleset rs = new PlusMinus();
+        Round round = new Round(rs);
 //        round.setDiceSet(DiceSet.getDebug());
-//
-//        int mypoints = round.playRound();
+        round.setDiceSet(DiceSet.get());
+
+        int mypoints = round.playRound();
 
 
 

@@ -10,20 +10,23 @@ public enum DiceCombo implements Iterable<DieValue> {
     /**
      * Represents all possible Combinations the Dice can form according to the game rules
      * Since the whole game has the same association of Combo and Points, the respective points are hardcoded here
+     * The order does matter! For Fireworks, always the most top DiceCombo gets chosen
+     *
+     * todo: STRAIGHT is not needed?
      */
 
+    TRIPLET_ONE(new ArrayList<>(List.of(DieValue.ONE,DieValue.ONE,DieValue.ONE)), 1000),
+    TRIPLET_SIX(new ArrayList<>(List.of(DieValue.SIX,DieValue.SIX,DieValue.SIX)),600),
+    TRIPLET_FIVE(new ArrayList<>(List.of(DieValue.FIVE,DieValue.FIVE,DieValue.FIVE)), 500),
+    TRIPLET_FOUR(new ArrayList<>(List.of(DieValue.FOUR,DieValue.FOUR,DieValue.FOUR)), 400),
+    TRIPLET_THREE(new ArrayList<>(List.of(DieValue.THREE,DieValue.THREE,DieValue.THREE)), 300),
+    TRIPLET_TWO(new ArrayList<>(List.of(DieValue.TWO,DieValue.TWO,DieValue.TWO)), 200),
     SINGLE_ONE(new ArrayList<>(List.of(DieValue.ONE)), 100),
+    SINGLE_FIVE(new ArrayList<>(List.of(DieValue.FIVE)), 50),
     SINGLE_TWO(new ArrayList<>(List.of(DieValue.TWO)), 0),
     SINGLE_THREE(new ArrayList<>(List.of(DieValue.THREE)), 0),
     SINGLE_FOUR(new ArrayList<>(List.of(DieValue.FOUR)), 0),
-    SINGLE_FIVE(new ArrayList<>(List.of(DieValue.FIVE)), 50),
     SINGLE_SIX(new ArrayList<>(List.of(DieValue.SIX)), 0),
-    TRIPLET_ONE(new ArrayList<>(List.of(DieValue.ONE,DieValue.ONE,DieValue.ONE)), 1000),
-    TRIPLET_TWO(new ArrayList<>(List.of(DieValue.TWO,DieValue.TWO,DieValue.TWO)), 200),
-    TRIPLET_THREE(new ArrayList<>(List.of(DieValue.THREE,DieValue.THREE,DieValue.THREE)), 300),
-    TRIPLET_FOUR(new ArrayList<>(List.of(DieValue.FOUR,DieValue.FOUR,DieValue.FOUR)), 400),
-    TRIPLET_FIVE(new ArrayList<>(List.of(DieValue.FIVE,DieValue.FIVE,DieValue.FIVE)), 500),
-    TRIPLET_SIX(new ArrayList<>(List.of(DieValue.SIX,DieValue.SIX,DieValue.SIX)),600),
     STRAIGHT(new ArrayList<>(List.of(DieValue.ONE,DieValue.TWO,DieValue.THREE,DieValue.FOUR,DieValue.FIVE,DieValue.SIX)), 0);
 
     private final List<DieValue> aListDieValues = new ArrayList<>();

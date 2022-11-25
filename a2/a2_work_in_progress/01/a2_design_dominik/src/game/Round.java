@@ -58,7 +58,6 @@ public class Round {
 
         // Show the initial roll
         System.out.println(String.format("Fresh round initialized with ruleset %s", aCurrentRuleset.returnName()));
-        System.out.println(aDiceSet);
 
     }
 
@@ -108,14 +107,36 @@ public class Round {
             System.out.println(aDiceSet);
 
             // - Ask player if stop or continue
-            if (aParser.askStop()) {break;}
+            if (aMustContinue) {
+                System.out.println("The current ruleset does not let you stop, you have to try to accomplish a Tutto");
+            } else {
+                if (aParser.askStop()) {break;}
+            }
 
             // - Ask player which DiceCombo to remove, only possible if there are DiceCombos to remove
             boolean keepRemoving = true;
             while (keepRemoving && !isNull()) {
                 System.out.println("Your remaining dice:");
                 System.out.println(aDiceSet);
-                DiceCombo toRemove = aParser.askWhichRemove(aRemovableDiceCombos);
+
+                // Either remove DiceCombos automatically or ask player
+                // First show all removable combos
+                System.out.println("Combinations currently possible to remove:");
+                for (DiceCombo dicecombo : aRemovableDiceCombos) {
+                    System.out.println(String.format("%s", dicecombo));
+                }
+
+                DiceCombo toRemove;
+                if (aMustRemoveAll) {
+                    if (aRemovableDiceCombos.size() == 0) {
+                        System.out.println("debug");
+                    }
+                    toRemove = aRemovableDiceCombos.get(0);
+                    System.out.println(String.format("The current ruleset forces you to remove all possible combinations, removing %s", toRemove));
+                } else {
+                    toRemove = aParser.askWhichRemove(aRemovableDiceCombos);
+                }
+
                 // Remove that DiceCombo from the DiceSet, refresh the removable DiceCombos
                 for (DieValue dievalue : toRemove) {
                     aDiceSet.moveDie(dievalue);
@@ -126,25 +147,28 @@ public class Round {
                 // Add the removed DiceSet to the aRolledDiceSet
                 aRolledDiceCombos.add(toRemove);
 
-                // If there are more removable combos, show him and ask if he wants to remove more
+                // If there are more removable combos, show him and ask if he wants to remove more, or remove silently depending on ruleset
                 // Otherwise inform that there are no more combos to remove and the remaining dice are rerolled
                 if (aRemovableDiceCombos.size() > 0) {
-                    System.out.println("Your remaining dice:");
-                    System.out.println(aDiceSet);
-                    keepRemoving = aParser.askKeepRemoving();
+                    if (!aMustRemoveAll) {
+                        System.out.println("Your remaining dice:");
+                        System.out.println(aDiceSet);
+                        keepRemoving = aParser.askKeepRemoving();
+                    }
                 } else {
                     System.out.println("No more combinations to remove");
                 }
-
             }
 
             // - After removing is done, check if is Tutto (if there are no remaining Dice)
-            // - otherwise roll remaining Dice
+            // - otherwise roll remaining Dice and check removable combos
             if (aDiceSet.getSizeLeft() == 0) {
                 isTutto = true;
             } else {
                 System.out.println("Re-rolling remaining dice ...");
                 aDiceSet.rollRemaining();
+                System.out.println(aDiceSet);
+                aRemovableDiceCombos = returnRemovableDiceCombos();
                 aNull = isNull();
             }
 
