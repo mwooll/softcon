@@ -18,7 +18,21 @@ public enum CardType {
     BONUS500(new Bonus(500)),
     BONUS600(new Bonus(600)),
 
-    STOP(new Stop());
+    STOP(new Stop()),
+
+    CLOVERLEAF(new Cloverleaf()),
+
+    FIREWORKS(new Fireworks()),
+
+    PLUSMINUS(new PlusMinus()),
+
+    STRAIGHT(new Cloverleaf()),
+
+    X2(new X2());
+
+
+
+
 
     private final Ruleset aRuleset;
 
