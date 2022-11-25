@@ -26,12 +26,13 @@ public class Main {
 //        tmp.forEach(System.out::println);
 
 //        Ruleset rs = new Bonus(200);
+//        Ruleset rs = new Fireworks();
+//        Ruleset rs = new Cloverleaf();
 //        Round round = new Round(rs);
 //        round.setDiceSet(DiceSet.getDebug());
 //
 //        int mypoints = round.playRound();
 
-        Ruleset rs = new Straight();
 
 
     }
