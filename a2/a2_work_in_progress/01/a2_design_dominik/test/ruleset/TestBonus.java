@@ -9,31 +9,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TestBonus {
 
+    int bp = 200;
+    Bonus rs = new Bonus(bp);
+
     @Test
     public void testBonus_name() {
-
-        int pBonusPoints = 200;
-        Ruleset rs = new Bonus(pBonusPoints);
-
-        assertEquals(String.format("BONUS %s", pBonusPoints), rs.returnName());
-
+        assertEquals(String.format("BONUS %s", bp), rs.returnName());
     }
 
     @Test
     public void testBonus_explanation() {
-
-        int pBonusPoints = 200;
-        Ruleset rs = new Bonus(pBonusPoints);
-
-        assertEquals(String.format("The BONUS card gives an extra %s points if a Tutto is accomplished", pBonusPoints), rs.explainRules());
-
+        assertEquals(String.format("The BONUS card gives an extra %s points if a Tutto is accomplished", bp), rs.explainRules());
     }
 
     @Test
     public void testBonus_handleTutto() {
 
-        int pBonusPoints = 100;
-        Ruleset rs = new Bonus(pBonusPoints);
+        int bp = 100;
+        Ruleset rs = new Bonus(bp);
 
         assertEquals(100, rs.handleTutto(0));
 
@@ -42,8 +35,8 @@ class TestBonus {
     @Test
     public void testBonus_handleTutto2() {
 
-        int pBonusPoints = 100;
-        Ruleset rs = new Bonus(pBonusPoints);
+        int bp = 100;
+        Ruleset rs = new Bonus(bp);
 
         assertEquals(100, rs.handleTutto(1000));
 
@@ -52,12 +45,12 @@ class TestBonus {
     @Test
     public void testBonus_invalidConstructor() {
 
-        int pBonusPoints = -100;
+        int bp = -100;
 
         assertThrows(AssertionError.class, new Executable() {
             @Override
             public void execute() throws Throwable {
-                Ruleset rs = new Bonus(pBonusPoints);
+                Ruleset rs = new Bonus(bp);
             }
         });
 

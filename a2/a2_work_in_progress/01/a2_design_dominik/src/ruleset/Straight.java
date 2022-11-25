@@ -8,15 +8,6 @@ import java.util.Collections;
 
 public class Straight extends Ruleset {
 
-    /**
-     * Constructor which initializes a fresh Straight Ruleset
-     */
-    public Straight() {
-        super();
-        aValidCombos.clear();
-        setValidCombos();
-    }
-
     @Override
     public String returnName() {return "STRAIGHT";}
 
@@ -41,11 +32,13 @@ public class Straight extends Ruleset {
      * Straight needs the ability to remove once picked SINGLE combos from the list of valid combos
      * @pre pDiceCombo must be a valid combo in aValidCombos
      */
-    public boolean removeValidCombo(DiceCombo pDiceCombo) {
+    @Override
+    public void removeValidCombo(DiceCombo pDiceCombo) {
         assert pDiceCombo != null;
         assert aValidCombos.contains(pDiceCombo);
 
-        return aValidCombos.remove(pDiceCombo);
+        aValidCombos.remove(pDiceCombo);
+
     }
 
     @Override

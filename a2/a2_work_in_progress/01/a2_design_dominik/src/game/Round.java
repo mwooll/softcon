@@ -3,8 +3,6 @@ package game;
 import die.*;
 import ruleset.*;
 
-import java.io.InputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +11,10 @@ public class Round {
     /**
      * Represents a part of a players turn, one fresh DiceSet and one current Ruleset
      * Ends either when a Tutto happens or when a NULL is rolled
-     *
-     * todo: Does Round need an int aPreviousScore? For the x2 card?
+     * The Round know if the next Round needs a new Ruleset or not
      */
 
-    private boolean aNull = false;
+    private boolean aNeedsNewRuleset = true;
     private InputParser aParser = new DefaultParser();
     private final Ruleset aCurrentRuleset;
     private DiceSet aDiceSet;
@@ -69,12 +66,11 @@ public class Round {
      */
     public int playRound() {
 
+        int pointsTotal = 0;
+        boolean isTutto = false;
+
         // At the start of the round, refresh the DiceSet
         aDiceSet.refresh();
-
-        int pointsTotal = 0;
-
-        boolean isTutto = false;
 
         // Re Roll all Dice at the start of the Round
         aDiceSet.rollRemaining();
@@ -83,7 +79,7 @@ public class Round {
         List<DiceCombo> aRemovableDiceCombos = returnRemovableDiceCombos();
 
         // Determine if the current roll is a null
-        aNull = isNull();
+        boolean aNull = isNull();
 
         while(!aNull && !isTutto) {
 
@@ -104,6 +100,8 @@ public class Round {
                 for (DieValue dievalue : toRemove) {
                     aDiceSet.moveDie(dievalue);
                 }
+                // Remove that DiceCombo from the valid combos of the Ruleset
+                aCurrentRuleset.removeValidCombo(toRemove);
                 aRemovableDiceCombos = returnRemovableDiceCombos();
                 // Add the removed DiceSet to the aRolledDiceSet
                 aRolledDiceCombos.add(toRemove);
@@ -149,8 +147,6 @@ public class Round {
             System.out.println(String.format("Your Tutto scored you %s points", pointsTutto));
             pointsTotal += pointsTutto;
         }
-
-
 
         // return the points
         System.out.println(String.format("Your total round scored you %s points", pointsTotal));

@@ -16,7 +16,12 @@ public abstract class Ruleset {
     // which DiceCombos are valid for the given ruleset?
     protected List<DiceCombo> aValidCombos = new ArrayList<>();
 
-    public Ruleset(){};
+    /**
+     * The default Constructor sets the valid combos for the ruleset
+     */
+    public Ruleset(){
+        setValidCombos();
+    };
 
     /**
      * Return the name of the ruleset
@@ -46,6 +51,11 @@ public abstract class Ruleset {
         aValidCombos.add(DiceCombo.TRIPLET_FIVE);
         aValidCombos.add(DiceCombo.TRIPLET_SIX);
     };
+
+    /**
+     * The default is that nothing happens since only Straight wants to remove valid combos
+     */
+    public void removeValidCombo(DiceCombo pDiceCombo) {}
 
     /**
      * Return a list with all valid DiceCombos for the Ruleset

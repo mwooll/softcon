@@ -31,6 +31,7 @@ public class Main {
 //
 //        int mypoints = round.playRound();
 
+        Ruleset rs = new Straight();
 
 
     }

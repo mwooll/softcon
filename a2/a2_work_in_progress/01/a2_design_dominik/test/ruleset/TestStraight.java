@@ -4,6 +4,7 @@ import die.DiceCombo;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,16 +32,56 @@ class TestStraight {
     }
 
     @Test
-    public void testBonus_handleTutto() {
+    public void test_handleTutto() {
         assertEquals(2000, straight.handleTutto(100));
     }
 
     @Test
-    public void testBonus_sumPoints() {
+    public void test_sumPoints() {
         List<DiceCombo> rolledCombos = new ArrayList<>();
         rolledCombos.add(DiceCombo.SINGLE_ONE);
         rolledCombos.add(DiceCombo.TRIPLET_FIVE);
         assertEquals(0, straight.sumUpPoints(rolledCombos));
+    }
+
+    @Test
+    public void test_removeValidCombos() {
+
+        // Get all valid combos after init of Straight
+        List<DiceCombo> combos = straight.returnValidCombos();
+
+        // Then remove one combo
+        straight.removeValidCombo(DiceCombo.SINGLE_ONE);
+
+        List<DiceCombo> remainingCombos = new ArrayList<>(Arrays.asList(
+             DiceCombo.SINGLE_TWO, DiceCombo.SINGLE_THREE, DiceCombo.SINGLE_FOUR,
+             DiceCombo.SINGLE_FIVE, DiceCombo.SINGLE_SIX
+        ));
+
+        assertEquals(remainingCombos, straight.returnValidCombos());
+
+    }
+
+    @Test
+    public void test_invalid_removeValidCombos() {
+
+        assertThrows(AssertionError.class, () -> straight.removeValidCombo(DiceCombo.TRIPLET_ONE));
+
+    }
+
+    @Test
+    public void test_empty_removeValidCombos() {
+
+        // remove all valid combos
+        straight.removeValidCombo(DiceCombo.SINGLE_ONE);
+        straight.removeValidCombo(DiceCombo.SINGLE_TWO);
+        straight.removeValidCombo(DiceCombo.SINGLE_THREE);
+        straight.removeValidCombo(DiceCombo.SINGLE_FOUR);
+        straight.removeValidCombo(DiceCombo.SINGLE_FIVE);
+        straight.removeValidCombo(DiceCombo.SINGLE_SIX);
+
+        assertThrows(AssertionError.class, () -> straight.removeValidCombo(DiceCombo.SINGLE_ONE));
+
     }
 
 }
