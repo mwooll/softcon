@@ -3,6 +3,11 @@ package ruleset;
 public class Cloverleaf extends Ruleset{
     private int numAchievedTuttos;
 
+    public Cloverleaf() {
+        super();
+        numAchievedTuttos = 0;
+    }
+
     @Override
     public String returnName() {return "CLOVERLEAF";}
 
@@ -11,8 +16,6 @@ public class Cloverleaf extends Ruleset{
         return "Getting two Tuttos back to back will result in an immediate win. " +
                 "You may not end your turn prematurely and rolling a Null scores you no points.";
     }
-
-    public void getDrawn() {numAchievedTuttos = 0;}
 
     /**
      * This needs to be handled by Round/Turn and end the game.

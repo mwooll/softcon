@@ -8,7 +8,14 @@ import java.util.Collections;
 
 public class Straight extends Ruleset {
 
-    protected List<DiceCombo> aValidCombos = new ArrayList<>();
+    /**
+     * Constructor which initializes a fresh Straight Ruleset
+     */
+    public Straight() {
+        super();
+        aValidCombos.clear();
+        setValidCombos();
+    }
 
     @Override
     public String returnName() {return "STRAIGHT";}
@@ -30,20 +37,20 @@ public class Straight extends Ruleset {
         aValidCombos.add(DiceCombo.SINGLE_SIX);
     }
 
-    public void getDrawn() {
-        aValidCombos.clear();
-        setValidCombos();
+    /**
+     * Straight needs the ability to remove once picked SINGLE combos from the list of valid combos
+     * @pre pDiceCombo must be a valid combo in aValidCombos
+     */
+    public boolean removeValidCombo(DiceCombo pDiceCombo) {
+        assert pDiceCombo != null;
+        assert aValidCombos.contains(pDiceCombo);
+
+        return aValidCombos.remove(pDiceCombo);
     }
 
     @Override
-    public int sumUpPoints(List<DiceCombo> pListDiceCombo) {
-        if (aValidCombos.size() != 0) {return 0;}
-
-        // else: every single combo was taken
-        return 2000;
-    }
+    public int sumUpPoints(List<DiceCombo> pListDiceCombo) {return 0;}
 
     @Override
-    // 0 bonus points for a Tutto
-    public int handleTutto(int pPoints) { return 0; }
+    public int handleTutto(int pPoints) { return 2000; }
 }

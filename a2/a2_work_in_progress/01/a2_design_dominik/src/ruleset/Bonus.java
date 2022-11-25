@@ -10,14 +10,9 @@ public class Bonus extends Ruleset {
      * @param pBonusPoints integer specifying how many bonus points
      */
     public Bonus(int pBonusPoints) {
-
         super();
-
         assert pBonusPoints > 0;
-
         aBonusPoints = pBonusPoints;
-
-        setValidCombos();
     }
 
     @Override
