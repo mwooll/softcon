@@ -16,6 +16,16 @@ public class Round {
 
     // Each Round instance has to be able to tell whether a new card should be drawn or not given the current events
     private boolean aNeedsNewRuleset = true;
+
+    // Each Round instance can tell if the leading players must be deducted points
+    private boolean aDecrease = false;
+
+    // Each Round instance can tell if it was a null or not
+    private boolean aIsNull = false;
+
+    // Each Round instance can tell if it was a tutto or not
+    private boolean aIsTutto = false;
+
     // Depending on the Ruleset the player cannot take some decisions himself
     private boolean aMustContinue = false;
     private boolean aMustRemoveAll = false;
@@ -83,7 +93,15 @@ public class Round {
         // Reset the aNeedsNewRuleset to true, that's the default
         aNeedsNewRuleset = true;
 
+        // Reset the aDecrease to false, that's the default
+        aDecrease = false;
+
+        // Reset aIsTutto to false
+        aIsTutto = false;
+
         int pointsTotal = 0;
+
+        // isTutto lives during that round to keep track if we have a tutto while removing combos
         boolean isTutto = false;
 
         // At the start of the round, refresh the DiceSet
@@ -96,9 +114,9 @@ public class Round {
         List<DiceCombo> aRemovableDiceCombos = returnRemovableDiceCombos();
 
         // Determine if the current roll is a null
-        boolean aNull = isNull();
+        aIsNull = rollIsNull();
 
-        while(!aNull && !isTutto) {
+        while(!aIsNull && !isTutto) {
 
             // - Tell player that he has not rolled a null and show him all possible DiceCombos
             System.out.println("Your remaining dice:");
@@ -113,7 +131,7 @@ public class Round {
 
             // - Ask player which DiceCombo to remove, only possible if there are DiceCombos to remove
             boolean keepRemoving = true;
-            while (keepRemoving && !isNull()) {
+            while (keepRemoving && !rollIsNull()) {
                 System.out.println("Your remaining dice:");
                 System.out.println(aDiceSet);
 
@@ -167,14 +185,25 @@ public class Round {
                 aDiceSet.rollRemaining();
                 System.out.println(aDiceSet);
                 aRemovableDiceCombos = returnRemovableDiceCombos();
-                aNull = isNull();
+                aIsNull = rollIsNull();
             }
 
         }
 
         // inform if null
-        if (aNull) {
+        if (aIsNull) {
             System.out.println("Your roll was a null, calculating points and ending the turn");
+        }
+
+        // inform if Tutto
+        if (isTutto) {
+            System.out.println("You accomplished a Tutto, calculating points and ending the round");
+            aIsTutto = true;
+        }
+
+        // inform if neither null nor tutto
+        if (!aIsNull && !aIsTutto) {
+            System.out.println("You ended your turn voluntarily, calculating points and ending the turn");
         }
 
         // independently of null or tutto, sum up the rolled points
@@ -182,9 +211,7 @@ public class Round {
         System.out.println(String.format("Your rolls scored you %s points", pointsRoll));
         pointsTotal += pointsRoll;
 
-        // inform if Tutto
         if (isTutto) {
-            System.out.println("You accomplished a Tutto, calculating points and ending the round");
             int pointsTutto = aCurrentRuleset.handleTutto(pointsTotal);
             System.out.println(String.format("Your Tutto scored you %s points", pointsTutto));
             pointsTotal += pointsTutto;
@@ -209,7 +236,8 @@ public class Round {
         Inform the player if a PlusMinus deducts points
          */
         if (isTutto && aCurrentRuleset.returnName().equals("PLUS/MINUS")) {
-            System.out.println("You socred a Tutto while PLUS/MINUS is uncovered. The leading player will have 1000 points deducted.");
+            System.out.println("You scored a Tutto while PLUS/MINUS is uncovered. The leading player will have 1000 points deducted.");
+            aDecrease = true;
         }
 
         // return the points
@@ -217,9 +245,6 @@ public class Round {
         return pointsTotal;
     }
 
-    /**
-     * Ask
-     */
 
     /**
      * Given the current state of the DiceSet and the Ruleset, return all possible DiceCombos which can be removed
@@ -242,7 +267,7 @@ public class Round {
     /**
      * Given the current state of a DiceSet and the current Ruleset, determine if DiceSet is a NULL roll
      */
-    private boolean isNull() {
+    private boolean rollIsNull() {
         return returnRemovableDiceCombos().size() == 0;
     }
 
@@ -250,5 +275,20 @@ public class Round {
      * Return based on the current state if a new Card should be drawn
      */
     public boolean drawNewCard () {return aNeedsNewRuleset;}
+
+    /**
+     * Return based on the current state if the leading players must be deducted points
+     */
+    public boolean decreasePoints() {return aDecrease;}
+
+    /**
+     * Return based on the current state if the Round is a null
+     */
+    public boolean isNull() {return aIsNull;}
+
+    /**
+     * Return based on the current state if the Round is a Tutto
+     */
+    public boolean isTutto() {return aIsTutto;}
 
 }

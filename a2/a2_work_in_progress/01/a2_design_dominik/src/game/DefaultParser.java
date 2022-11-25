@@ -46,6 +46,30 @@ public class DefaultParser implements InputParser {
 
     }
 
+    private boolean askRollDisplay(String pQuestion, String pWarning) {
+
+        while(true) {
+            aPrintStream.println(pQuestion);
+            String answer = aScanner.nextLine();
+
+            if (answer.equals("R") || answer.equals("D")) {
+                return answer.equals("D");
+            }
+
+            aPrintStream.println(pWarning);
+        }
+
+    }
+
+    public boolean askDisplayScore() {
+        return askRollDisplay("Do you want to start rolling the dice (R) or display the score (D)? R/D", "Please type R for rolling dice, D for displaying the score");
+    };
+
+
+    public boolean askStopAfterTutto() {
+        return askYesNo("You accomplished a Tutto, do you want to stop your whole turn? J/N", "Please type in J or N");
+    }
+
     public boolean askStop() {
         return askYesNo("Do you want to stop your round? J/N", "Please type in J or N");
     }

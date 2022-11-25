@@ -19,7 +19,6 @@ public class DeckSpec implements Iterable<CardType> {
     public DeckSpec(boolean pDebug) {
 
         if (pDebug) {
-            aCardList.put(CardType.BONUS200, 1);
             aCardList.put(CardType.STOP, 1);
         } else {
             aCardList.put(CardType.BONUS200, 5);

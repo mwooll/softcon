@@ -11,6 +11,16 @@ public interface InputParser {
      */
 
     /**
+     * At the beginning of the turn, ask if the player wants to see the Score or play a round
+     */
+    boolean askDisplayScore();
+
+    /**
+     * Asking the player if he wants to start another round after a tutto
+     */
+    boolean askStopAfterTutto();
+
+    /**
      * Asking the player if he wants to start removing combos or stop his round
      */
     boolean askStop();

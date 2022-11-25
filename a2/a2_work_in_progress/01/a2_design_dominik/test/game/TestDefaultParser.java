@@ -72,6 +72,36 @@ class TestDefaultParser {
     }
 
     @Test
+    public void test_askDisplayScore_Display() {
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("D\n".getBytes());
+        InputParser ip = new DefaultParser(inputStream, System.out);
+
+        assertTrue(ip.askDisplayScore());
+
+    }
+
+    @Test
+    public void test_askDisplayScore_Roll() {
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("R\n".getBytes());
+        InputParser ip = new DefaultParser(inputStream, System.out);
+
+        assertFalse(ip.askDisplayScore());
+
+    }
+
+    @Test
+    public void test_askDisplayScore_invalid_Display() {
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("Invalid\nR\n".getBytes());
+        InputParser ip = new DefaultParser(inputStream, System.out);
+
+        assertFalse(ip.askDisplayScore());
+
+    }
+
+    @Test
     public void test_askWhichRemove_assertion_empty() {
 
         InputParser ip = new DefaultParser();

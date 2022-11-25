@@ -1,4 +1,5 @@
 import die.DiceSet;
+import game.Game;
 import game.Round;
 import ruleset.*;
 
@@ -25,17 +26,20 @@ public class Main {
 //
 //        tmp.forEach(System.out::println);
 
-//        Ruleset rs = new Bonus(200);
-//        Ruleset rs = new Fireworks();
-//        Ruleset rs = new Cloverleaf();
-        Ruleset rs = new PlusMinus();
-        Round round = new Round(rs);
-//        round.setDiceSet(DiceSet.getDebug());
-        round.setDiceSet(DiceSet.get());
+////        Ruleset rs = new Bonus(200);
+////        Ruleset rs = new Fireworks();
+////        Ruleset rs = new Cloverleaf();
+//        Ruleset rs = new PlusMinus();
+//        Round round = new Round(rs);
+////        round.setDiceSet(DiceSet.getDebug());
+//        round.setDiceSet(DiceSet.get());
+//
+//        int mypoints = round.playRound();
 
-        int mypoints = round.playRound();
 
-
+        // init a game wihtout debug
+        Game g = new Game(false);
+        g.playTurn("p1");
 
     }
 }
