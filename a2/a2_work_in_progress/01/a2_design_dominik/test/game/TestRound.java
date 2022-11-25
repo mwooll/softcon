@@ -66,7 +66,7 @@ class TestRound {
     }
 
     @Test
-    public void test_playRound_Tutto() {
+    public void test_playRound_Bonus_Tutto() {
 
         /*
          * N - don't stop

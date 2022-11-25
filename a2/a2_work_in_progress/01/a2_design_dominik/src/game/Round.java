@@ -12,8 +12,12 @@ public class Round {
      * Represents a part of a players turn, one fresh DiceSet and one current Ruleset
      * Ends either when a Tutto happens or when a NULL is rolled
      * The Round know if the next Round needs a new Ruleset or not
+     *
+     * todo: Fireworks: Player cannot chose to stop or only remove one combo
+     * todo: PlusMinus, Cloverleaf: Player cannot chose to stop, but can remove single combos
      */
 
+    // Each Round instance has to be able to tell whether a new card should be drawn or not given the current events
     private boolean aNeedsNewRuleset = true;
     private InputParser aParser = new DefaultParser();
     private final Ruleset aCurrentRuleset;
@@ -62,9 +66,13 @@ public class Round {
 
     /**
      * Play a round consisting of a Ruleset and a fresh set of Dice
+     * At the end, the Round instance checks if it should prohibit a new Card being drawn
      * @return An integer with the total of points
      */
     public int playRound() {
+
+        // Reset the aNeedsNewRuleset to true, that's the default
+        aNeedsNewRuleset = true;
 
         int pointsTotal = 0;
         boolean isTutto = false;
@@ -148,6 +156,21 @@ public class Round {
             pointsTotal += pointsTutto;
         }
 
+        /*
+        When finishing the round, determine if the constellation of Ruleset when Tutto is such that
+        we don't want a new card to be drawn
+         */
+        if (isTutto) {
+            if (aCurrentRuleset.returnName().equals("FIREWORKS")) {
+                System.out.println("You scored a Tutto while FIREWORKS is uncovered. The Card stays and you keep rolling!");
+                aNeedsNewRuleset = false;
+            }
+            if (aCurrentRuleset.returnName().equals("CLOVERLEAF")) {
+                System.out.println("You scored a Tutto while CLOVERLEAF is uncovered.\nThe card stays, if you roll another Tutto you win the game!");
+                aNeedsNewRuleset = false;
+            }
+        }
+
         // return the points
         System.out.println(String.format("Your total round scored you %s points", pointsTotal));
         return pointsTotal;
@@ -177,5 +200,10 @@ public class Round {
     private boolean isNull() {
         return returnRemovableDiceCombos().size() == 0;
     }
+
+    /**
+     * Return based on the current state if a new Card should be drawn
+     */
+    public boolean drawNewCard () {return aNeedsNewRuleset;}
 
 }

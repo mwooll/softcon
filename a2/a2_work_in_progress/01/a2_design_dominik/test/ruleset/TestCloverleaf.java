@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TestCloverleaf {
 
-    Cloverleaf cloverleaf = new Cloverleaf();
+    Ruleset cloverleaf = new Cloverleaf();
 
     @Test
     public void test_name() {

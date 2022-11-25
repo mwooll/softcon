@@ -1,9 +1,12 @@
 package ruleset;
 
+import die.DiceCombo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import ruleset.Bonus;
 import ruleset.Ruleset;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -53,6 +56,18 @@ class TestBonus {
                 Ruleset rs = new Bonus(bp);
             }
         });
+
+    }
+
+    @Test
+    public void test_removal() {
+
+        // the list of valid combos should remain unchanged
+        List<DiceCombo> preList = rs.returnValidCombos();
+        rs.removeValidCombo(DiceCombo.SINGLE_ONE);
+        List<DiceCombo> postList = rs.returnValidCombos();
+
+        assertEquals(preList, postList);
 
     }
 
