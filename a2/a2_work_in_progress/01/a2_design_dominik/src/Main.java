@@ -38,7 +38,7 @@ public class Main {
 
 
         // init a game wihtout debug
-        Game g = new Game(false);
+        Game g = new Game(true);
         g.playTurn("p1");
 
     }

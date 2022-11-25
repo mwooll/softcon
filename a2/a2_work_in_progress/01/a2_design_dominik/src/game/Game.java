@@ -1,5 +1,6 @@
 package game;
 import card.*;
+import die.DiceSet;
 import ruleset.Ruleset;
 
 public class Game {
@@ -8,6 +9,8 @@ public class Game {
      * The Game class orchestrates the whole game. It is responsible for
      * initializing the players
      * play turn
+     *
+     * todo: remove debugging boolean after finished
      */
 
     private final int N_PLAYERS = 2;
@@ -17,6 +20,8 @@ public class Game {
     private Tableau aTableau = new Tableau();
     private InputParser aParser = new DefaultParser();
 
+    private boolean aDebug; // remove later
+
     /**
      * Constructor does initialize the game
      */
@@ -24,13 +29,14 @@ public class Game {
 
         // for debugging, add one player
         aTableau.add("p1");
+        aDebug = pDebug;
 
         // initialize a tableau
         // ask how many players
         // ask players names
         // add each player to tableau
 
-        // Debug Deck with less cards
+        // Debug Deck in DeckSpec with fewer cards
         aDeck = new Deck(pDebug);
         aDiscardPile = new DiscardPile();
 
@@ -95,13 +101,36 @@ public class Game {
         turnCurrentCard = aDeck.draw();
         turnCurrentRuleset = turnCurrentCard.returnCardType().getRuleset();
 
-        System.out.println(String.format("Revealed a %s card with ruleset %s", turnCurrentCard.returnCardType(), turnCurrentRuleset.returnName()));
+        System.out.println(String.format("Starting Turn with a %s card with ruleset %s", turnCurrentCard.returnCardType(), turnCurrentRuleset.returnName()));
 
         // init the round instance
+        // todo: Check that a new Round always answers drawNewCard() with false!
         turnCurrentRound = new Round(turnCurrentRuleset);
+
+        // debugging only
+        if (aDebug) {
+            turnCurrentRound.setDiceSet(DiceSet.getDebug());
+        }
 
         // play as many round as possible
         while (true) {
+
+            // Check with the current round if we need to draw a new Card.
+            // if so, draw a card and create new Round instance
+            // Only do that if it's not the first round of the turn
+            if (turnCounter > 0 && turnCurrentRound.drawNewCard()) {
+                System.out.println("Drawing new card ...");
+                turnCurrentCard = aDeck.draw();
+                turnCurrentRuleset = turnCurrentCard.returnCardType().getRuleset();
+                System.out.println(String.format("Starting Turn with a %s card with ruleset %s", turnCurrentCard.returnCardType(), turnCurrentRuleset.returnName()));
+                turnCurrentRound = new Round(turnCurrentRuleset);
+
+                // debugging only
+                if (aDebug) {
+                    turnCurrentRound.setDiceSet(DiceSet.getDebug());
+                }
+
+            }
 
             turnCounter += 1;
             turnScore += turnCurrentRound.playRound();
@@ -131,7 +160,10 @@ public class Game {
 
         }
 
+        // Update scores
         aTableau.update(pPlayerName, turnScore);
+
+        // Check with the round
 
         System.out.println("Turn ended, current score:");
         aTableau.printTableau();

@@ -26,7 +26,7 @@ public enum CardType {
 
     PLUSMINUS(new PlusMinus()),
 
-    STRAIGHT(new Cloverleaf()),
+    STRAIGHT(new Straight()),
 
     X2(new X2());
 

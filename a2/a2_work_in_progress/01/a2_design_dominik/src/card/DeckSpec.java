@@ -8,6 +8,8 @@ public class DeckSpec implements Iterable<CardType> {
     /**
      * A card.DeckSpec is a specific setup of Cardtypes for the card.Deck to initialize
      * It contains CardTypes and respective Numbers
+     *
+     * todo: Create method allowing to create custom DeckSpecs for testing
      */
 
     private final HashMap<CardType, Integer> aCardList = new HashMap<CardType, Integer>();
@@ -19,7 +21,9 @@ public class DeckSpec implements Iterable<CardType> {
     public DeckSpec(boolean pDebug) {
 
         if (pDebug) {
-            aCardList.put(CardType.STOP, 1);
+            // aCardList.put(CardType.STOP, 1);
+            aCardList.put(CardType.BONUS300, 1);
+            aCardList.put(CardType.CLOVERLEAF, 1);
         } else {
             aCardList.put(CardType.BONUS200, 5);
             aCardList.put(CardType.BONUS300, 5);
