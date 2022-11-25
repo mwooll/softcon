@@ -10,7 +10,7 @@ import ruleset.Default;
 class TestDiscardPile {
 
     DiscardPile discardPile = new DiscardPile();
-    Card card = new Card(new Default());
+    Card card = new Card(CardType.DEFAULT);
 
     @Test
     public void testCreation() {
@@ -27,7 +27,7 @@ class TestDiscardPile {
     public void testPeek() {
         discardPile.add(card);
         Card cardPeek = discardPile.peek();
-        assertEquals(card.returnName(), cardPeek.returnName());
+        assertEquals(card.returnCardType(), cardPeek.returnCardType());
     }
 
     @Test

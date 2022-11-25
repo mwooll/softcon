@@ -12,19 +12,10 @@ public class TestCard {
 
     @Test
     public void testBonus600() {
-        Ruleset rs = new Bonus(600);
-        Card card = new Card(rs);
+        CardType ct = CardType.BONUS600;
+        Card card = new Card(ct);
 
-        assertEquals("BONUS 600", card.returnName());
-
-    }
-
-    @Test
-    public void testStop() {
-        Ruleset rs = new Stop();
-        Card card = new Card(rs);
-
-        assertEquals("STOP", card.returnName());
+        assertEquals(CardType.BONUS600, card.returnCardType());
 
     }
 

@@ -5,24 +5,24 @@ import ruleset.Ruleset;
 public class Card {
 
     /**
-     * A card.Card represents on of the Cards which the player
+     * A Card represents on of the Cards which the player
      * can draw from the pile.
-     * A card.Card has a ruleset.Ruleset
+     * A Card has a CardType attached to it
      */
 
-    private final Ruleset aRuleset;
+    private CardType aCardType;
 
-    public Card(Ruleset pRuleset) {
-        aRuleset = pRuleset;
+    public Card(CardType pCardType) {
+        aCardType = pCardType;
     }
 
     /**
      * Copy Constructor to return a new instance which is a deep copy
      */
     public Card(Card pCard) {
-        aRuleset = pCard.aRuleset;
+        aCardType = pCard.aCardType;
     }
 
-    public String returnName() {return aRuleset.returnName();}
+    public CardType returnCardType() {return aCardType;}
 
 }

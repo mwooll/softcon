@@ -30,12 +30,10 @@ public class Deck {
         for (CardType ct : pDeckSpec) {
             // card.DeckSpec specifies how many Cards of card.CardType ct
             Integer ctCount = pDeckSpec.getCount(ct);
-            // each card.CardType has an associated ruleset.Ruleset
-            Ruleset ctRuleset = ct.getRuleset();
 
-            // create the needed amount of Cards
+            // create the needed amount of Cards with CardType ct
             for (int i = 0; i < ctCount; i++) {
-                aCards.add(new Card(ctRuleset));
+                aCards.add(new Card(ct));
             }
         }
 
