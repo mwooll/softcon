@@ -12,6 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class TestRound {
 
 
+    Ruleset rsPlusMinus = new PlusMinus();
+    Ruleset rsCloverleaf = new Cloverleaf();
+    Ruleset rsFireworks = new Fireworks();
     Ruleset rsBonus = new Bonus(200);
     Ruleset rsDefault = new Default();
 
@@ -45,11 +48,11 @@ class TestRound {
     public void test_playRound_StopAfterOne() {
 
         /*
-         * don't stop
-         * remove first option
-         * decline removing more
+         * N - don't stop
+         * 1 - remove first option = TRIPLET_ONE
+         * N - decline removing more
          * (reroll dice)
-         * stop
+         * J - stop
          */
 
         Round roundBonus = new Round(rsBonus);
@@ -61,7 +64,7 @@ class TestRound {
         roundBonus.setDiceSet(DiceSet.getDebug());
         roundBonus.setParser(ip);
 
-        assertEquals(100,roundBonus.playRound());
+        assertEquals(1000,roundBonus.playRound());
 
     }
 
@@ -70,14 +73,14 @@ class TestRound {
 
         /*
          * N - don't stop
-         * 2 - remove second option (TRIPLET_ONE)
+         * 1 - remove first option (TRIPLET_ONE)
          * J - remove more
-         * 2 - remove second option (TRIPLET_ONE)
+         * 1 - remove first option (TRIPLET_ONE)
          */
 
         Round roundBonus = new Round(rsBonus);
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream("N\n2\nJ\n2\n".getBytes());
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("N\n1\nJ\n1\n".getBytes());
         InputParser ip = new DefaultParser(inputStream, System.out);
 
         // Set debug DiceSet and Parser in the Round instance
@@ -85,6 +88,63 @@ class TestRound {
         roundBonus.setParser(ip);
 
         assertEquals(2200,roundBonus.playRound());
+
+    }
+
+    @Test
+    public void test_playRound_Fireworks() {
+
+
+        Round roundFireworks = new Round(rsFireworks);
+
+        roundFireworks.setDiceSet(DiceSet.getDebug());
+
+        assertEquals(2000,roundFireworks.playRound());
+
+    }
+
+    @Test
+    public void test_playRound_Cloverleaf() {
+
+        /*
+         * cant stop
+         * 1 - remove first option (TRIPLET_ONE)
+         * J - remove more
+         * 1 - remove first option (TRIPLET_ONE)
+         */
+
+        Round roundCloverleaf = new Round(rsCloverleaf);
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("1\nJ\n1\n".getBytes());
+        InputParser ip = new DefaultParser(inputStream, System.out);
+
+        roundCloverleaf.setDiceSet(DiceSet.getDebug());
+        roundCloverleaf.setParser(ip);
+
+        assertEquals(2000,roundCloverleaf.playRound());
+
+    }
+
+
+    @Test
+    public void test_playRound_PlusMinus() {
+
+        /*
+         * cant stop
+         * 1 - remove first option (TRIPLET_ONE)
+         * J - remove more
+         * 1 - remove first option (TRIPLET_ONE)
+         */
+
+        Round roundPlusMinus = new Round(rsPlusMinus);
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("1\nJ\n1\n".getBytes());
+        InputParser ip = new DefaultParser(inputStream, System.out);
+
+        roundPlusMinus.setDiceSet(DiceSet.getDebug());
+        roundPlusMinus.setParser(ip);
+
+        assertEquals(1000,roundPlusMinus.playRound());
 
     }
 

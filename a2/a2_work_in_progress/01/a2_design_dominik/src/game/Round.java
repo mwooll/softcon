@@ -12,8 +12,6 @@ public class Round {
      * Represents a part of a players turn, one fresh DiceSet and one current Ruleset
      * Ends either when a Tutto happens or when a NULL is rolled
      * The Round know if the next Round needs a new Ruleset or not
-     * todo: Fireworks: Player cannot chose to stop or only remove one combo
-     * todo: PlusMinus, Cloverleaf: Player cannot chose to stop, but can remove single combos
      */
 
     // Each Round instance has to be able to tell whether a new card should be drawn or not given the current events

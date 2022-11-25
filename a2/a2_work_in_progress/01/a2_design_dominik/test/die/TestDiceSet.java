@@ -120,7 +120,7 @@ class TestDiceSet {
 
     @Test
     public void test_returnCombos() {
-        List<DiceCombo> expected = Arrays.asList(DiceCombo.SINGLE_ONE, DiceCombo.TRIPLET_ONE);
+        List<DiceCombo> expected = Arrays.asList(DiceCombo.TRIPLET_ONE, DiceCombo.SINGLE_ONE);
         assertEquals(expected, diceset_debug.returnCombos());
     }
 
