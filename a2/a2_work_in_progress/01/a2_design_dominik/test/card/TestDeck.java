@@ -9,8 +9,14 @@ public class TestDeck {
     Deck deck56 = new Deck(deckspec56);
 
     @Test
-    public void testCreationDebug() {
+    public void testCreation() {
         assertEquals(56, deck56.cardsLeft());
+    }
+
+    @Test
+    public void testCreationEmpty() {
+        Deck emptyDeck = new Deck(new DeckSpec.DeckSpecBuilder().build());
+        assertEquals(0, emptyDeck.cardsLeft());
     }
 
     @Test

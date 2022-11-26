@@ -7,16 +7,17 @@ import java.util.List;
 public class DeckSpec implements Iterable<CardType> {
 
     /**
-     * A card.DeckSpec is a specific setup of Cardtypes for the card.Deck to initialize
-     * It contains CardTypes and respective Numbers
+     * A DeckSpec is a specific setup of CardTypes for the Deck to initialize with
+     * It contains CardTypes and respective Numbers how many of which
      *
-     * todo: Create method allowing to create custom DeckSpecs for testing
+     * todo: setXX needs an assert for non negative integers. But that would hurt the branch coverage...
      */
 
     private final HashMap<CardType, Integer> aCardList = new HashMap<CardType, Integer>();
 
     /**
      * Constructor creates an instance containing Cardtype and number of Cards
+     * @param builder A DeckSpecBuilder which tells the DeckSpec the exact numbers of cards
      */
     private DeckSpec(DeckSpecBuilder builder) {
         for (CardType ct : CardType.values()) {

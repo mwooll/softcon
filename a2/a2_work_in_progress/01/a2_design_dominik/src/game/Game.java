@@ -42,9 +42,6 @@ public class Game {
         aDeck = new Deck(pDeckSpec);
         aDeck.shuffle();
         aDiscardPile = new DiscardPile();
-
-
-
     }
 
     /**

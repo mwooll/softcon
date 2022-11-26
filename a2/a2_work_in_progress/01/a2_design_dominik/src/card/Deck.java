@@ -16,7 +16,7 @@ public class Deck {
     private final List<Card> aCards = new ArrayList<>();
 
     /**
-     * Constructor creates all the Cards specified in the builder of DeckSpec
+     * Constructor creates all the Cards specified in the supplied DeckSpec
      */
     public Deck(DeckSpec pDeckSpec) {
 
