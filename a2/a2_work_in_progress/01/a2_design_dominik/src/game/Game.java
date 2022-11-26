@@ -24,8 +24,10 @@ public class Game {
 
     /**
      * Constructor does initialize the game
+     * @param pDebug specify if the DiceSet with a fixed roll ONE or a real random DiceSet is fetched by Round
+     * @param pDeckSpec specifying the type of Deck to be used for the game
      */
-    public Game(boolean pDebug) {
+    public Game(boolean pDebug, DeckSpec pDeckSpec) {
 
         // for debugging, add one player
         aTableau.add("p1");
@@ -36,8 +38,9 @@ public class Game {
         // ask players names
         // add each player to tableau
 
-        // Debug Deck in DeckSpec with fewer cards
-        aDeck = new Deck(pDebug);
+        // Initializing the Deck and DiscardPile
+        aDeck = new Deck(pDeckSpec);
+        aDeck.shuffle();
         aDiscardPile = new DiscardPile();
 
 

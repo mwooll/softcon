@@ -1,37 +1,23 @@
 package card;
 
-import card.Card;
-import card.Deck;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestDeck {
 
+    DeckSpec deckspec56 = new DeckSpec.DeckSpecBuilder().setDefault().build();
+    Deck deck56 = new Deck(deckspec56);
+
     @Test
     public void testCreationDebug() {
-
-        // use debug deckspec
-        Deck deck = new Deck(true);
-
-        assertEquals(2, deck.cardsLeft());
-
-    }
-
-    @Test
-    public void testCreation() {
-
-        // use full deckspec
-        Deck deck = new Deck(false);
-
-        assertEquals(35, deck.cardsLeft());
-
+        assertEquals(56, deck56.cardsLeft());
     }
 
     @Test
     public void testDrawNotEmpty() {
 
-        // use debug deckspec
-        Deck deck = new Deck(true);
+        // use debug deckspec with two cards
+        Deck deck = new Deck(new DeckSpec.DeckSpecBuilder().setStop(2).build());
 
         // draw one card, there should be one left
         Card card = deck.draw();
@@ -43,14 +29,20 @@ public class TestDeck {
     @Test
     public void testDrawEmpty() {
 
-        // use debug deckspec
-        Deck deck = new Deck(true);
+        // use debug deckspec with one card
+        Deck deck = new Deck(new DeckSpec.DeckSpecBuilder().setFireworks(1).build());
 
-        // draw two cards, there should be no card left
+        // draw one card, there should be no card left
         Card card1 = deck.draw();
-        Card card2 = deck.draw();
 
         assertEquals(0, deck.cardsLeft());
+
+    }
+
+    @Test
+    public void testShuffle() {
+
+        // todo: how to do that...
 
     }
 

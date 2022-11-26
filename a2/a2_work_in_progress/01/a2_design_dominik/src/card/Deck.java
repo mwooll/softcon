@@ -16,15 +16,9 @@ public class Deck {
     private final List<Card> aCards = new ArrayList<>();
 
     /**
-     * Constructor creates all the Cards in card.DeckSpec and shuffles them
-     * Creates Cards specified in pDeckSpec
-     * After creation shuffles the card.Deck
-     *
-     * @param pDebug If true use debug subset of cards, otherwise full game spec
+     * Constructor creates all the Cards specified in the builder of DeckSpec
      */
-    public Deck(boolean pDebug) {
-
-        DeckSpec pDeckSpec = new DeckSpec(pDebug);
+    public Deck(DeckSpec pDeckSpec) {
 
         // each ct is a card.CardType instance
         for (CardType ct : pDeckSpec) {
@@ -36,9 +30,16 @@ public class Deck {
                 aCards.add(new Card(ct));
             }
         }
+    }
 
+
+    /**
+     * Shuffle the Deck, inplace
+     */
+    public void shuffle() {
         Collections.shuffle(aCards);
     }
+
 
     /**
      * Draw the top card.Card from the card.Deck and return it.

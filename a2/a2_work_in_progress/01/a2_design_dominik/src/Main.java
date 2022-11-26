@@ -1,3 +1,4 @@
+import card.DeckSpec;
 import die.DiceSet;
 import game.Game;
 import game.Round;
@@ -37,8 +38,9 @@ public class Main {
 //        int mypoints = round.playRound();
 
 
-        // init a game wihtout debug
-        Game g = new Game(true);
+        // init a game
+        DeckSpec deckspec56 = new DeckSpec.DeckSpecBuilder().setDefault().build();
+        Game g = new Game(true, deckspec56);
         g.playTurn("p1");
 
     }
