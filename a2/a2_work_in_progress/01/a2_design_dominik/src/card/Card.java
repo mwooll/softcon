@@ -10,7 +10,7 @@ public class Card {
      * A Card has a CardType attached to it
      */
 
-    private CardType aCardType;
+    private final CardType aCardType;
 
     public Card(CardType pCardType) {
         aCardType = pCardType;

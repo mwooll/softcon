@@ -26,8 +26,7 @@ public enum DiceCombo implements Iterable<DieValue> {
     SINGLE_TWO(new ArrayList<>(List.of(DieValue.TWO)), 0),
     SINGLE_THREE(new ArrayList<>(List.of(DieValue.THREE)), 0),
     SINGLE_FOUR(new ArrayList<>(List.of(DieValue.FOUR)), 0),
-    SINGLE_SIX(new ArrayList<>(List.of(DieValue.SIX)), 0),
-    STRAIGHT(new ArrayList<>(List.of(DieValue.ONE,DieValue.TWO,DieValue.THREE,DieValue.FOUR,DieValue.FIVE,DieValue.SIX)), 0);
+    SINGLE_SIX(new ArrayList<>(List.of(DieValue.SIX)), 0);
 
     private final List<DieValue> aListDieValues = new ArrayList<>();
     private int aPoints = 0;
