@@ -11,7 +11,6 @@ class TestTableau {
     @Test
     public void test_add() {
         tableau.add("p1");
-        tableau.printTableau();
         assertEquals(1, tableau.size());
     }
 

@@ -7,7 +7,7 @@ public class Tableau {
     /**
      * A Tableau collects all players, identified by their name
      * Records for each player how many points
-     * THERE IS NO ORDER of players in the tableau
+     * HashMap provides no natural order of keys
      */
 
     private final HashMap<String, Integer> aTableau = new HashMap<>();
@@ -76,24 +76,13 @@ public class Tableau {
     }
 
     /**
-     * Show tableau
-     */
-    public void printTableau() {
-        for (Map.Entry<String, Integer> set : aTableau.entrySet()) {
-            System.out.println(set.getKey() + " : " + set.getValue());
-        }
-    }
-
-    /**
      * Announce the ranking of the players
      * In case of draws put same scores on same rank
      * @pre Tableau cannot be empty
      *
-     * todo: implement properly
+     * todo: implement properly, maybe in game instead of here?
      */
-    public void announceWinner() {
-        printTableau();
-    }
+    public void announceWinner() {}
 
     /**
      * Return number of entries
@@ -110,14 +99,5 @@ public class Tableau {
         assert aTableau.containsKey(pPlayerName);
         return aTableau.get(pPlayerName);
     }
-
-    /**
-     * Return the names of all Player names keys currently in the Tableau
-     */
-    public List<String> getPlayers() {
-        return new ArrayList(aTableau.keySet());
-    }
-
-
 
 }

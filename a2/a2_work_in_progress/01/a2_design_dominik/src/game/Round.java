@@ -14,6 +14,8 @@ public class Round {
      * The Round know if the next Round needs a new Ruleset or not
      *
      * todo: Instead of boolean flags for mustDoXY, new class Decision maker/Strategy which uses an InputParser and the aCurrentRuleset to decide
+     * todo: CLOVERLEAF when successful end the game
+     * todo: The boolean flags for returning the state are not clean...
      */
 
     // Each Round instance has to be able to tell whether a new card should be drawn or not given the current events
@@ -101,6 +103,7 @@ public class Round {
         // Reset aIsTutto to false
         aIsTutto = false;
 
+        // hold the points of this round
         int pointsTotal = 0;
 
         // isTutto lives during that round to keep track if we have a tutto while removing combos
@@ -146,9 +149,6 @@ public class Round {
 
                 DiceCombo toRemove;
                 if (aMustRemoveAll) {
-                    if (aRemovableDiceCombos.size() == 0) {
-                        System.out.println("debug");
-                    }
                     toRemove = aRemovableDiceCombos.get(0);
                     System.out.println(String.format("The current ruleset forces you to remove all possible combinations, removing %s", toRemove));
                 } else {
@@ -168,7 +168,7 @@ public class Round {
                 // If there are more removable combos, show him and ask if he wants to remove more, or remove silently depending on ruleset
                 // Otherwise inform that there are no more combos to remove and the remaining dice are rerolled
                 if (aRemovableDiceCombos.size() > 0) {
-                    if (!aMustRemoveAll) {
+                    if (!aMustRemoveAll && !aMustContinue) {
                         System.out.println("Your remaining dice:");
                         System.out.println(aDiceSet);
                         keepRemoving = aParser.askKeepRemoving();
@@ -208,15 +208,23 @@ public class Round {
             System.out.println("You ended your turn voluntarily, calculating points and ending the turn");
         }
 
-        // independently of null or tutto, sum up the rolled points
+        // independently of null or tutto, sum up the rolled points. They can contain points even if null
         int pointsRoll = aCurrentRuleset.sumUpPoints(aRolledDiceCombos);
-        System.out.println(String.format("Your rolls scored you %s points", pointsRoll));
         pointsTotal += pointsRoll;
 
-        if (isTutto) {
+        // add tutto points
+        if (aIsTutto) {
             int pointsTutto = aCurrentRuleset.handleTutto(pointsTotal);
             System.out.println(String.format("Your Tutto scored you %s points", pointsTutto));
             pointsTotal += pointsTutto;
+        }
+
+        // determine the final points of the round, which can be nulled by a null roll
+        int pointsFinal = pointsTotal;
+
+        // handle final points if null
+        if (aIsNull) {
+            pointsFinal = aCurrentRuleset.handleNull(pointsTotal);
         }
 
         /*
@@ -238,13 +246,13 @@ public class Round {
         Inform the player if a PlusMinus deducts points
          */
         if (isTutto && aCurrentRuleset.returnName().equals("PLUS/MINUS")) {
-            System.out.println("You scored a Tutto while PLUS/MINUS is uncovered. The leading player will have 1000 points deducted.");
+            System.out.println("You scored a Tutto while PLUS/MINUS is uncovered. The leading player(s) will have 1000 points deducted right now.");
             aDecrease = true;
         }
 
         // return the points
-        System.out.println(String.format("Your total round scored you %s points", pointsTotal));
-        return pointsTotal;
+        System.out.println(String.format("Your total round scored you %s points", pointsFinal));
+        return pointsFinal;
     }
 
 

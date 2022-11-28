@@ -39,8 +39,10 @@ public class Main {
 
 //
 //        // init a game
-        DeckSpec deckspec56 = new DeckSpec.DeckSpecBuilder().setDefault().build();
-        Game g = new Game(true, deckspec56);
+//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setDefault().build();
+        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setPlusminus(1).build();
+        Game g = new Game(true, ds);
+        g.playGame();
 
 
     }

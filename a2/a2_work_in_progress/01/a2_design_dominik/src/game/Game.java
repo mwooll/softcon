@@ -14,13 +14,15 @@ public class Game {
      * play turn
      *
      * todo: remove debugging boolean after finished
+     * todo: remove discardPile completely, we don't need it. Keep everything in deck.
      */
 
-    private final int aNumberPlayers;
+    // What kind of cards to use for the game instance
+    private DeckSpec aDeckSpec;
+    // aPlayers contains the order in which the players take their turns
     public List<String> aPlayers = new ArrayList<>();
-    private int aWinCondition;
-    private final Deck aDeck;
-    private final DiscardPile aDiscardPile;
+    private final int aWinCondition;
+    private Deck aDeck;
     private final Tableau aTableau = new Tableau();
     private InputParser aParser = new DefaultParser();
 
@@ -36,17 +38,20 @@ public class Game {
         // for debugging, using the dice set
         aDebug = pDebug;
 
+        // set the DeckSpec
+        aDeckSpec = pDeckSpec;
+
         // Set the input parser to use for the game
         // Can be overridden with the setParser method on a game instance
         setParser(new DefaultParser());
 
         // ask how many players
-        aNumberPlayers = aParser.askNumberPlayers();
-        assert aNumberPlayers > 0;
+        int numberPlayers = aParser.askNumberPlayers();
+        assert numberPlayers > 0;
 
         // ask players names
         System.out.println("Order of player names entered will determine order of turns");
-        for (int i = 1; i <= aNumberPlayers; i++) {
+        for (int i = 1; i <= numberPlayers; i++) {
             aPlayers.add(aParser.askPlayerName(i, aPlayers));
         }
 
@@ -58,12 +63,9 @@ public class Game {
             aTableau.add(playerName);
         }
 
-        System.out.println(aTableau.getPlayers());
-
         // Initializing the Deck and DiscardPile
-        aDeck = new Deck(pDeckSpec);
+        aDeck = new Deck(aDeckSpec);
         aDeck.shuffle();
-        aDiscardPile = new DiscardPile();
     }
 
     /**
@@ -74,6 +76,15 @@ public class Game {
     }
 
     /**
+     * Given the ordering of players in aPlayers, print for each player the points
+     */
+    private void printTableau() {
+        for (String playerName : aPlayers) {
+            System.out.println(playerName + " : " + aTableau.getPoints(playerName));
+        }
+    }
+
+    /**
      * Determine if a player fulfills the win condition
      */
     private boolean aPlayerHasWon() {return aTableau.aPlayerHasWon(aWinCondition);}
@@ -81,10 +92,10 @@ public class Game {
     /**
      * Determine the final winner
      *
-     * todo: implement properly, for now just show the tableau
+     * todo: implement properly, for now just printTableau
      */
     private void determineWinner() {
-        aTableau.printTableau();
+        printTableau();
     }
 
     /**
@@ -92,11 +103,29 @@ public class Game {
      */
     public void playGame() {
 
-        // For each tableau round (one player once)
-        // play turn of player X
-        // after turn, check if anybody has won
-        // if yes, set flag that after tableau round the game will be over
-        // after tableau round, either repeat or finish
+        System.out.println("-------------------- START GAME -----------------");
+        printTableau();
+
+        int nTurns = 0;
+        int nPlayers = aPlayers.size();
+        boolean keepPlaying = true;
+
+        // as long as no player has reached the win condition, keep playing
+        while (keepPlaying) {
+            System.out.println(String.format("-------------------- TURN %s -----------------", nTurns));
+            for (String playerName : aPlayers) {
+                playTurn(playerName);
+
+                // check if anybody has the win condition
+                if (aPlayerHasWon()) {
+                    System.out.println(String.format("A Player has reached the win condition of %s points.\nEvery player can catch up turns then the game ends and the player with the most points wins.", aWinCondition));
+                    keepPlaying = false;
+                }
+            }
+        }
+
+        aTableau.announceWinner();
+
     }
 
     /**
@@ -105,7 +134,7 @@ public class Game {
      * At the end of each round, the turn updates the tableau in case there are negative points
      * At the end of the turn, the turn updates the tableau for positive and negative points again
      */
-    public void playTurn(String pPlayerName) {
+    private void playTurn(String pPlayerName) {
 
         int turnScore = 0;
         int turnCounter = 0;
@@ -118,13 +147,16 @@ public class Game {
         // ask if display score or play turn
         while(true) {
             if (aParser.askDisplayScore()) {
-                aTableau.printTableau();
+                printTableau();
             } else {
                 break;
             }
         }
 
-        // todo: Check if deck has cards, if not reshuffle
+        // Check if Deck still has cards to draw from, if not inform and reinitialize deck and discardPile
+        if (aDeck.isEmpty()) {
+            aDeck.refresh();
+        }
 
         // At the beginning of the turn, you always draw a card
         turnCurrentCard = aDeck.draw();
@@ -195,8 +227,10 @@ public class Game {
         // Check with the round
 
         System.out.println("Turn ended, current score:");
-        aTableau.printTableau();
+        printTableau();
 
     }
+
+
 
 }
