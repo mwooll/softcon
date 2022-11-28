@@ -21,7 +21,7 @@ public class Game {
      */
 
     // aPlayers contains the order in which the players take their turns
-    public List<String> aPlayers = new ArrayList<>();
+    private final List<String> aPlayers = new ArrayList<>();
     private final int aWinCondition;
     private Deck aDeck;
     private final Tableau aTableau = new Tableau();
