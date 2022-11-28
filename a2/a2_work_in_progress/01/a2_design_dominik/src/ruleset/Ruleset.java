@@ -11,6 +11,8 @@ public abstract class Ruleset {
     /**
      * A class subtyping the ruleset. Ruleset needs to
      * know how to handle game rules
+     *
+     * todo: Remove Default ruleset and declare returnName and explainRules abstract
      */
 
     // which DiceCombos are valid for the given ruleset?
@@ -84,9 +86,20 @@ public abstract class Ruleset {
     /**
      * Specify the amounts of points to add when a Tutto happens
      * Receives the current points in case an operation on those points is needed
+     * @param pPoints The points scored so far in this round
      */
     public int handleTutto(int pPoints){
         return 0;
     };
+
+
+    /**
+     * Specify what happens to the points from sumUpPoints when a NULL happens
+     * Only FIREWORKS returns the points, all other rulesets return 0 points
+     * @param pPoints The points scored so far in this round
+     */
+    public int handleNull(int pPoints) {
+        return 0;
+    }
 
 }

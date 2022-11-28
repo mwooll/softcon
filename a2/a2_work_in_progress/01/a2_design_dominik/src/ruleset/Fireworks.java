@@ -12,4 +12,9 @@ public class Fireworks extends Ruleset {
                 "but you keep all the points you rolled.";
     }
 
+    @Override
+    public int handleNull(int pPoints) {
+        return pPoints;
+    }
+
 }

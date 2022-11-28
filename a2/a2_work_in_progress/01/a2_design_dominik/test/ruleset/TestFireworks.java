@@ -46,6 +46,28 @@ class TestFireworks {
     }
 
     @Test
+    public void test_sumUpPoints_null2() {
+
+        // When a null occurs, FIREWORKS keeps its points
+
+        Ruleset rs = new Fireworks();
+        List<DiceCombo> tmpCombos = new ArrayList<>();
+        tmpCombos.add(DiceCombo.SINGLE_ONE);
+
+        // sum up points
+        int tmpPoints = rs.sumUpPoints(tmpCombos);
+
+        // apply tutto
+        tmpPoints += rs.handleTutto(tmpPoints);
+
+        // apply null
+        int finalPoints = rs.handleNull(tmpPoints);
+
+        assertEquals(100, finalPoints);
+
+    }
+
+    @Test
     public void test_Tutto() {
 
         // simulate a list with rolled combos, sum them up and then simulate tutto

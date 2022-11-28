@@ -6,6 +6,8 @@ import org.junit.jupiter.api.function.Executable;
 import ruleset.Bonus;
 import ruleset.Ruleset;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,6 +44,29 @@ class TestBonus {
         Ruleset rs = new Bonus(bp);
 
         assertEquals(100, rs.handleTutto(1000));
+
+    }
+
+    @Test
+    public void testBonus_handleNull() {
+
+        // No matter the rolled combos, when a null occurs should return 0
+
+        int bp = 100;
+        Ruleset rs = new Bonus(bp);
+        List<DiceCombo> tmpCombos = new ArrayList<>();
+        tmpCombos.add(DiceCombo.SINGLE_ONE);
+
+        // sum up points
+        int tmpPoints = rs.sumUpPoints(tmpCombos);
+
+        // apply tutto
+        tmpPoints += rs.handleTutto(tmpPoints);
+
+        // apply null
+        int finalPoints = rs.handleNull(tmpPoints);
+
+        assertEquals(0, finalPoints);
 
     }
 
