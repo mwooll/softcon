@@ -41,9 +41,9 @@ public class Main {
 
 //
 //        // init a game
-//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setDefault().build();
-        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setPlusminus(1).build();
-        Game g = new Game(true, ds);
+        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setDefault().build();
+//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(5).build();
+        Game g = new Game(false, ds);
         g.playGame();
 
 

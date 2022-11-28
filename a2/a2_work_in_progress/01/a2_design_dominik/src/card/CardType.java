@@ -32,8 +32,6 @@ public enum CardType {
 
 
 
-
-
     private final Ruleset aRuleset;
 
     CardType(Ruleset pRuleset) {

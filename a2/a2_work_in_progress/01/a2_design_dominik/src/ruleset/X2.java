@@ -7,7 +7,7 @@ public class X2 extends Ruleset {
 
     @Override
     public String explainRules() {
-        return "The X2 card doubles your current turns points if you roll a tutto.";
+        return "The X2 card doubles your current rolls points if you roll a tutto.";
     };
 
     @Override

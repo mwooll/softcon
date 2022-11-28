@@ -15,6 +15,9 @@ public class Game {
      *
      * todo: remove debugging boolean after finished
      * todo: remove discardPile completely, we don't need it. Keep everything in deck.
+     * todo: Method drawCard at beginning of playTurn
+     * todo: Method finishUpRound at end of playTurn
+     * todo:
      */
 
     // aPlayers contains the order in which the players take their turns

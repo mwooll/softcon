@@ -1,0 +1,17 @@
+-1000 negative points? No, min is 0
+
+Can remove single if a triplet is possible?
+	• yes
+
+-1000 hits even if i fuck up my turn with the next card
+
+Fireworks, the most valuable combination is removed first
+
+When a player reaches the win condition but then gets deducted oints and will not reach the win condition, the game ends anyways and the player with the most points wins
+
+x2 does only double your points of this round
+
+
+
+Branch coverage with assert not possible …
+
