@@ -17,8 +17,6 @@ public class Game {
      * todo: remove discardPile completely, we don't need it. Keep everything in deck.
      */
 
-    // What kind of cards to use for the game instance
-    private DeckSpec aDeckSpec;
     // aPlayers contains the order in which the players take their turns
     public List<String> aPlayers = new ArrayList<>();
     private final int aWinCondition;
@@ -37,9 +35,6 @@ public class Game {
 
         // for debugging, using the dice set
         aDebug = pDebug;
-
-        // set the DeckSpec
-        aDeckSpec = pDeckSpec;
 
         // Set the input parser to use for the game
         // Can be overridden with the setParser method on a game instance
@@ -64,7 +59,7 @@ public class Game {
         }
 
         // Initializing the Deck and DiscardPile
-        aDeck = new Deck(aDeckSpec);
+        aDeck = new Deck(pDeckSpec);
         aDeck.shuffle();
     }
 
@@ -142,7 +137,7 @@ public class Game {
         Ruleset turnCurrentRuleset;
         Round turnCurrentRound;
 
-        System.out.println(String.format("%s turn", pPlayerName));
+        System.out.println(String.format("-------------------- %s turn --------------------", pPlayerName));
 
         // ask if display score or play turn
         while(true) {
@@ -153,8 +148,9 @@ public class Game {
             }
         }
 
-        // Check if Deck still has cards to draw from, if not inform and reinitialize deck and discardPile
+        // Check if Deck still has cards to draw from, if not inform and refresh deck
         if (aDeck.isEmpty()) {
+            System.out.println("Deck is used up, reshuffle ...");
             aDeck.refresh();
         }
 
@@ -180,6 +176,13 @@ public class Game {
             // if so, draw a card and create new Round instance
             // Only do that if it's not the first round of the turn
             if (turnCounter > 0 && turnCurrentRound.drawNewCard()) {
+
+                // Check if Deck still has cards to draw from, if not inform and refresh deck
+                if (aDeck.isEmpty()) {
+                    System.out.println("Deck is used up, reshuffle ...");
+                    aDeck.refresh();
+                }
+
                 System.out.println("Drawing new card ...");
                 turnCurrentCard = aDeck.draw();
                 turnCurrentRuleset = turnCurrentCard.returnCardType().getRuleset();

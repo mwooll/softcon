@@ -1,3 +1,5 @@
+package main_debug;
+
 import card.DeckSpec;
 import die.DiceSet;
 import game.Game;
@@ -8,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        System.out.println("Main executed.");
+//        System.out.println("main_debug.Main executed.");
 
         // Test the Seed vs Random
 //        DiceSet diceset = DiceSet.getDebug();

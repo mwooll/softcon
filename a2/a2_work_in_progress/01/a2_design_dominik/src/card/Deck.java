@@ -46,9 +46,8 @@ public class Deck {
      * Return all Cards from the drawn pile to the deck and shuffle all cards
      */
     public void refresh() {
-        for (Card c : aDiscardedCards) {
-            aCards.add(c);
-        }
+
+        aCards.addAll(aDiscardedCards);
         shuffle();
     }
 
