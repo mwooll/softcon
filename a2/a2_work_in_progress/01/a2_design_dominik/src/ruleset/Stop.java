@@ -7,6 +7,9 @@ import java.util.List;
 public class Stop extends Ruleset {
 
     @Override
+    public Stop clone(){return new Stop();}
+
+    @Override
     public String returnName() {return "STOP";}
 
     @Override

@@ -38,6 +38,12 @@ public enum CardType {
         aRuleset = pRuleset;
     }
 
-    public Ruleset getRuleset() {return aRuleset;}
+    /**
+     * Return a fresh copy of the ruleset, a new instance
+     * @return A fresh instance of the ruleset associated with that CardType
+     */
+    public Ruleset getFreshRuleset() {
+        return aRuleset.clone();
+    }
 
 }

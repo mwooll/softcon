@@ -3,6 +3,9 @@ package ruleset;
 public class Fireworks extends Ruleset {
 
     @Override
+    public Fireworks clone(){return new Fireworks();}
+
+    @Override
     public String returnName() {return "FIREWORKS";}
 
     @Override

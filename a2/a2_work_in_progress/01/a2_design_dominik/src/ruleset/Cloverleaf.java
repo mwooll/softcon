@@ -9,6 +9,9 @@ public class Cloverleaf extends Ruleset{
     }
 
     @Override
+    public Cloverleaf clone() {return new Cloverleaf();}
+
+    @Override
     public String returnName() {return "CLOVERLEAF";}
 
     @Override

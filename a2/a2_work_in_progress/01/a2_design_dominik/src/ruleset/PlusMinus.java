@@ -7,6 +7,9 @@ import java.util.List;
 public class PlusMinus extends Ruleset {
 
     @Override
+    public PlusMinus clone(){return new PlusMinus();}
+
+    @Override
     public String returnName() {return "PLUS/MINUS";}
 
     @Override

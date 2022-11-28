@@ -11,6 +11,9 @@ public class Default extends Ruleset {
      * Default Ruleset for testing
      */
 
+    @Override
+    public Default clone(){return new Default();}
+
     /**
      * Return empty, always generate NULL roll
      */

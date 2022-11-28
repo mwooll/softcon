@@ -20,7 +20,7 @@ class TestX2 {
 
     @Test
     public void test_explanation() {
-        assertEquals("The X2 card doubles your current turns points if you roll a tutto.", rs.explainRules());
+        assertEquals("The X2 card doubles your current rolls points if you roll a tutto.", rs.explainRules());
     }
 
     @Test

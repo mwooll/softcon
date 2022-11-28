@@ -33,7 +33,7 @@ class TestRound {
 
         Round roundBonus = new Round(rsBonus);
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream("J\n".getBytes());
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("Y\n".getBytes());
         InputParser ip = new DefaultParser(inputStream, System.out);
 
         // Set debug DiceSet and Parser in the Round instance
@@ -52,12 +52,12 @@ class TestRound {
          * 1 - remove first option = TRIPLET_ONE
          * N - decline removing more
          * (reroll dice)
-         * J - stop
+         * Y - stop
          */
 
         Round roundBonus = new Round(rsBonus);
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream("N\n1\nN\nJ\n".getBytes());
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("N\n1\nN\nY\n".getBytes());
         InputParser ip = new DefaultParser(inputStream, System.out);
 
         // Set debug DiceSet and Parser in the Round instance
@@ -74,13 +74,13 @@ class TestRound {
         /*
          * N - don't stop
          * 1 - remove first option (TRIPLET_ONE)
-         * J - remove more
+         * Y - remove more
          * 1 - remove first option (TRIPLET_ONE)
          */
 
         Round roundBonus = new Round(rsBonus);
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream("N\n1\nJ\n1\n".getBytes());
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("N\n1\nY\n1\n".getBytes());
         InputParser ip = new DefaultParser(inputStream, System.out);
 
         // Set debug DiceSet and Parser in the Round instance
@@ -109,13 +109,13 @@ class TestRound {
         /*
          * cant stop
          * 1 - remove first option (TRIPLET_ONE)
-         * J - remove more
+         * Y - remove more
          * 1 - remove first option (TRIPLET_ONE)
          */
 
         Round roundCloverleaf = new Round(rsCloverleaf);
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream("1\nJ\n1\n".getBytes());
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("1\nY\n1\n".getBytes());
         InputParser ip = new DefaultParser(inputStream, System.out);
 
         roundCloverleaf.setDiceSet(DiceSet.getDebug());
@@ -132,13 +132,13 @@ class TestRound {
         /*
          * cant stop
          * 1 - remove first option (TRIPLET_ONE)
-         * J - remove more
+         * Y - remove more
          * 1 - remove first option (TRIPLET_ONE)
          */
 
         Round roundPlusMinus = new Round(rsPlusMinus);
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream("1\nJ\n1\n".getBytes());
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("1\nY\n1\n".getBytes());
         InputParser ip = new DefaultParser(inputStream, System.out);
 
         roundPlusMinus.setDiceSet(DiceSet.getDebug());

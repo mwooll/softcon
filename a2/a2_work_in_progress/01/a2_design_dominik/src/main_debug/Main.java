@@ -1,9 +1,7 @@
 package main_debug;
 
-import card.DeckSpec;
-import die.DiceSet;
-import game.Game;
-import game.Round;
+import card.*;
+import game.*;
 import ruleset.*;
 
 public class Main {
@@ -39,11 +37,25 @@ public class Main {
 //
 //        int mypoints = round.playRound();
 
-//
-//        // init a game
-        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setDefault().build();
-//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(5).build();
-        Game g = new Game(false, ds);
+
+
+//        // Test out Rulesets in enum, are they different?
+//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(2).setBonus(1,0,0,0,0).build();
+//        Deck deck = new Deck(ds);
+//        Card card1 = deck.draw();
+//        Card card2 = deck.draw();
+//        Card card3 = deck.draw();
+//        Ruleset rs1 = card1.returnCardType().getFreshRuleset();
+//        Ruleset rs2 = card2.returnCardType().getFreshRuleset();
+//        Ruleset rs3 = card3.returnCardType().getFreshRuleset();
+
+
+
+
+        // init a game
+//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setDefault().build();
+        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(5).build();
+        Game g = new Game(true, ds);
         g.playGame();
 
 

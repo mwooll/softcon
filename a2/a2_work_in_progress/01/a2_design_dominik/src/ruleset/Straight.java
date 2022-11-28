@@ -9,6 +9,9 @@ import java.util.Collections;
 public class Straight extends Ruleset {
 
     @Override
+    public Straight clone() {return new Straight();}
+
+    @Override
     public String returnName() {return "STRAIGHT";}
 
     @Override

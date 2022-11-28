@@ -28,6 +28,11 @@ public abstract class Ruleset {
     };
 
     /**
+     * A clone function returns a new instance of the subclass instance
+     */
+    public abstract Ruleset clone();
+
+    /**
      * Return the name of the ruleset
      */
     public String returnName() {return "PLACEHOLDER";}

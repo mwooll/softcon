@@ -16,6 +16,9 @@ public class Bonus extends Ruleset {
     }
 
     @Override
+    public Bonus clone() {return new Bonus(aBonusPoints);}
+
+    @Override
     public String returnName() {return String.format("BONUS %s", aBonusPoints);}
 
     @Override

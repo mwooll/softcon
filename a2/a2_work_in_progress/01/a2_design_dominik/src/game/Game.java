@@ -23,7 +23,7 @@ public class Game {
     // aPlayers contains the order in which the players take their turns
     private final List<String> aPlayers = new ArrayList<>();
     private final int aWinCondition;
-    private Deck aDeck;
+    private final Deck aDeck;
     private final Tableau aTableau = new Tableau();
     private InputParser aParser = new DefaultParser();
 
@@ -105,7 +105,6 @@ public class Game {
         printTableau();
 
         int nTurns = 0;
-        int nPlayers = aPlayers.size();
         boolean keepPlaying = true;
 
         // as long as no player has reached the win condition, keep playing
@@ -159,7 +158,8 @@ public class Game {
 
         // At the beginning of the turn, you always draw a card
         turnCurrentCard = aDeck.draw();
-        turnCurrentRuleset = turnCurrentCard.returnCardType().getRuleset();
+        // initialize a fresh ruleset whenever a card is drawn
+        turnCurrentRuleset = turnCurrentCard.returnCardType().getFreshRuleset();
 
         System.out.println(String.format("Starting Turn with a %s card with ruleset %s", turnCurrentCard.returnCardType(), turnCurrentRuleset.returnName()));
 
@@ -188,8 +188,8 @@ public class Game {
 
                 System.out.println("Drawing new card ...");
                 turnCurrentCard = aDeck.draw();
-                turnCurrentRuleset = turnCurrentCard.returnCardType().getRuleset();
-                System.out.println(String.format("Starting Turn with a %s card with ruleset %s", turnCurrentCard.returnCardType(), turnCurrentRuleset.returnName()));
+                turnCurrentRuleset = turnCurrentCard.returnCardType().getFreshRuleset();
+                System.out.println(String.format("Starting Turn with a %s card with a fresh ruleset %s", turnCurrentCard.returnCardType(), turnCurrentRuleset.returnName()));
                 turnCurrentRound = new Round(turnCurrentRuleset);
 
                 // debugging only
@@ -236,7 +236,5 @@ public class Game {
         printTableau();
 
     }
-
-
 
 }

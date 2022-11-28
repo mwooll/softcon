@@ -16,7 +16,7 @@ class TestDefaultParser {
     @Test
     public void test_askStop_true() {
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream("J\n".getBytes());
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("Y\n".getBytes());
         InputParser ip = new DefaultParser(inputStream, System.out);
 
         assertTrue(ip.askStop());
@@ -36,7 +36,7 @@ class TestDefaultParser {
     @Test
     public void test_askStop_wrong_right() {
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream("invalidInput\nJ\n".getBytes());
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("invalidInput\nY\n".getBytes());
         InputParser ip = new DefaultParser(inputStream, System.out);
 
         assertTrue(ip.askStop());
@@ -46,7 +46,7 @@ class TestDefaultParser {
     @Test
     public void test_askKeepRemoving_true() {
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream("J\n".getBytes());
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("Y\n".getBytes());
         InputParser ip = new DefaultParser(inputStream, System.out);
 
         assertTrue(ip.askKeepRemoving());
@@ -66,7 +66,7 @@ class TestDefaultParser {
     @Test
     public void test_askKeepRemoving_wrong_right() {
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream("invalidInput\nJ\n".getBytes());
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("invalidInput\nY\n".getBytes());
         InputParser ip = new DefaultParser(inputStream, System.out);
 
         assertTrue(ip.askKeepRemoving());
