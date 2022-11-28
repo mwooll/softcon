@@ -1,5 +1,9 @@
 package ruleset;
 
+import die.DiceCombo;
+
+import java.util.List;
+
 public class Cloverleaf extends Ruleset{
     private int numAchievedTuttos;
 
@@ -19,6 +23,9 @@ public class Cloverleaf extends Ruleset{
         return "Getting two Tuttos back to back will result in an immediate win. " +
                 "You may not end your turn prematurely and rolling a Null scores you no points.";
     }
+
+    @Override
+    public int sumUpPoints(List<DiceCombo> pListDiceCombo) {return 0;}
 
     /**
      * This needs to be handled by Round/Turn and end the game.

@@ -1,6 +1,10 @@
 package ruleset;
 
+import die.DiceCombo;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,14 +29,53 @@ class TestCloverleaf {
     }
 
     @Test
-    public void testBonus_handleFirstTutto() {
-        assertEquals(0, cloverleaf.handleTutto(100));
+    public void test_handle_FirstTutto() {
+
+        // No matter the rolled combos, a Cloverleaf should never count points from a roll when the first tutto happens
+        Ruleset rs = new Cloverleaf();
+        List<DiceCombo> tmpCombos = new ArrayList<>();
+        tmpCombos.add(DiceCombo.SINGLE_ONE);
+
+        int tmpPoints = rs.sumUpPoints(tmpCombos);
+
+        assertEquals(0, rs.handleTutto(tmpPoints));
     }
 
     @Test
-    public void testBonus_handleSecondTutto() {
-        cloverleaf.handleTutto(50);
-        assertEquals(100_000_000, cloverleaf.handleTutto(200));
+    public void test_handle_SecondTutto() {
+
+        // No matter the rolled combos, a Cloverleaf should never count points from a roll when the second tutto happens
+        // it should return exactly the win condition
+        Ruleset rs = new Cloverleaf();
+        List<DiceCombo> tmpCombos = new ArrayList<>();
+        tmpCombos.add(DiceCombo.SINGLE_ONE);
+
+        List<DiceCombo> tmpCombos2 = new ArrayList<>();
+        tmpCombos.add(DiceCombo.TRIPLET_ONE);
+
+        int tmpPoints = rs.sumUpPoints(tmpCombos);
+        tmpPoints += rs.handleTutto(tmpPoints);
+        tmpPoints += rs.sumUpPoints(tmpCombos2);
+
+        assertEquals(100000000, rs.handleTutto(tmpPoints));
+
     }
+
+    @Test
+    public void test_handle_sumUpPoints() {
+
+        // No matter the rolled combos, a Cloverleaf should never count points from a roll
+
+        Ruleset rs = new Cloverleaf();
+        List<DiceCombo> tmpCombos = new ArrayList<>();
+        tmpCombos.add(DiceCombo.SINGLE_ONE);
+
+        // sum up points
+        int tmpPoints = rs.sumUpPoints(tmpCombos);
+
+        assertEquals(0, tmpPoints);
+    }
+
+
 
 }

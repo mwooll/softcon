@@ -121,7 +121,7 @@ class TestRound {
         roundCloverleaf.setDiceSet(DiceSet.getDebug());
         roundCloverleaf.setParser(ip);
 
-        assertEquals(2000,roundCloverleaf.playRound());
+        assertEquals(0,roundCloverleaf.playRound());
 
     }
 
