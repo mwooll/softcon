@@ -46,9 +46,13 @@ public class TestDeck {
     }
 
     @Test
-    public void testShuffle() {
+    public void testRefresh() {
 
-        // todo: how to do that...
+        // draw a card, refresh, make sure size is the same
+        Card tmpCard = deck56.draw();
+        deck56.refresh();
+
+        assertEquals(56, deck56.cardsLeft());
 
     }
 

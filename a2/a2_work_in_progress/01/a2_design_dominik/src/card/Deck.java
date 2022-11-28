@@ -11,9 +11,11 @@ public class Deck {
     /**
      * A deck represents the pile of cards which allow
      * to draw the top card from and reshuffle if needed
+     * There is no discard pile, the Deck keeps track of the drawn cards and is able to reshuffle them again
      */
 
     private final List<Card> aCards = new ArrayList<>();
+    private final List<Card> aDiscardedCards = new ArrayList<>();
 
     /**
      * Constructor creates all the Cards specified in the supplied DeckSpec
@@ -40,16 +42,29 @@ public class Deck {
         Collections.shuffle(aCards);
     }
 
+    /**
+     * Return all Cards from the drawn pile to the deck and shuffle all cards
+     */
+    public void refresh() {
+        for (Card c : aDiscardedCards) {
+            aCards.add(c);
+        }
+        shuffle();
+    }
+
 
     /**
      * Draw the top card.Card from the card.Deck and return it.
      * This draw acts like pop, it does remove the card.Card from the card.Deck
+     * Adds it to aDiscardedCards
      * @pre card.Deck is not empty
      * @return A card.Card instance
      */
     public Card draw() {
         assert !isEmpty();
-        return aCards.remove(aCards.size()-1);
+        Card drawnCard = aCards.remove(aCards.size()-1);
+        aDiscardedCards.add(drawnCard);
+        return drawnCard;
     }
 
     /**
@@ -68,7 +83,7 @@ public class Deck {
      * Check if the deck is empty
      * @return True if empty, False otherwise
      */
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return aCards.size() == 0;
     }
 }
