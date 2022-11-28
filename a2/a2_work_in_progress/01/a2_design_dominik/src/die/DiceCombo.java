@@ -11,8 +11,6 @@ public enum DiceCombo implements Iterable<DieValue> {
      * Represents all possible Combinations the Dice can form according to the game rules
      * Since the whole game has the same association of Combo and Points, the respective points are hardcoded here
      * The order does matter! For Fireworks, always the most top DiceCombo gets chosen
-     *
-     * todo: STRAIGHT is not needed?
      */
 
     TRIPLET_ONE(new ArrayList<>(List.of(DieValue.ONE,DieValue.ONE,DieValue.ONE)), 1000),
