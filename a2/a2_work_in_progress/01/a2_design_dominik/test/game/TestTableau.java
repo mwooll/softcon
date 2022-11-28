@@ -19,7 +19,7 @@ class TestTableau {
     public void test_update() {
         tableau.add("p1");
         tableau.update("p1", 20);
-        assertEquals(20, tableau.get("p1"));
+        assertEquals(20, tableau.getPoints("p1"));
     }
 
     @Test
@@ -42,7 +42,7 @@ class TestTableau {
         tableau.add("p2");
         tableau.update("p1", 1100);
         tableau.decrease();
-        assertEquals(100, tableau.get("p1"));
+        assertEquals(100, tableau.getPoints("p1"));
     }
 
     @Test
@@ -51,7 +51,7 @@ class TestTableau {
         tableau.add("p2");
         tableau.update("p1", 50);
         tableau.decrease();
-        assertEquals(0, tableau.get("p1"));
+        assertEquals(0, tableau.getPoints("p1"));
     }
 
 

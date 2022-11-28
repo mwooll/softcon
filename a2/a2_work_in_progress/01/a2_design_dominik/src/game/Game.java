@@ -3,6 +3,9 @@ import card.*;
 import die.DiceSet;
 import ruleset.Ruleset;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
 
     /**
@@ -13,11 +16,12 @@ public class Game {
      * todo: remove debugging boolean after finished
      */
 
-    private final int N_PLAYERS = 2;
-    private final int WIN_CONDITION = 6000;
-    private Deck aDeck;
-    private DiscardPile aDiscardPile;
-    private Tableau aTableau = new Tableau();
+    private final int aNumberPlayers;
+    public List<String> aPlayers = new ArrayList<>();
+    private int aWinCondition;
+    private final Deck aDeck;
+    private final DiscardPile aDiscardPile;
+    private final Tableau aTableau = new Tableau();
     private InputParser aParser = new DefaultParser();
 
     private boolean aDebug; // remove later
@@ -29,14 +33,32 @@ public class Game {
      */
     public Game(boolean pDebug, DeckSpec pDeckSpec) {
 
-        // for debugging, add one player
-        aTableau.add("p1");
+        // for debugging, using the dice set
         aDebug = pDebug;
 
-        // initialize a tableau
+        // Set the input parser to use for the game
+        // Can be overridden with the setParser method on a game instance
+        setParser(new DefaultParser());
+
         // ask how many players
+        aNumberPlayers = aParser.askNumberPlayers();
+        assert aNumberPlayers > 0;
+
         // ask players names
+        System.out.println("Order of player names entered will determine order of turns");
+        for (int i = 1; i <= aNumberPlayers; i++) {
+            aPlayers.add(aParser.askPlayerName(i, aPlayers));
+        }
+
+        // ask how many points win condition
+        aWinCondition = aParser.askWinCondition();
+
         // add each player to tableau
+        for (String playerName : aPlayers) {
+            aTableau.add(playerName);
+        }
+
+        System.out.println(aTableau.getPlayers());
 
         // Initializing the Deck and DiscardPile
         aDeck = new Deck(pDeckSpec);
@@ -45,9 +67,16 @@ public class Game {
     }
 
     /**
+     * Set a InputParser for the Game instance
+     */
+    public void setParser(InputParser pInputParser) {
+        aParser = pInputParser;
+    }
+
+    /**
      * Determine if a player fulfills the win condition
      */
-    private boolean aPlayerHasWon() {return aTableau.aPlayerHasWon(WIN_CONDITION);}
+    private boolean aPlayerHasWon() {return aTableau.aPlayerHasWon(aWinCondition);}
 
     /**
      * Determine the final winner

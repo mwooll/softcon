@@ -1,10 +1,12 @@
 package game;
 
 import die.DiceCombo;
+import game.DefaultParser;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,6 +159,39 @@ class TestDefaultParser {
         input.add(DiceCombo.SINGLE_TWO);
 
         assertEquals(DiceCombo.SINGLE_ONE, ip.askWhichRemove(input));
+
+    }
+
+    @Test
+    public void test_askNumberPlayers() {
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("invalid\n0\n-1\n3\n".getBytes());
+        InputParser ip = new DefaultParser(inputStream, System.out);
+
+        assertEquals(3, ip.askNumberPlayers());
+
+    }
+
+    @Test
+    public void test_askWinCondition() {
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("invalid\n-1\n \n3\n".getBytes());
+        InputParser ip = new DefaultParser(inputStream, System.out);
+
+        assertEquals(3, ip.askWinCondition());
+
+    }
+
+    @Test
+    public void test_askPlayerName() {
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("in_valid\n \nplayer2\n".getBytes());
+        InputParser ip = new DefaultParser(inputStream, System.out);
+
+        List<String> tmpPlayers = new ArrayList<>();
+        tmpPlayers.add("player1");
+
+        assertEquals("player2", ip.askPlayerName(2, tmpPlayers));
 
     }
 

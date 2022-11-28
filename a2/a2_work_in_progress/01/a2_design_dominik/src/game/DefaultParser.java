@@ -6,6 +6,9 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class DefaultParser implements InputParser {
 
@@ -61,10 +64,58 @@ public class DefaultParser implements InputParser {
 
     }
 
+    private int askInteger(String pQuestion, String pWarning, int pMin) {
+
+        while(true) {
+            aPrintStream.println(pQuestion);
+            String answerString = aScanner.nextLine();
+
+            try {
+                int answer = Integer.parseInt(answerString);
+                if (answer >= pMin) {
+                     return answer;
+                } else {
+                    aPrintStream.println(pWarning);
+                }
+            } catch (NumberFormatException e) {}
+
+            aPrintStream.println(pWarning);
+        }
+
+    }
+
+
+
+    public int askNumberPlayers() {
+        return askInteger("How many players are playing? Please enter a number, Minimum 1 Player", "Please enter a single number bigger than 0", 1);
+    }
+
+    public String askPlayerName(int pNumber, List<String> pForbidden) {
+
+        Pattern patternExpected = Pattern.compile("^[a-zA-Z0-9]+$");
+
+        while(true) {
+            aPrintStream.println("Please enter the name of player " + pNumber);
+            aPrintStream.println("Only use a-z A-Z and numbers");
+            String answer = aScanner.nextLine();
+            Matcher matcher = patternExpected.matcher(answer);
+
+            if (!pForbidden.contains(answer) && matcher.find()) {
+                return answer;
+            }
+
+            aPrintStream.println("Name is already taken or contains invalid characters, please chose another one. Names already in use:");
+            aPrintStream.println(String.join(",", pForbidden));
+        }
+    }
+
+    public int askWinCondition() {
+        return askInteger("How many points to win the game? Please enter a number.", "Please enter a single number bigger than 0", 1);
+    }
+
     public boolean askDisplayScore() {
         return askRollDisplay("Do you want to start rolling the dice (R) or display the score (D)? R/D", "Please type R for rolling dice, D for displaying the score");
     };
-
 
     public boolean askStopAfterTutto() {
         return askYesNo("You accomplished a Tutto, do you want to stop your whole turn? J/N", "Please type in J or N");

@@ -11,6 +11,22 @@ public interface InputParser {
      */
 
     /**
+     * At the beginning of the game, ask how many players should play
+     */
+    int askNumberPlayers();
+
+    /**
+     * At the beginning of the game, ask for one player name, make sure its not yet in the list supplied
+     * only accept alphanumeric characters
+     */
+    String askPlayerName(int pNumber, List<String> pForbidden);
+
+    /**
+     * At the beginning of the game, ask for the winning condition points
+     */
+    int askWinCondition();
+
+    /**
      * At the beginning of the turn, ask if the player wants to see the Score or play a round
      */
     boolean askDisplayScore();

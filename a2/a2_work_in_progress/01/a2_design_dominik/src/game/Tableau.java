@@ -1,15 +1,13 @@
 package game;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Tableau {
 
     /**
      * A Tableau collects all players, identified by their name
      * Records for each player how many points
-     * The order constitutes the order of the game, if anybody wins, the Tableau knows which players are left to play
+     * THERE IS NO ORDER of players in the tableau
      */
 
     private final HashMap<String, Integer> aTableau = new HashMap<>();
@@ -108,9 +106,16 @@ public class Tableau {
      * Return the value of a specific player
      * @pre Key must be in tableau
      */
-    public int get(String pPlayerName) {
+    public int getPoints(String pPlayerName) {
         assert aTableau.containsKey(pPlayerName);
         return aTableau.get(pPlayerName);
+    }
+
+    /**
+     * Return the names of all Player names keys currently in the Tableau
+     */
+    public List<String> getPlayers() {
+        return new ArrayList(aTableau.keySet());
     }
 
 

@@ -12,7 +12,7 @@ public class Main {
 
         // Test the Seed vs Random
 //        DiceSet diceset = DiceSet.getDebug();
-//        DiceSet diceset_random = DiceSet.get();
+//        DiceSet diceset_random = DiceSet.getPoints();
 
         // Test Round
 //        DiceSet ds = DiceSet.getDebug();
@@ -33,15 +33,15 @@ public class Main {
 //        Ruleset rs = new PlusMinus();
 //        Round round = new Round(rs);
 ////        round.setDiceSet(DiceSet.getDebug());
-//        round.setDiceSet(DiceSet.get());
+//        round.setDiceSet(DiceSet.getPoints());
 //
 //        int mypoints = round.playRound();
 
-
-        // init a game
+//
+//        // init a game
         DeckSpec deckspec56 = new DeckSpec.DeckSpecBuilder().setDefault().build();
         Game g = new Game(true, deckspec56);
-        g.playTurn("p1");
+
 
     }
 }
