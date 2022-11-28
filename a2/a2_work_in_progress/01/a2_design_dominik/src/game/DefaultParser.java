@@ -32,7 +32,7 @@ public class DefaultParser implements InputParser {
     }
 
     /**
-     * Asks the user J or N question, returns true if J, false if N
+     * Asks the user Y or N question, returns true if Y, false if N
      */
     private boolean askYesNo(String pQuestion, String pWarning) {
 
@@ -40,8 +40,8 @@ public class DefaultParser implements InputParser {
             aPrintStream.println(pQuestion);
             String answer = aScanner.nextLine();
 
-            if (answer.equals("J") || answer.equals("N")) {
-                return answer.equals("J");
+            if (answer.equals("Y") || answer.equals("N")) {
+                return answer.equals("Y");
             }
 
             aPrintStream.println(pWarning);
@@ -118,15 +118,15 @@ public class DefaultParser implements InputParser {
     };
 
     public boolean askStopAfterTutto() {
-        return askYesNo("You accomplished a Tutto, do you want to stop your whole turn? J/N", "Please type in J or N");
+        return askYesNo("You accomplished a Tutto, do you want to stop your whole turn? Y/N", "Please type in Y or N");
     }
 
     public boolean askStop() {
-        return askYesNo("Do you want to stop your round? J/N", "Please type in J or N");
+        return askYesNo("Do you want to stop your round? Y/N", "Please type in Y or N");
     }
 
     public boolean askKeepRemoving() {
-        return askYesNo("Do you want to keep removing dice combinations? J/N", "Please type in J or N");
+        return askYesNo("Do you want to keep removing dice combinations? Y/N", "Please type in Y or N");
     }
 
     public DiceCombo askWhichRemove(List<DiceCombo> pList) {
