@@ -37,7 +37,21 @@ public class TestDefaultRuleset {
     }
 
     @Test
-    public void testDefault_setValidCombos() {}
+    public void testDefault_ValidCombos() {
+        List<DiceCombo> validCombos = rs.returnValidCombos();
+
+        List<DiceCombo> expectedCombos = new ArrayList<>();
+        expectedCombos.add(DiceCombo.SINGLE_FIVE);
+        expectedCombos.add(DiceCombo.SINGLE_ONE);
+        expectedCombos.add(DiceCombo.TRIPLET_ONE);
+        expectedCombos.add(DiceCombo.TRIPLET_TWO);
+        expectedCombos.add(DiceCombo.TRIPLET_THREE);
+        expectedCombos.add(DiceCombo.TRIPLET_FOUR);
+        expectedCombos.add(DiceCombo.TRIPLET_FIVE);
+        expectedCombos.add(DiceCombo.TRIPLET_SIX);
+
+        assertEquals(expectedCombos, validCombos);
+    }
 
     @Test
     public void testDefault_removeValidCombo() {
@@ -48,27 +62,28 @@ public class TestDefaultRuleset {
         List<DiceCombo> postList = rs.returnValidCombos();
 
         assertEquals(preList, postList);
-
     }
 
-    @Test
-    public void testDefault_returnValidCombos() {}
 
     @Test
     public void testDefault_sumUpPoints() {
+        List<DiceCombo> combos = new ArrayList<>();
+        assertEquals(0, rs.sumUpPoints(combos));
 
+        combos.add(DiceCombo.SINGLE_FIVE);
+        combos.add(DiceCombo.SINGLE_ONE);
+        combos.add(DiceCombo.TRIPLET_SIX);
+        assertEquals(750, rs.sumUpPoints(combos));
     }
 
     @Test
     public void testDefault_handleTutto() {
         assertEquals(0, rs.handleTutto(0));
-
     }
 
     @Test
     public void testDefault_handleTutto2() {
         assertEquals(0, rs.handleTutto(1000));
-
     }
 
     @Test
@@ -87,6 +102,5 @@ public class TestDefaultRuleset {
         int finalPoints = rs.handleNull(tmpPoints);
 
         assertEquals(0, finalPoints);
-
     }
 }
