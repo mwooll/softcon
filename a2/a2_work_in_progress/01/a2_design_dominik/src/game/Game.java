@@ -1,6 +1,7 @@
 package game;
 import card.*;
 import die.DiceSet;
+import ruleset.Cloverleaf;
 import ruleset.Ruleset;
 
 import java.util.ArrayList;
@@ -128,9 +129,16 @@ public class Game {
 
         // as long as no player has reached the win condition, keep playing
         while (keepPlaying) {
-            System.out.println(String.format("-------------------- TURN %s -----------------", nTurns));
+            System.out.println(String.format("-------------------- PLAYING TABLEAU NO %s -----------------", nTurns));
             for (String playerName : aPlayers) {
-                playTurn(playerName);
+                System.out.println(String.format("-------------------- TURN %s -----------------", playerName));
+                boolean cloverleafEndingGame = playTurn(playerName);
+
+                // check if the CLOVERLEAF ends the game
+                if (cloverleafEndingGame) {
+                    System.out.println(String.format("The CLOVERLEAF ends the game, %s has won!", playerName));
+                    return;
+                }
 
                 // check if anybody has the win condition
                 if (aPlayerHasWon()) {
@@ -152,9 +160,11 @@ public class Game {
      * The turn lets the player play as many round as he can play
      * At the end of each round, the turn updates the tableau in case there are negative points
      * At the end of the turn, the turn updates the tableau for positive and negative points again
+     * @return True if a Cloverleaf Tutto happened, in this case the game is over right away, False otherwise
      */
-    private void playTurn(String pPlayerName) {
+    private boolean playTurn(String pPlayerName) {
 
+        int cloverleafEndingGame = 0;
         int turnScore = 0;
         int turnCounter = 0;
         Card turnCurrentCard;
@@ -192,7 +202,7 @@ public class Game {
             turnCurrentRound.setDiceSet(DiceSet.getDebug());
         }
 
-        // play as many round as possible
+        // play as many rounds as possible
         while (true) {
 
             // Check with the current round if we need to draw a new Card.
@@ -222,22 +232,39 @@ public class Game {
             turnCounter += 1;
             turnScore += turnCurrentRound.playRound();
 
+            // Handle an instant win by CLOVERLEAF. If the current ruleset is CLOVERLEAF and has numAchievedTuttos > 1
+            // Handle it by returning 1 right away
+            if (turnCurrentRuleset.returnName().equals("CLOVERLEAF")) {
+                Cloverleaf turnCurrentRulesetCloverleaf = (Cloverleaf) turnCurrentRuleset;
+                if (turnCurrentRulesetCloverleaf.numAchievedTuttos > 1) {
+                    return true;
+                }
+            }
+
             // Ask if points must be deducted, do that right away
             if (turnCurrentRound.decreasePoints()) {
                 aTableau.decrease();
             }
 
             // if the round was a null, end the turn here, give no points
+            // todo: Except for FIREWORKS
             if (turnCurrentRound.isNull()) {
                 turnScore = 0;
                 break;
             }
 
             // if the round was a tutto, ask if the player wants to keep on playing
+            // if it's a cloverleaf and the game has not yet ended, that means the player has 1 Tutto so far
+            // inform the player that he has to play another round
             if (turnCurrentRound.isTutto()) {
-                if (aParser.askStopAfterTutto()) {
-                    break;
+                if (turnCurrentRuleset.returnName().equals("CLOVERLEAF")) {
+                    System.out.println("You have to try to socre a second Tutto, if you do you win the game!");
+                } else {
+                    if (aParser.askStopAfterTutto()) {
+                        break;
+                    }
                 }
+
             }
 
             // if it was neither a null nor tutto, stop playing
@@ -250,10 +277,8 @@ public class Game {
         // Update scores
         aTableau.update(pPlayerName, turnScore);
 
-        // Check with the round
-
-        System.out.println("Turn ended, current score:");
-        printTableau();
+        // if no CLOVERLEAF ended the game, return 0
+        return false;
 
     }
 

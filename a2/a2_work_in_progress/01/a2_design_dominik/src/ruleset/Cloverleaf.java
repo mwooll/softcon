@@ -5,7 +5,7 @@ import die.DiceCombo;
 import java.util.List;
 
 public class Cloverleaf extends Ruleset{
-    private int numAchievedTuttos;
+    public int numAchievedTuttos;
 
     public Cloverleaf() {
         super();
