@@ -17,7 +17,6 @@ public class Game {
      * todo: remove discardPile completely, we don't need it. Keep everything in deck.
      * todo: Method drawCard at beginning of playTurn
      * todo: Method finishUpRound at end of playTurn
-     * todo:
      */
 
     // aPlayers contains the order in which the players take their turns
@@ -27,7 +26,7 @@ public class Game {
     private final Tableau aTableau = new Tableau();
     private InputParser aParser = new DefaultParser();
 
-    private boolean aDebug; // remove later
+    private final boolean aDebug; // remove later
 
     /**
      * Constructor does initialize the game
@@ -88,12 +87,32 @@ public class Game {
     private boolean aPlayerHasWon() {return aTableau.aPlayerHasWon(aWinCondition);}
 
     /**
-     * Determine the final winner
+     * Determine the final winner and announce him
+     * In case of tie, announce all players
+     * No assertion about empty tableau, init of Game should not allow that through DefaultParser
      *
      * todo: implement properly, for now just printTableau
      */
     private void determineWinner() {
-        printTableau();
+        int maxPoints = -1;
+        List<String> winners = new ArrayList<>();
+
+        for (String playerName : aPlayers) {
+            // if the player has more or equal points as current maximum, reset maxPoints
+            int pPoints = aTableau.getPoints(playerName);
+            if (pPoints >= maxPoints) {maxPoints = pPoints;}
+        }
+        // Loop a second time, adding all winners to the list
+        for (String playerName : aPlayers) {
+            // if the player has more or equal points as current maximum, reset maxPoints
+            int pPoints = aTableau.getPoints(playerName);
+            if (pPoints == maxPoints) {winners.add(playerName);}
+        }
+
+        String winnersString = String.join(",", winners);
+        System.out.println(String.format("The winner(s) with %s points are", maxPoints));
+        System.out.println(winnersString);
+
     }
 
     /**
@@ -121,7 +140,10 @@ public class Game {
             }
         }
 
-        aTableau.announceWinner();
+        System.out.println(String.format("GAME IS OVER! Determining the winner ... "));
+        determineWinner();
+        System.out.println("Final Tableau:");
+        printTableau();
 
     }
 
@@ -138,8 +160,6 @@ public class Game {
         Card turnCurrentCard;
         Ruleset turnCurrentRuleset;
         Round turnCurrentRound;
-
-        System.out.println(String.format("-------------------- %s turn --------------------", pPlayerName));
 
         // ask if display score or play turn
         while(true) {

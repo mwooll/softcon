@@ -76,15 +76,6 @@ public class Tableau {
     }
 
     /**
-     * Announce the ranking of the players
-     * In case of draws put same scores on same rank
-     * @pre Tableau cannot be empty
-     *
-     * todo: implement properly, maybe in game instead of here?
-     */
-    public void announceWinner() {}
-
-    /**
      * Return number of entries
      */
     public int size() {

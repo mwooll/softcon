@@ -11,8 +11,6 @@ public class DiceSet {
      * It remembers which Dice are still available to roll and which ones are already rolled
      * It DOES NOT remember the DiceCombos rolled, that's the rounds task
      * There will only be one DiceSet instance for the entire game, implements FLYWEIGHT
-     *
-     * todo: Remove toString method, only there to visually debug
      */
 
     private final List<Die> aDiceRemaining = new ArrayList<>();
