@@ -1,27 +1,25 @@
 package ruleset;
 
 
-import die.DiceCombo;
-
-import java.util.List;
-
 public class Default extends Ruleset {
 
     /**
      * Default Ruleset for testing
+     * Only overrides abstract methods
      */
+
+    public Default() {}
 
     @Override
     public Default clone(){return new Default();}
 
-    /**
-     * Return empty, always generate NULL roll
-     */
-    public void setValidCombos() {}
+    @Override
+    public String returnName() {return "DEFAULT";}
 
-    /**
-     * Always return 0 points
-     */
-    public int sumUpPoints(List<DiceCombo> pListDiceCombo){return 0;};
+    @Override
+    public String explainRules() {
+        return "No special rules are active.";
+    }
+
 
 }

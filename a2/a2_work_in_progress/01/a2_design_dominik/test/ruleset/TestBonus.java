@@ -83,17 +83,4 @@ class TestBonus {
         });
 
     }
-
-    @Test
-    public void test_removal() {
-
-        // the list of valid combos should remain unchanged
-        List<DiceCombo> preList = rs.returnValidCombos();
-        rs.removeValidCombo(DiceCombo.SINGLE_ONE);
-        List<DiceCombo> postList = rs.returnValidCombos();
-
-        assertEquals(preList, postList);
-
-    }
-
 }
