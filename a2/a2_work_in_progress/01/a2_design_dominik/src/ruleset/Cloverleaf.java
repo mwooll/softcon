@@ -34,10 +34,6 @@ public class Cloverleaf extends Ruleset{
     @Override
     public int handleTutto(int pPoints) {
         numAchievedTuttos += 1;
-        if (numAchievedTuttos >= 2) {
-            System.out.println("The current player wins.");
-            return 100_000_000;
-        }
         return 0;
     }
 }

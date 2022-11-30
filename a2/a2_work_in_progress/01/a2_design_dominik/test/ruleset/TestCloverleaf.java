@@ -45,7 +45,6 @@ class TestCloverleaf {
     public void test_handle_SecondTutto() {
 
         // No matter the rolled combos, a Cloverleaf should never count points from a roll when the second tutto happens
-        // it should return exactly the win condition
         Ruleset rs = new Cloverleaf();
         List<DiceCombo> tmpCombos = new ArrayList<>();
         tmpCombos.add(DiceCombo.SINGLE_ONE);
@@ -57,7 +56,7 @@ class TestCloverleaf {
         tmpPoints += rs.handleTutto(tmpPoints);
         tmpPoints += rs.sumUpPoints(tmpCombos2);
 
-        assertEquals(100000000, rs.handleTutto(tmpPoints));
+        assertEquals(0, rs.handleTutto(tmpPoints));
 
     }
 
