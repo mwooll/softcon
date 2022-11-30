@@ -25,7 +25,7 @@ public class Game {
     private final int aWinCondition;
     private final Deck aDeck;
     private final Tableau aTableau = new Tableau();
-    private InputParser aParser = new DefaultParser();
+    private InputParser aParser;
 
     private final boolean aDebug; // remove later
 
@@ -34,14 +34,14 @@ public class Game {
      * @param pDebug specify if the DiceSet with a fixed roll ONE or a real random DiceSet is fetched by Round
      * @param pDeckSpec specifying the type of Deck to be used for the game
      */
-    public Game(boolean pDebug, DeckSpec pDeckSpec) {
+    public Game(boolean pDebug, DeckSpec pDeckSpec, InputParser pParser) {
 
         // for debugging, using the dice set
         aDebug = pDebug;
 
         // Set the input parser to use for the game
         // Can be overridden with the setParser method on a game instance
-        setParser(new DefaultParser());
+        setParser(pParser);
 
         // ask how many players
         int numberPlayers = aParser.askNumberPlayers();
@@ -118,8 +118,9 @@ public class Game {
 
     /**
      * Game loop that entails the whole game
+     * @return true to test
      */
-    public void playGame() {
+    public boolean playGame() {
 
         System.out.println("-------------------- START GAME -----------------");
         printTableau();
@@ -137,7 +138,7 @@ public class Game {
                 // check if the CLOVERLEAF ends the game
                 if (cloverleafEndingGame) {
                     System.out.println(String.format("The CLOVERLEAF ends the game, %s has won!", playerName));
-                    return;
+                    return true;
                 }
 
                 // check if anybody has the win condition
@@ -153,6 +154,8 @@ public class Game {
         System.out.println("Final Tableau:");
         printTableau();
 
+        return true;
+
     }
 
     /**
@@ -164,7 +167,6 @@ public class Game {
      */
     private boolean playTurn(String pPlayerName) {
 
-        int cloverleafEndingGame = 0;
         int turnScore = 0;
         int turnCounter = 0;
         Card turnCurrentCard;
@@ -196,6 +198,8 @@ public class Game {
         // init the round instance
         // todo: Check that a new Round always answers drawNewCard() with false!
         turnCurrentRound = new Round(turnCurrentRuleset);
+        // set the parser
+        turnCurrentRound.setParser(aParser);
 
         // debugging only
         if (aDebug) {
@@ -221,6 +225,7 @@ public class Game {
                 turnCurrentRuleset = turnCurrentCard.returnCardType().getFreshRuleset();
                 System.out.println(String.format("Starting Turn with a %s card with a fresh ruleset %s", turnCurrentCard.returnCardType(), turnCurrentRuleset.returnName()));
                 turnCurrentRound = new Round(turnCurrentRuleset);
+                turnCurrentRound.setParser(aParser);
 
                 // debugging only
                 if (aDebug) {
