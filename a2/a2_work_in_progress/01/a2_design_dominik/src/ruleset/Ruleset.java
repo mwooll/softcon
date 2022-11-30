@@ -12,7 +12,6 @@ public abstract class Ruleset {
      * A class subtyping the ruleset. Ruleset needs to
      * know how to handle game rules
      *
-     * todo: returnName and explainRules must be abstract classes
      * todo: Use Default (rename to TestAbstract?) to test all methods that have a default
      * todo: Subclasses only test the methods they override, everything else is covered by Default
      */
@@ -25,7 +24,7 @@ public abstract class Ruleset {
      */
     public Ruleset(){
         setValidCombos();
-    };
+    }
 
     /**
      * A clone function returns a new instance of the subclass instance
@@ -35,15 +34,13 @@ public abstract class Ruleset {
     /**
      * Return the name of the ruleset
      */
-    public String returnName() {return "PLACEHOLDER";}
+    public  abstract String returnName();
 
     /**
      * Explain the rules which make up the ruleset.Ruleset
      * @return The rules as a printable string
      */
-    public String explainRules() {
-        return "PLACEHOLDER";
-    }
+    public abstract String explainRules();
 
     /**
      * Given the ruleset, set the list with all possible valid combos
@@ -59,7 +56,7 @@ public abstract class Ruleset {
         aValidCombos.add(DiceCombo.TRIPLET_FOUR);
         aValidCombos.add(DiceCombo.TRIPLET_FIVE);
         aValidCombos.add(DiceCombo.TRIPLET_SIX);
-    };
+    }
 
     /**
      * The default is that nothing happens since only Straight wants to remove valid combos
@@ -88,7 +85,7 @@ public abstract class Ruleset {
 
         return outPoints;
 
-    };
+    }
 
     /**
      * Specify the amounts of points to add when a Tutto happens
@@ -97,7 +94,7 @@ public abstract class Ruleset {
      */
     public int handleTutto(int pPoints){
         return 0;
-    };
+    }
 
 
     /**
