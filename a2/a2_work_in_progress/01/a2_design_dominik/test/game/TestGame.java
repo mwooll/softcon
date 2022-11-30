@@ -15,8 +15,6 @@ class TestGame {
     @Test
     public void test_game_ending_cloverleaf_secondTutto() {
 
-        // todo: Input Parser does not work... Cannot test game functions
-
         /*
         Default Setting, always ONE
         1 - Number of players

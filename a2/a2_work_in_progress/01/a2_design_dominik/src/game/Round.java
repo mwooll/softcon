@@ -14,8 +14,7 @@ public class Round {
      * The Round know if the next Round needs a new Ruleset or not
      *
      * todo: Instead of boolean flags for mustDoXY, new class Decision maker/Strategy which uses an InputParser and the aCurrentRuleset to decide
-     * todo: CLOVERLEAF when successful end the game
-     * todo: The boolean flags for returning the state are not clean...
+     * todo: The boolean flags for returning the state are not clean. That should be cleaned up in some finishUpRound step
      */
 
     // Each Round instance has to be able to tell whether a new card should be drawn or not given the current events
@@ -60,7 +59,7 @@ public class Round {
         aCurrentRuleset = pRuleset;
 
         // Determine if player can stop
-        if (aCurrentRuleset.returnName().equals("FIREWORKS")) {
+        if (aCurrentRuleset.returnName().equals("FIREWORKS") || aCurrentRuleset.returnName().equals("STRAIGHT") ) {
             aMustContinue = true;
             aMustRemoveAll = true;
         }

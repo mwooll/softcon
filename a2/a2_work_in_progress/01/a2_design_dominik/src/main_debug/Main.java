@@ -57,17 +57,18 @@ public class Main {
 
 
         // init a game
-//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setDefault().build();
-//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(5).build();
-//        Game g = new Game(true, ds, new DefaultParser());
-//        g.playGame();
+        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setDefault().build();
+//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(1).build();
+//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setStraight(1).build();
+        Game g = new Game(false, ds, new DefaultParser());
+        g.playGame();
 
-        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(10).build();
-        ByteArrayInputStream inputStream = new ByteArrayInputStream("1\np1\n10000000\nR\n1".getBytes());
-        InputParser ip = new DefaultParser(inputStream, System.out);
-
-        Game game = new Game(true, ds, ip);
-        game.playGame();
+//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(1).build();
+//        ByteArrayInputStream inputStream = new ByteArrayInputStream("1\np1\n10000000\nR\n".getBytes());
+//        InputParser ip = new DefaultParser(inputStream, System.out);
+//
+//        Game game = new Game(true, ds, ip);
+//        game.playGame();
 
     }
 }

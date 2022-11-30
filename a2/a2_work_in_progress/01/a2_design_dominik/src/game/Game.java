@@ -91,8 +91,6 @@ public class Game {
      * Determine the final winner and announce him
      * In case of tie, announce all players
      * No assertion about empty tableau, init of Game should not allow that through DefaultParser
-     *
-     * todo: implement properly, for now just printTableau
      */
     private void determineWinner() {
         int maxPoints = -1;
@@ -196,7 +194,6 @@ public class Game {
         System.out.println(String.format("Starting Turn with a %s card with ruleset %s", turnCurrentCard.returnCardType(), turnCurrentRuleset.returnName()));
 
         // init the round instance
-        // todo: Check that a new Round always answers drawNewCard() with false!
         turnCurrentRound = new Round(turnCurrentRuleset);
         // set the parser
         turnCurrentRound.setParser(aParser);
