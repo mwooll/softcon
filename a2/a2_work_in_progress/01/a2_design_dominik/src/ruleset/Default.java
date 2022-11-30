@@ -21,5 +21,4 @@ public class Default extends Ruleset {
         return "No special rules are active.";
     }
 
-
 }

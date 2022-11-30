@@ -19,16 +19,6 @@ class TestRound {
     Ruleset rsDefault = new Default();
 
     @Test
-    public void test_playRound_Null() {
-
-        Round roundDefault = new Round(rsDefault);
-
-        // Default has empty validCombos, every roll is a null
-        assertEquals(0, roundDefault.playRound());
-
-    }
-
-    @Test
     public void test_playRound_StopDirectly() {
 
         Round roundBonus = new Round(rsBonus);

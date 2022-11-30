@@ -8,8 +8,6 @@ public class Card {
      * A Card represents on of the Cards which the player
      * can draw from the pile.
      * A Card has a CardType attached to it
-     *
-     * todo: Method that returns a fresh ruleset.
      */
 
     private final CardType aCardType;
