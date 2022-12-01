@@ -33,7 +33,7 @@ public class Die implements Comparable<Die> {
     public void rollDie() {
 
         // pick value at random
-        int randIndex = rand.nextInt(DieValue.values().length-1);
+        int randIndex = rand.nextInt(DieValue.values().length);
 
         // if debug active, always set same index
         if (aDebug) {
