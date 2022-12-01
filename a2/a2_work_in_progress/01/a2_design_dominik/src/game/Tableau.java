@@ -35,7 +35,7 @@ public class Tableau {
      */
     public void update(String pPlayerName, int pScore) {
         assert aTableau.containsKey(pPlayerName);
-        assert pScore > 0;
+        assert pScore >= 0;
 
         aTableau.put(pPlayerName, aTableau.get(pPlayerName) + pScore);
 

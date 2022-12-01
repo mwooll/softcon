@@ -20,9 +20,11 @@ public class Main {
 //        System.out.println("main_debug.Main executed.");
 
         // Test sorting of List in DiceSet
-        DiceSet ds = DiceSet.get();
+//        DiceSet ds = DiceSet.get();
+//        System.out.println(ds);
 
-        System.out.println(ds);
+
+
 
 
 
@@ -74,13 +76,13 @@ public class Main {
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(1).build();
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setStraight(1).build();
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setFireworks(2).build();
-//        Game g = new Game(false, ds, new DefaultParser());
-//        g.playGame();
+        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setBonus(0,0,0,0,10).build();
+        Game g = new Game(true, ds, new DefaultParser());
+        g.playGame();
 
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(1).build();
 //        ByteArrayInputStream inputStream = new ByteArrayInputStream("1\np1\n10000000\nR\n".getBytes());
 //        InputParser ip = new DefaultParser(inputStream, System.out);
-//
 //        Game game = new Game(true, ds, ip);
 //        game.playGame();
 

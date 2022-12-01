@@ -9,7 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TestGame {
 
-    DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(10).build();
+    DeckSpec ds_cloverleaf = new DeckSpec.DeckSpecBuilder().setCloverleaf(10).build();
+    DeckSpec ds_bonus = new DeckSpec.DeckSpecBuilder().setBonus(0,0,0,0,1).build();
 
 
     @Test
@@ -32,7 +33,39 @@ class TestGame {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(inputString.getBytes());
         InputParser ip = new DefaultParser(inputStream, System.out);
 
-        Game game = new Game(true, ds, ip);
+        Game game = new Game(true, ds_cloverleaf, ip);
+        game.setParser(ip);
+
+        assertTrue(game.playGame());
+
+
+    }
+
+    @Test
+    public void test_game_ending_bonus() {
+
+        /*
+        Default Setting, always ONE
+        2 - Number of players
+        p1 - Name of players
+        p2
+        100 - Win Condition
+        R - Roll the dice
+        N - Do not stop round
+        1 - Always remove the TRIPLET_ONE
+        N - Do not remove any more combinations
+        Y - Stop turn
+        D - Show Tableau
+        R - Roll the dice
+        Y - Stop turn
+        */
+
+        // let p1 win the game
+        String inputString = String.join("\n","2","p1","p2","100","R","N","1","N","Y","D","R","Y");
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(inputString.getBytes());
+        InputParser ip = new DefaultParser(inputStream, System.out);
+
+        Game game = new Game(true, ds_bonus, ip);
         game.setParser(ip);
 
         assertTrue(game.playGame());
