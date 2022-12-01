@@ -1,10 +1,15 @@
 package main_debug;
 
 import card.*;
+import die.*;
 import game.*;
 import ruleset.*;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -13,6 +18,27 @@ public class Main {
     public static void main(String[] args) {
 
 //        System.out.println("main_debug.Main executed.");
+
+        // Test sorting of List
+        List<Die> aDiceRemaining = new ArrayList<Die>();
+        aDiceRemaining.add(new Die(false));
+        aDiceRemaining.add(new Die(false));
+        aDiceRemaining.add(new Die(false));
+        aDiceRemaining.add(new Die(false));
+        aDiceRemaining.add(new Die(false));
+        aDiceRemaining.add(new Die(false));
+
+//        List<String> aDiceRemaining = new ArrayList<>();
+//        aDiceRemaining.add("b");
+//        aDiceRemaining.add("a");
+//
+//
+        System.out.println(aDiceRemaining);
+        Collections.sort(aDiceRemaining);
+        System.out.println(aDiceRemaining);
+
+
+
 
         // Test the Seed vs Random
 //        DiceSet diceset = DiceSet.getDebug();
@@ -57,11 +83,12 @@ public class Main {
 
 
         // init a game
-        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setDefault().build();
+//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setDefault().build();
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(1).build();
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setStraight(1).build();
-        Game g = new Game(false, ds, new DefaultParser());
-        g.playGame();
+//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setFireworks(2).build();
+//        Game g = new Game(false, ds, new DefaultParser());
+//        g.playGame();
 
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(1).build();
 //        ByteArrayInputStream inputStream = new ByteArrayInputStream("1\np1\n10000000\nR\n".getBytes());

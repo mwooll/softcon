@@ -248,19 +248,19 @@ public class Game {
                 aTableau.decrease();
             }
 
-            // if the round was a null, end the turn here, give no points
-            // todo: Except for FIREWORKS
+            // if the round was a null, end the turn here. The points were handled in playRound
             if (turnCurrentRound.isNull()) {
-                turnScore = 0;
                 break;
             }
 
             // if the round was a tutto, ask if the player wants to keep on playing
-            // if it's a cloverleaf and the game has not yet ended, that means the player has 1 Tutto so far
-            // inform the player that he has to play another round
+            // cloverleaf - If tutto and the game has not yet ended, that means the player has 1 Tutto so far
+            // fireworks - You need to keep on playing
             if (turnCurrentRound.isTutto()) {
                 if (turnCurrentRuleset.returnName().equals("CLOVERLEAF")) {
-                    System.out.println("You have to try to socre a second Tutto, if you do you win the game!");
+                    System.out.println("You have to try to score a second Tutto, if you do you win the game!");
+                } else if (turnCurrentRuleset.returnName().equals("FIREWORKS")) {
+                    System.out.println("You have to keep rolling the dice!");
                 } else {
                     if (aParser.askStopAfterTutto()) {
                         break;

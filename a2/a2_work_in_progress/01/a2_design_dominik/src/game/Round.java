@@ -214,7 +214,10 @@ public class Round {
         // add tutto points
         if (aIsTutto) {
             int pointsTutto = aCurrentRuleset.handleTutto(pointsTotal);
-            System.out.println(String.format("Your Tutto scored you %s points", pointsTutto));
+            // If the tutto scored extra points, inform the player
+            if (pointsTutto > 0) {
+                System.out.println(String.format("Your Tutto scored you %s points", pointsTutto));
+            }
             pointsTotal += pointsTutto;
         }
 
