@@ -67,9 +67,6 @@ public class Round {
             aMustContinue = true;
         }
 
-        // Show the initial roll
-        System.out.println(String.format("Fresh round initialized with ruleset %s", aCurrentRuleset.returnName()));
-
     }
 
     /**

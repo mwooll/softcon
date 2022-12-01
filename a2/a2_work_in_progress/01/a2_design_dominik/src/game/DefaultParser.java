@@ -64,7 +64,7 @@ public class DefaultParser implements InputParser {
 
     }
 
-    private int askInteger(String pQuestion, String pWarning, int pMin) {
+    private int askInteger(String pQuestion, String pWarning, int pMin, int pMax) {
 
         while(true) {
             aPrintStream.println(pQuestion);
@@ -72,14 +72,13 @@ public class DefaultParser implements InputParser {
 
             try {
                 int answer = Integer.parseInt(answerString);
-                if (answer >= pMin) {
+                if (answer >= pMin && answer <= pMax) {
                      return answer;
                 } else {
                     aPrintStream.println(pWarning);
                 }
-            } catch (NumberFormatException e) {}
+            } catch (NumberFormatException e) {aPrintStream.println(pWarning);}
 
-            aPrintStream.println(pWarning);
         }
 
     }
@@ -87,7 +86,7 @@ public class DefaultParser implements InputParser {
 
 
     public int askNumberPlayers() {
-        return askInteger("How many players are playing? Please enter a number, Minimum 1 Player", "Please enter a single number bigger than 0", 1);
+        return askInteger("How many players are playing? Please enter a number between 2 and 4", "Please enter a single number either 2, 3 or 4", 2, 4);
     }
 
     public String askPlayerName(int pNumber, List<String> pForbidden) {
@@ -110,7 +109,7 @@ public class DefaultParser implements InputParser {
     }
 
     public int askWinCondition() {
-        return askInteger("How many points to win the game? Please enter a number.", "Please enter a single number bigger than 0", 1);
+        return askInteger("How many points to win the game? Please enter a number. Maximum 100'000", "Please enter a single number bigger than 0, smaller than 100000", 1,100000);
     }
 
     public boolean askDisplayScore() {

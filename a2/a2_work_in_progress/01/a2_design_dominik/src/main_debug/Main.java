@@ -72,11 +72,11 @@ public class Main {
 
 
         // init a game
-//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setDefault().build();
+        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setDefault().build();
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(1).build();
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setStraight(1).build();
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setFireworks(2).build();
-        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setBonus(0,0,0,0,10).build();
+//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setBonus(0,0,0,0,10).build();
         Game g = new Game(true, ds, new DefaultParser());
         g.playGame();
 
