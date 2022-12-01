@@ -72,18 +72,19 @@ public class Main {
 
 
         // init a game
-        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setDefault().build();
+        boolean playDebug = false;
+//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setDefault().build();
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(1).build();
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setStraight(1).build();
-//        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setFireworks(2).build();
+        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setFireworks(2).build();
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setBonus(0,0,0,0,10).build();
-        Game g = new Game(true, ds, new DefaultParser());
+        Game g = new Game(playDebug, ds, new DefaultParser());
         g.playGame();
 
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setCloverleaf(1).build();
-//        ByteArrayInputStream inputStream = new ByteArrayInputStream("1\np1\n10000000\nR\n".getBytes());
+//        ByteArrayInputStream inputStream = new ByteArrayInputStream("4\ndominik\notto\nmark\nmona\n2000".getBytes());
 //        InputParser ip = new DefaultParser(inputStream, System.out);
-//        Game game = new Game(true, ds, ip);
+//        Game game = new Game(playDebug, ds, ip);
 //        game.playGame();
 
     }

@@ -18,8 +18,9 @@ class TestGame {
 
         /*
         Default Setting, always ONE
-        1 - Number of players
-        p1 - Name of player
+        2 - Number of players
+        p1 - Name of players
+        p2
         10000000 - Win Condition
         R - Roll the dice
         1 - Always remove the TRIPLET_ONE
@@ -29,7 +30,7 @@ class TestGame {
          */
 
         // make sure that the game ends when a player rolls the second tutto in a row
-        String inputString = "1\np1\n10000000\nR\n1\n1\n1\n1\n";
+        String inputString = "2\np1\np2\n100000\nR\n1\n1\n1\n1\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(inputString.getBytes());
         InputParser ip = new DefaultParser(inputStream, System.out);
 

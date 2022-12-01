@@ -5,6 +5,7 @@ import ruleset.Cloverleaf;
 import ruleset.Ruleset;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Game {
@@ -15,7 +16,6 @@ public class Game {
      * play turn
      *
      * todo: remove debugging boolean after finished
-     * todo: remove discardPile completely, we don't need it. Keep everything in deck.
      * todo: Method drawCard at beginning of playTurn
      * todo: Method finishUpRound at end of playTurn
      */
@@ -48,10 +48,12 @@ public class Game {
         assert numberPlayers > 0;
 
         // ask players names
-        System.out.println("Order of player names entered will determine order of turns");
+        System.out.println("Order is determined by alphabetical order");
         for (int i = 1; i <= numberPlayers; i++) {
             aPlayers.add(aParser.askPlayerName(i, aPlayers));
         }
+        // sort aPlayers alphabetical
+        Collections.sort(aPlayers);
 
         // ask how many points win condition
         aWinCondition = aParser.askWinCondition();
@@ -123,7 +125,7 @@ public class Game {
         System.out.println("-------------------- START GAME -----------------");
         printTableau();
 
-        int nTurns = 0;
+        int nTurns = 1;
         boolean keepPlaying = true;
 
         // as long as no player has reached the win condition, keep playing
@@ -139,12 +141,13 @@ public class Game {
                     return true;
                 }
 
-                // check if anybody has the win condition
-                if (aPlayerHasWon()) {
+                // check if anybody has the win condition. Do not inform again that someone has won when we are already finishing up the tableau round
+                if (aPlayerHasWon() && keepPlaying) {
                     System.out.println(String.format("A Player has reached the win condition of %s points.\nEvery player can catch up turns then the game ends and the player with the most points wins.", aWinCondition));
                     keepPlaying = false;
                 }
             }
+            nTurns += 1;
         }
 
         System.out.println(String.format("GAME IS OVER! Determining the winner ... "));
@@ -166,7 +169,7 @@ public class Game {
     private boolean playTurn(String pPlayerName) {
 
         int turnScore = 0;
-        int turnCounter = 0;
+        int turnCounter = 1;
         Card turnCurrentCard;
         Ruleset turnCurrentRuleset;
         Round turnCurrentRound;
@@ -191,7 +194,8 @@ public class Game {
         // initialize a fresh ruleset whenever a card is drawn
         turnCurrentRuleset = turnCurrentCard.returnCardType().getFreshRuleset();
 
-        System.out.println(String.format("Starting Turn with a %s card with ruleset %s", turnCurrentCard.returnCardType(), turnCurrentRuleset.returnName()));
+        System.out.println(String.format("Starting Turn with a %s card", turnCurrentCard.returnCardType()));
+        System.out.println(turnCurrentRuleset.explainRules());
 
         // init the round instance
         turnCurrentRound = new Round(turnCurrentRuleset);
@@ -207,9 +211,10 @@ public class Game {
         while (true) {
 
             // Check with the current round if we need to draw a new Card.
-            // if so, draw a card and create new Round instance
+            // if so, draw a card and create new Ruleset
             // Only do that if it's not the first round of the turn
-            if (turnCounter > 0 && turnCurrentRound.drawNewCard()) {
+            // WATCH OUT: We have to initialize a fresh Round object either way!
+            if (turnCounter > 1 && turnCurrentRound.drawNewCard()) {
 
                 // Check if Deck still has cards to draw from, if not inform and refresh deck
                 if (aDeck.isEmpty()) {
@@ -217,19 +222,25 @@ public class Game {
                     aDeck.refresh();
                 }
 
+                // Draw new card
                 System.out.println("Drawing new card ...");
                 turnCurrentCard = aDeck.draw();
                 turnCurrentRuleset = turnCurrentCard.returnCardType().getFreshRuleset();
-                System.out.println(String.format("Starting Turn with a %s card with a fresh ruleset %s", turnCurrentCard.returnCardType(), turnCurrentRuleset.returnName()));
-                turnCurrentRound = new Round(turnCurrentRuleset);
-                turnCurrentRound.setParser(aParser);
-
-                // debugging only
-                if (aDebug) {
-                    turnCurrentRound.setDiceSet(DiceSet.getDebug());
-                }
+                System.out.println(String.format("You drew a %s card", turnCurrentCard.returnCardType()));
+                System.out.println(turnCurrentRuleset.explainRules());
 
             }
+
+            // Initialize the fresh round instance
+            turnCurrentRound = new Round(turnCurrentRuleset);
+            turnCurrentRound.setParser(aParser);
+
+            // debugging only
+            if (aDebug) {
+                turnCurrentRound.setDiceSet(DiceSet.getDebug());
+            }
+
+            System.out.println(String.format("-------------------- TURN %s ROLL %s -----------------", pPlayerName, turnCounter));
 
             turnCounter += 1;
             turnScore += turnCurrentRound.playRound();
@@ -275,6 +286,8 @@ public class Game {
             }
 
         }
+
+        System.out.println(String.format("Your total turn scored you a total of %s points", turnScore));
 
         // Update scores
         aTableau.update(pPlayerName, turnScore);

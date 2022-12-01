@@ -10,7 +10,7 @@ public class Fireworks extends Ruleset {
 
     @Override
     public String explainRules() {
-        return "You have to remove all valid combinations and you keep rolling until you roll a null." +
+        return "You have to remove all valid combinations and you keep rolling until you roll a null. " +
                 "If you achieve a Tutto you leave the card and keep rolling. The Tutto does not score you any points, " +
                 "but you keep all the points you rolled.";
     }

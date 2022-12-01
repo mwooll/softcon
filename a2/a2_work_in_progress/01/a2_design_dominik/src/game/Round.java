@@ -58,6 +58,9 @@ public class Round {
         // Set the current Ruleset
         aCurrentRuleset = pRuleset;
 
+        // Clear the rolledDiceCombos
+        aRolledDiceCombos.clear();
+
         // Determine if player can stop
         if (aCurrentRuleset.returnName().equals("FIREWORKS") || aCurrentRuleset.returnName().equals("STRAIGHT") ) {
             aMustContinue = true;
@@ -117,11 +120,14 @@ public class Round {
         // Determine if the current roll is a null
         aIsNull = rollIsNull();
 
+        int rollingCounter = 0;
         while(!aIsNull && !isTutto) {
 
-            // - Tell player that he has not rolled a null and show him all possible DiceCombos
-            System.out.println("Your remaining dice:");
-            System.out.println(aDiceSet);
+            // For the first roll, tell player that he has not rolled a null and show him his roll
+            if (rollingCounter == 0) {
+                System.out.println("Your dice:");
+                System.out.println(aDiceSet);
+            }
 
             // - Ask player if stop or continue
             if (aMustContinue) {
@@ -137,12 +143,6 @@ public class Round {
                 System.out.println(aDiceSet);
 
                 // Either remove DiceCombos automatically or ask player
-                // First show all removable combos
-                System.out.println("Combinations currently possible to remove:");
-                for (DiceCombo dicecombo : aRemovableDiceCombos) {
-                    System.out.println(String.format("%s", dicecombo));
-                }
-
                 DiceCombo toRemove;
                 if (aMustRemoveAll) {
                     toRemove = aRemovableDiceCombos.get(0);
@@ -185,6 +185,8 @@ public class Round {
                 aRemovableDiceCombos = returnRemovableDiceCombos();
                 aIsNull = rollIsNull();
             }
+
+            rollingCounter += 1;
 
         }
 
@@ -232,7 +234,7 @@ public class Round {
          */
         if (isTutto) {
             if (aCurrentRuleset.returnName().equals("FIREWORKS")) {
-                System.out.println("You scored a Tutto while FIREWORKS is uncovered. The Card stays and you keep rolling!");
+                System.out.println("You scored a Tutto while FIREWORKS is uncovered. The card stays and you keep rolling!");
                 aNeedsNewRuleset = false;
             }
             if (aCurrentRuleset.returnName().equals("CLOVERLEAF")) {
@@ -250,7 +252,7 @@ public class Round {
         }
 
         // return the points
-        System.out.println(String.format("Your total round scored you %s points", pointsFinal));
+        System.out.println(String.format("Your round scored you a total of %s points", pointsFinal));
         return pointsFinal;
     }
 
