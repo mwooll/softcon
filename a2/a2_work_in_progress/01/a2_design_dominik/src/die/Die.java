@@ -3,7 +3,7 @@ package die;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Die {
+public class Die implements Comparable<Die> {
 
     /**
      * Represents a single Die.Die in the game
@@ -48,6 +48,10 @@ public class Die {
     @Override
     public String toString() {
         return aDieValue.name();
+    }
+
+    public int compareTo(Die pDie) {
+        return aDieValue.ordinal() - pDie.aDieValue.ordinal();
     }
 
 }

@@ -1,5 +1,6 @@
 package die;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
@@ -176,10 +177,20 @@ public class DiceSet {
     public int getSize() {return N_DIE;}
 
 
-
+    /**
+     * Use deep copies of the Lists with Die
+     * @return String representaion of the DiceSet
+     */
     @Override
     public String toString() {
-        return String.format("Dice Left : %s\nDice Used : %s", aDiceRemaining, aDiceUsed);
+
+        List<Die> copyDiceRemaining = new ArrayList<>(aDiceRemaining);
+        List<Die> copyDiceUsed = new ArrayList<>(aDiceUsed);
+
+        Collections.sort(copyDiceRemaining);
+        Collections.sort(copyDiceUsed);
+
+        return String.format("Dice Left : %s\nDice Used : %s", copyDiceRemaining, copyDiceUsed);
     }
 
 

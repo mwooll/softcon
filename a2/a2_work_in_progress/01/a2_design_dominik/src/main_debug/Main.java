@@ -19,23 +19,10 @@ public class Main {
 
 //        System.out.println("main_debug.Main executed.");
 
-        // Test sorting of List
-        List<Die> aDiceRemaining = new ArrayList<Die>();
-        aDiceRemaining.add(new Die(false));
-        aDiceRemaining.add(new Die(false));
-        aDiceRemaining.add(new Die(false));
-        aDiceRemaining.add(new Die(false));
-        aDiceRemaining.add(new Die(false));
-        aDiceRemaining.add(new Die(false));
+        // Test sorting of List in DiceSet
+        DiceSet ds = DiceSet.get();
 
-//        List<String> aDiceRemaining = new ArrayList<>();
-//        aDiceRemaining.add("b");
-//        aDiceRemaining.add("a");
-//
-//
-        System.out.println(aDiceRemaining);
-        Collections.sort(aDiceRemaining);
-        System.out.println(aDiceRemaining);
+        System.out.println(ds);
 
 
 
