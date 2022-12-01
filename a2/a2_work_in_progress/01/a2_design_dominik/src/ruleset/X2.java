@@ -14,5 +14,5 @@ public class X2 extends Ruleset {
     };
 
     @Override
-    public int handleTutto(int pPoints) {return pPoints*2;}
+    public int handleTutto(int pPoints) {return pPoints;}
 }
