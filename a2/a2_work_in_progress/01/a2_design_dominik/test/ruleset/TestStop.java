@@ -27,7 +27,7 @@ class TestStop {
 
         Ruleset rs = new Stop();
 
-        assertEquals("The STOP card.Card stops the turn when drawn", rs.explainRules());
+        assertEquals("The STOP card stops the turn when drawn", rs.explainRules());
 
     }
 

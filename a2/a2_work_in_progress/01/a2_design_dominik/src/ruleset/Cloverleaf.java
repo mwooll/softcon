@@ -21,7 +21,7 @@ public class Cloverleaf extends Ruleset{
     @Override
     public String explainRules() {
         return "Getting two Tuttos back to back will result in an immediate win. " +
-                "You may not end your turn prematurely and rolling a Null scores you no points.";
+                "You may not end your turn prematurely and rolling a null scores you no points.";
     }
 
     @Override

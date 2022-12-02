@@ -14,7 +14,7 @@ public class Stop extends Ruleset {
 
     @Override
     public String explainRules() {
-        return "The STOP card.Card stops the turn when drawn";
+        return "The STOP card stops the turn when drawn";
     }
 
     /**

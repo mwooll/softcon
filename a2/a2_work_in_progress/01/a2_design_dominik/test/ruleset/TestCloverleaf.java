@@ -22,7 +22,7 @@ class TestCloverleaf {
     @Test
     public void test_explanation() {
 
-        String expected = "Getting two Tuttos back to back will result in an immediate win. You may not end your turn prematurely and rolling a Null scores you no points.";
+        String expected = "Getting two Tuttos back to back will result in an immediate win. You may not end your turn prematurely and rolling a null scores you no points.";
 
         assertEquals(expected, cloverleaf.explainRules());
 
