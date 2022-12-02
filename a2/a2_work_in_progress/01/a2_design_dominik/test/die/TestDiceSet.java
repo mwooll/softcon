@@ -128,7 +128,7 @@ class TestDiceSet {
     public void test_returnCombos_onlyOne() {
         List<DiceCombo> expected = Arrays.asList(DiceCombo.SINGLE_ONE);
 
-        // move all dies to the used
+        // move all dice to the used
         for (int i = 0; i < diceset_debug.getSize()-1; i++) {
             diceset_debug.moveDie(DieValue.ONE);
         }
@@ -141,7 +141,7 @@ class TestDiceSet {
     public void test_returnCombos_empty() {
         List<DiceCombo> expected = new ArrayList<>();
 
-        // move all dies to the used
+        // move all dice to the used
         for (int i = 0; i < diceset_debug.getSize(); i++) {
             diceset_debug.moveDie(DieValue.ONE);
         }
@@ -150,5 +150,86 @@ class TestDiceSet {
 
     }
 
+    @Test
+    public void test_returnMaximalCombos_empty() {
+        List<DiceCombo> expected = new ArrayList<>();
 
+        // move all dice to the used
+        for (int i = 0; i < diceset_debug.getSize(); i++) {
+            diceset_debug.moveDie(DieValue.ONE);
+        }
+
+        assertEquals(expected, diceset_debug.returnMaximalCombos());
+    }
+
+    @Test
+    public void test_returnMaximalCombos_1_ONE() {
+        List<DiceCombo> expected = new ArrayList<>();
+        expected.add(DiceCombo.SINGLE_ONE);
+
+        // move all but 1 dice to the used
+        for (int i = 0; i < (diceset_debug.getSize() - 1); i++) {
+            diceset_debug.moveDie(DieValue.ONE);
+        }
+
+        assertEquals(expected, diceset_debug.returnMaximalCombos());
+    }
+    @Test
+    public void test_returnMaximalCombos_2_ONE() {
+        List<DiceCombo> expected = new ArrayList<>();
+        expected.add(DiceCombo.SINGLE_ONE);
+        expected.add(DiceCombo.SINGLE_ONE);
+
+        // move all but 2 dice to the used
+        for (int i = 0; i < (diceset_debug.getSize() - 2); i++) {
+            diceset_debug.moveDie(DieValue.ONE);
+        }
+
+        assertEquals(expected, diceset_debug.returnMaximalCombos());
+    }
+    @Test
+    public void test_returnMaximalCombos_3_ONE() {
+        List<DiceCombo> expected = new ArrayList<>();
+        expected.add(DiceCombo.TRIPLET_ONE);
+
+        // move 3 dice to the used
+        for (int i = 0; i < (diceset_debug.getSize() - 3); i++) {
+            diceset_debug.moveDie(DieValue.ONE);
+        }
+
+        assertEquals(expected, diceset_debug.returnMaximalCombos());
+    }
+    @Test
+    public void test_returnMaximalCombos_4_ONE() {
+        List<DiceCombo> expected = new ArrayList<>();
+        expected.add(DiceCombo.TRIPLET_ONE);
+        expected.add(DiceCombo.SINGLE_ONE);
+
+        // move 2 dice to the used
+        for (int i = 0; i < (diceset_debug.getSize() - 4); i++) {
+            diceset_debug.moveDie(DieValue.ONE);
+        }
+
+        assertEquals(expected, diceset_debug.returnMaximalCombos());
+    }
+    @Test
+    public void test_returnMaximalCombos_5_ONE() {
+        List<DiceCombo> expected = new ArrayList<>();
+        expected.add(DiceCombo.TRIPLET_ONE);
+        expected.add(DiceCombo.SINGLE_ONE);
+        expected.add(DiceCombo.SINGLE_ONE);
+
+        // move 1 dice to the used
+        diceset_debug.moveDie(DieValue.ONE);
+
+        assertEquals(expected, diceset_debug.returnMaximalCombos());
+    }
+    @Test
+    public void test_returnMaximalCombos_6_ONE() {
+        List<DiceCombo> expected = new ArrayList<>();
+        expected.add(DiceCombo.TRIPLET_ONE);
+        expected.add(DiceCombo.TRIPLET_ONE);
+
+        assertEquals(expected, diceset_debug.returnMaximalCombos());
+    }
 }

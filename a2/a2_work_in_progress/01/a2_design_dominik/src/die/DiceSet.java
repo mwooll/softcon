@@ -139,6 +139,47 @@ public class DiceSet {
         return possibleCombos;
     }
 
+
+    /**
+     * Return a list of all combos which would give the most amount of points.
+     *
+     * Does implicitly assume the Default/Bonus/X2 Ruleset, where only triplets and single ones and fives can be removed,
+     * all the other rulesets do not allow you to voluntarily end your turn.
+     */
+    public List<DiceCombo> returnMaximalCombos() {
+
+        List<DiceCombo> maximalCombos = new ArrayList<>();
+
+        // get the counts that are currently possible
+        HashMap<DieValue, Integer> available = getDieValueCount();
+
+        // adding all possible triplets to
+        for (DieValue dievalue : DieValue.values()) {
+            int numAvailable = available.get(dievalue);
+            int numTriplets = numAvailable/3;
+            int numSingles = numAvailable%3;
+
+
+            for (int i = 0; i < numTriplets; i++) {
+                maximalCombos.add(DiceCombo.returnTriplet(dievalue));
+            }
+
+            if (dievalue == DieValue.ONE) {
+                for (int i = 0; i < numSingles; i++) {
+                    maximalCombos.add(DiceCombo.SINGLE_ONE);
+                }
+            }
+
+            if (dievalue == DieValue.FIVE) {
+                for (int i = 0; i < numSingles; i++) {
+                    maximalCombos.add(DiceCombo.SINGLE_FIVE);
+                }
+            }
+        }
+
+        return maximalCombos;
+    }
+
     /**
      * Return a HashMap with DieValue,count specifying how many DieValues there are in aDiceLeft
      */

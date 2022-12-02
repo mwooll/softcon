@@ -58,4 +58,35 @@ public enum DiceCombo implements Iterable<DieValue> {
 
     public Iterator<DieValue> iterator() {return aListDieValues.iterator();}
 
+    /**
+     * Return a triplet corresponding to the given DieValue.
+     *
+     * @return DiceCombo
+     */
+    public static DiceCombo returnTriplet(DieValue dievalue) {
+        DiceCombo triplet;
+        switch (dievalue) {
+            case ONE:
+                triplet = TRIPLET_ONE;
+                break;
+            case TWO:
+                triplet = TRIPLET_TWO;
+                break;
+            case THREE:
+                triplet = TRIPLET_THREE;
+                break;
+            case FOUR:
+                triplet = TRIPLET_FOUR;
+                break;
+            case FIVE:
+                triplet = TRIPLET_FIVE;
+                break;
+            case SIX:
+                triplet = TRIPLET_SIX;
+                break;
+            default:
+                triplet = TRIPLET_ONE; //to make it compilable
+        }
+        return triplet;
+    }
 }

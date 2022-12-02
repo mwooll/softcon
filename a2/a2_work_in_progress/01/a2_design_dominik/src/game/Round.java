@@ -26,7 +26,7 @@ public class Round {
     // Each Round instance can tell if it was a null or not
     private boolean aIsNull = false;
 
-    // Each Round instance can tell if it was a tutto or not
+    // Each Round instance can tell if it was a Tutto or not
     private boolean aIsTutto = false;
 
     // Depending on the Ruleset the player cannot take some decisions himself
@@ -105,7 +105,7 @@ public class Round {
         // hold the points of this round
         int pointsTotal = 0;
 
-        // isTutto lives during that round to keep track if we have a tutto while removing combos
+        // isTutto lives during that round to keep track if we have a Tutto while removing combos
         boolean isTutto = false;
 
         // At the start of the round, refresh the DiceSet
@@ -133,7 +133,12 @@ public class Round {
             if (aMustContinue) {
                 System.out.println("The current ruleset does not let you stop, you have to try to accomplish a Tutto");
             } else {
-                if (aParser.askStop()) {break;}
+                System.out.println(returnRemovableDiceCombos());
+                if (aParser.askStop()) {
+                    int endingPoints = endTurn();
+                    pointsTotal = pointsTotal + endingPoints;
+                    return pointsTotal;
+                }
             }
 
             // - Ask player which DiceCombo to remove, only possible if there are DiceCombos to remove
@@ -201,19 +206,19 @@ public class Round {
             aIsTutto = true;
         }
 
-        // inform if neither null nor tutto
+        // inform if neither null nor Tutto
         if (!aIsNull && !aIsTutto) {
             System.out.println("You ended your turn voluntarily, calculating points and ending the turn");
         }
 
-        // independently of null or tutto, sum up the rolled points. They can contain points even if null
+        // independently of null or Tutto, sum up the rolled points. They can contain points even if null
         int pointsRoll = aCurrentRuleset.sumUpPoints(aRolledDiceCombos);
         pointsTotal += pointsRoll;
 
-        // add tutto points
+        // add Tutto points
         if (aIsTutto) {
             int pointsTutto = aCurrentRuleset.handleTutto(pointsTotal);
-            // If the tutto scored extra points, inform the player
+            // If the Tutto scored extra points, inform the player
             if (pointsTutto > 0) {
                 System.out.println(String.format("Your Tutto scored you %s points", pointsTutto));
             }
@@ -274,6 +279,17 @@ public class Round {
 
         return tmp;
     }
+
+    /**
+     *
+     * @return
+     */
+    private int endTurn() {
+        List<DiceCombo> maximalCombos = new ArrayList<>(aDiceSet.returnMaximalCombos());
+        int endingPoints = aCurrentRuleset.sumUpPoints(maximalCombos);
+        return endingPoints;
+    }
+
 
     /**
      * Given the current state of a DiceSet and the current Ruleset, determine if DiceSet is a NULL roll
