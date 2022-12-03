@@ -4,6 +4,7 @@ import die.DiceSet;
 import ruleset.Cloverleaf;
 import ruleset.Ruleset;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -287,6 +288,8 @@ public class Game {
 
         }
 
+
+        turnScore= turnCurrentRuleset.handleNull(turnScore);
         System.out.println(String.format("Your total turn scored you a total of %s points", turnScore));
 
         // Update scores
