@@ -62,11 +62,11 @@ public class Round {
         aRolledDiceCombos.clear();
 
         // Determine if player can stop
-        if (aCurrentRuleset.returnName().equals("FIREWORKS") || aCurrentRuleset.returnName().equals("STRAIGHT") ) {
+        if (aCurrentRuleset.returnName().equals("FIREWORKS")) {
             aMustContinue = true;
             aMustRemoveAll = true;
         }
-        if (aCurrentRuleset.returnName().equals("CLOVERLEAF") || aCurrentRuleset.returnName().equals("PLUS/MINUS")) {
+        if (aCurrentRuleset.returnName().equals("CLOVERLEAF") || aCurrentRuleset.returnName().equals("PLUS/MINUS") || aCurrentRuleset.returnName().equals("STRAIGHT")) {
             aMustContinue = true;
         }
 
