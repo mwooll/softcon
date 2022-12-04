@@ -39,22 +39,26 @@ class TestRound {
 
         /*
          * N - don't stop
-         * 1 - remove first option = TRIPLET_ONE
+         * 1 - remove second option = SINGLE_ONE
          * N - decline removing more
          * (reroll dice)
          * Y - stop
+         *
+         * expect: 100 from removed plus stopping removing TRIPLET_ONE, SINGLE_ONE, SINGLE_ONE
+         * resulting in 100 + 1000 + 100 + 100 = 2300 points
+         *
          */
 
         Round roundBonus = new Round(rsBonus);
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream("N\n1\nN\nY\n".getBytes());
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("N\n2\nN\nY\n".getBytes());
         InputParser ip = new DefaultParser(inputStream, System.out);
 
         // Set debug DiceSet and Parser in the Round instance
         roundBonus.setDiceSet(DiceSet.getDebug());
         roundBonus.setParser(ip);
 
-        assertEquals(1000,roundBonus.playRound());
+        assertEquals(1300,roundBonus.playRound());
 
     }
 

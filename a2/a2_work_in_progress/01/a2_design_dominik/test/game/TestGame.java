@@ -71,7 +71,6 @@ class TestGame {
 
         assertTrue(game.playGame());
 
-
     }
 
 }

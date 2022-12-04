@@ -120,8 +120,13 @@ public class Round {
         // Determine if the current roll is a null
         aIsNull = rollIsNull();
 
+        // Flag if the player wants to stop his round
+        boolean stopRound = false;
+
         int rollingCounter = 0;
-        while(!aIsNull && !isTutto) {
+        while(!aIsNull && !isTutto && !stopRound) {
+
+            rollingCounter += 1;
 
             // For the first roll, tell player that he has not rolled a null and show him his roll
             if (rollingCounter == 0) {
@@ -129,20 +134,22 @@ public class Round {
                 System.out.println(aDiceSet);
             }
 
-            // - Ask player if stop or continue
+            // - Ask player which DiceCombo to remove, only possible if there are DiceCombos to remove
+            boolean keepRemoving = true;
+
+            // - Ask player if stop or continue, if he wants to stop, add points of all remaining combnations possible to remove and never enter the while loop keepRemoving
             if (aMustContinue) {
                 System.out.println("The current ruleset does not let you stop, you have to try to accomplish a Tutto");
             } else {
-                System.out.println(returnRemovableDiceCombos());
+                if (rollingCounter > 1) {System.out.println(returnRemovableDiceCombos());}
                 if (aParser.askStop()) {
                     int endingPoints = endTurn();
                     pointsTotal = pointsTotal + endingPoints;
-                    return pointsTotal;
+                    keepRemoving = false;
+                    stopRound = true;
                 }
             }
 
-            // - Ask player which DiceCombo to remove, only possible if there are DiceCombos to remove
-            boolean keepRemoving = true;
             while (keepRemoving && !rollIsNull()) {
                 System.out.println("Your remaining dice:");
                 System.out.println(aDiceSet);
@@ -183,6 +190,8 @@ public class Round {
             // - otherwise roll remaining Dice and check removable combos
             if (aDiceSet.getSizeLeft() == 0) {
                 isTutto = true;
+            } else if (stopRound) {
+                System.out.println("Stopping round ...");
             } else {
                 System.out.println("Re-rolling remaining dice ...");
                 aDiceSet.rollRemaining();
@@ -190,8 +199,6 @@ public class Round {
                 aRemovableDiceCombos = returnRemovableDiceCombos();
                 aIsNull = rollIsNull();
             }
-
-            rollingCounter += 1;
 
         }
 
