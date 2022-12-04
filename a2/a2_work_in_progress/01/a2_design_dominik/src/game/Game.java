@@ -288,8 +288,9 @@ public class Game {
 
         }
 
-
-        turnScore= turnCurrentRuleset.handleNull(turnScore);
+        if (turnCurrentRound.isNull()) {
+            turnScore= turnCurrentRuleset.handleNull(turnScore);
+        }
         System.out.println(String.format("Your total turn scored you a total of %s points", turnScore));
 
         // Update scores

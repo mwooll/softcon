@@ -202,9 +202,11 @@ public class Round {
 
         }
 
-        // inform if null
+        // inform if null, not if a STOP card
         if (aIsNull) {
-            System.out.println("Your roll was a null, calculating points and ending the turn");
+            if (!aCurrentRuleset.returnName().equals("STOP")) {
+                System.out.println("Your roll was a null, calculating points and ending the turn");
+            }
         }
 
         // inform if Tutto
