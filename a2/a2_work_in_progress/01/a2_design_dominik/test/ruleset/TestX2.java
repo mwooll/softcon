@@ -28,7 +28,7 @@ class TestX2 {
 
         int tmpPoints = 100;
 
-        assertEquals(200, rs.handleTutto(tmpPoints));
+        assertEquals(100, rs.handleTutto(tmpPoints));
 
     }
 
@@ -51,7 +51,7 @@ class TestX2 {
         int pointsRolled = rs.sumUpPoints(rolledCombos);
 
         assertEquals(1100, pointsRolled);
-        assertEquals(2200, rs.handleTutto(pointsRolled));
+        assertEquals(2200, rs.handleTutto(pointsRolled) + pointsRolled);
 
     }
 

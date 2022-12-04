@@ -24,7 +24,7 @@ class TestFireworks {
     @Test
     public void test_explanation() {
 
-        String expected = "You have to remove all valid combinations and you keep rolling until you roll a null." +
+        String expected = "You have to remove all valid combinations and you keep rolling until you roll a null. " +
                 "If you achieve a Tutto you leave the card and keep rolling. The Tutto does not score you any points, " +
                 "but you keep all the points you rolled.";
 

@@ -30,7 +30,7 @@ class TestRound {
         roundBonus.setDiceSet(DiceSet.getDebug());
         roundBonus.setParser(ip);
 
-        assertEquals(0,roundBonus.playRound());
+        assertEquals(2000,roundBonus.playRound());
 
     }
 
