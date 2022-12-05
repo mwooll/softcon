@@ -176,7 +176,7 @@ public class Round {
                 // If there are more removable combos, show him and ask if he wants to remove more, or remove silently depending on ruleset
                 // Otherwise inform that there are no more combos to remove and the remaining dice are rerolled
                 if (aRemovableDiceCombos.size() > 0) {
-                    if (!aMustRemoveAll && !aMustContinue) {
+                    if (!aMustRemoveAll) {
                         System.out.println("Your remaining dice:");
                         System.out.println(aDiceSet);
                         keepRemoving = aParser.askKeepRemoving();
