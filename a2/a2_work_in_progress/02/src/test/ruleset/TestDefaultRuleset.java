@@ -11,7 +11,6 @@ public class TestDefaultRuleset {
 
     /**
      * Tests the base implementations of Ruleset.
-     * todo: test setValidCombos
      */
     Default rs = new Default();
 

@@ -12,8 +12,6 @@ public abstract class Ruleset {
      * A class subtyping the ruleset. Ruleset needs to
      * know how to handle game rules
      *
-     * todo: Use Default (rename to TestAbstract?) to test all methods that have a default
-     * todo: Subclasses only test the methods they override, everything else is covered by Default
      */
 
     // which DiceCombos are valid for the given ruleset?

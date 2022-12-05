@@ -11,8 +11,6 @@ public class DiscardPile {
      * A pile of cards representing the used cards from the game
      * Is initialized empty, filled with cards one by one
      * Does respect the order in which Cards are added, like a Stack
-     *
-     * todo: Would a CardStack (aka Solitaire) be better? Easy to implement?
      */
 
     private final List<Card> aCards = new ArrayList<>();

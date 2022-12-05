@@ -17,8 +17,6 @@ public class Game {
      * play turn
      *
      * todo: remove debugging boolean after finished
-     * todo: Method drawCard at beginning of playTurn
-     * todo: Method finishUpRound at end of playTurn
      */
 
     // aPlayers contains the order in which the players take their turns
