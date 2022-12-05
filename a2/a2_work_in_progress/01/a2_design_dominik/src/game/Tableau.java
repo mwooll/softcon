@@ -42,19 +42,48 @@ public class Tableau {
     }
 
     /**
-     * Decrease the score of the leading player by 1000
+     * Decrease the score of the leading player(s) by 1000
      * If multiple players have same score, decrease all of them
+     * Do not decrease the points of the playing player pPlayerName
+     * @return HashMap with name:<scoreBefore, scoreAfter> of all players that get 1000 points deducted
      */
-    public void decrease() {
+    public HashMap<String, List<Integer>> decrease(String pPlayerName) {
+
+        // init empty new HashMap with player:newScore
+        HashMap<String, List<Integer>> outHashMap = new HashMap<>();
+
         // find max
         int maxScore = Collections.max(aTableau.values());
+
+        // if the max is 0, return empty HashMap
+        if (maxScore == 0) {
+            System.out.println("All players have 0 points, decrease nothing.");
+            return outHashMap;
+        }
 
         // decrease each entry with max by 1000
         for (Map.Entry<String, Integer> set : aTableau.entrySet()) {
             if (set.getValue() == maxScore) {
-                aTableau.put(set.getKey(), Math.max(set.getValue() - 1000, 0));
+
+                // fetch all the values for playerName
+                String tmpPlayerName = set.getKey();
+                int tmpPlayerScore = set.getValue();
+                int tmpPlayerScoreDeducted = Math.max(tmpPlayerScore - 1000, 0);
+                List<Integer> tmpOutHashMapValue = new ArrayList<>(Arrays.asList(tmpPlayerScore, tmpPlayerScoreDeducted));
+
+                // skip the player playing the turn
+                if (tmpPlayerName.equals(pPlayerName)) {continue;}
+                // deduct points in the tableau
+                aTableau.put(tmpPlayerName, tmpPlayerScoreDeducted);
+                // add player and scores to the output HashMap
+                outHashMap.put(tmpPlayerName, tmpOutHashMapValue);
+                // print message
+                System.out.println(String.format("Deduct points player %s : %s to %s", tmpPlayerName, tmpPlayerScore, tmpPlayerScoreDeducted));
+
             }
         }
+
+        return outHashMap;
 
     }
 

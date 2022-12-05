@@ -80,7 +80,7 @@ public class Main {
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setBonus(0,0,0,0,10).build();
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setX2(1).setBonus(1,1,0,0,0).build();
 //        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setBonus(0,0,0,0,10).setStop(0).build();
-        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setStraight(2).build();
+        DeckSpec ds = new DeckSpec.DeckSpecBuilder().setStraight(2).setPlusminus(10).build();
 
         Game g = new Game(playDebug, ds, new DefaultParser());
         g.playGame();

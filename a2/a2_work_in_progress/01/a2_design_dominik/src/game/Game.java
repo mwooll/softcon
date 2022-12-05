@@ -255,9 +255,9 @@ public class Game {
                 }
             }
 
-            // Ask if points must be deducted, do that right away
+            // Ask if points must be deducted, do that right away. Do not decrease the score of the player playing the turn
             if (turnCurrentRound.decreasePoints()) {
-                aTableau.decrease();
+                aTableau.decrease(pPlayerName);
             }
 
             // if the round was a null, end the turn here. The points were handled in playRound
