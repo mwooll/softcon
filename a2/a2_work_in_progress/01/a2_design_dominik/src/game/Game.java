@@ -83,6 +83,7 @@ public class Game {
         for (String playerName : aPlayers) {
             System.out.println(playerName + " : " + aTableau.getPoints(playerName));
         }
+        System.out.println(String.format("Points needed to win the game : %s", aWinCondition));
     }
 
     /**

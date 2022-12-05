@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TestGame {
 
-    DeckSpec ds_cloverleaf = new DeckSpec.DeckSpecBuilder().setCloverleaf(10).build();
+    DeckSpec ds_cloverleaf = new DeckSpec.DeckSpecBuilder().setCloverleaf(1).build();
     DeckSpec ds_bonus = new DeckSpec.DeckSpecBuilder().setBonus(0,0,0,0,1).build();
 
 
@@ -23,14 +23,17 @@ class TestGame {
         p2
         10000000 - Win Condition
         R - Roll the dice
-        1 - Always remove the TRIPLET_ONE
+        1 - Always remove the TRIPLET_ONE and keep on removing
+        Y
         1
+        Y
         1
+        Y
         1
          */
 
         // make sure that the game ends when a player rolls the second tutto in a row
-        String inputString = "2\np1\np2\n100000\nR\n1\n1\n1\n1\n";
+        String inputString = "2\np1\np2\n100000\nR\n1\nY\n1\nY\n1\nY\n1\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(inputString.getBytes());
         InputParser ip = new DefaultParser(inputStream, System.out);
 
