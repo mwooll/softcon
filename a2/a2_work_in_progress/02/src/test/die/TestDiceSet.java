@@ -12,12 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TestDiceSet {
 
-    /*
-    create DiceSet where seed of each Die is set to 1, yielding
-    ONE
-    FOUR
-     */
-
     DiceSet diceset_debug = DiceSet.getDebug();
     DiceSet diceset = DiceSet.get();
     HashMap<DieValue, Integer> testDieValueCount = new HashMap<>();
