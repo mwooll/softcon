@@ -1,9 +1,15 @@
-package game;
+package gui;
+
+import gamemodel.GameModel;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
@@ -23,19 +29,21 @@ public class HelloApplication extends Application {
 
         GridPane root = new GridPane();
         root.setGridLinesVisible(true);
-        root.setStyle("-fx-background-color: green");
+        root.setStyle("-fx-background-color: white");
         root.setHgap(MARGIN_OUTER);
         root.setVgap(MARGIN_OUTER);
         root.setPadding(new Insets(MARGIN_OUTER));
 
-        Button buttonOne = new Button("Click me.");
-        buttonOne.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                System.out.println("Button clicked.");
-            }
-        });
-        root.getChildren().add(buttonOne);
+        // Game model
+        final GameModel gamemodel = new GameModel();
+
+        // Player Setter
+        IPlayerSetter playerSetter1 = new PlayerSetter(gamemodel, 0);
+        root.add((HBox) playerSetter1, 0,1);
+
+        // Player Observer
+        IPlayerObserver playerObserver = new PlayerObserver(gamemodel);
+        root.add((HBox) playerObserver, 0,0);
 
         stage.setScene(new Scene(root, WIDTH, HEIGHT));
         stage.show();
