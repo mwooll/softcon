@@ -1,4 +1,4 @@
-package com.example.conways_game_of_life;
+package game;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

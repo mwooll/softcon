@@ -1,4 +1,4 @@
-package com.example.conways_game_of_life;
+package game;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
