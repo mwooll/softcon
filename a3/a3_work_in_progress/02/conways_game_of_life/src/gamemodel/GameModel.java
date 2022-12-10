@@ -58,7 +58,7 @@ public class GameModel implements GameModelView {
         assert pIndex >= 0 && pIndex <= N_PLAYERS;
         assert checkPlayerName(pPlayerName, pIndex);
 
-        System.out.println(String.format("Setting name Player %s to %s", pIndex, pPlayerName));
+        System.out.println(String.format("Setting name Player %s to %s", pIndex+1, pPlayerName));
 
         aPlayers.set(pIndex, pPlayerName);
         for (IPlayerObserver observer : aPlayersObservers) {
