@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
@@ -25,27 +26,45 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) {
 
-        stage.setTitle("Test JavaFX");
-
-        GridPane root = new GridPane();
-        root.setGridLinesVisible(true);
-        root.setStyle("-fx-background-color: white");
-        root.setHgap(MARGIN_OUTER);
-        root.setVgap(MARGIN_OUTER);
-        root.setPadding(new Insets(MARGIN_OUTER));
-
         // Game model
         final GameModel gamemodel = new GameModel();
 
-        // Player Setter
-        IPlayerSetter playerSetter1 = new PlayerSetter(gamemodel, 0);
-        root.add((HBox) playerSetter1, 0,1);
+        stage.setTitle("Test JavaFX");
 
-        // Player Observer
-        IPlayerObserver playerObserver = new PlayerObserver(gamemodel);
-        root.add((HBox) playerObserver, 0,0);
+        GridPane rootFirstStage = new GridPane();
+        rootFirstStage.setGridLinesVisible(true);
+        rootFirstStage.setStyle("-fx-background-color: white");
+        rootFirstStage.setHgap(MARGIN_OUTER);
+        rootFirstStage.setVgap(MARGIN_OUTER);
+        rootFirstStage.setPadding(new Insets(MARGIN_OUTER));
 
-        stage.setScene(new Scene(root, WIDTH, HEIGHT));
+        int rowCounter = 0;
+        rootFirstStage.add(new Label("! No duplicate names allowed"), 0, rowCounter);
+        rowCounter ++;
+
+        for (int i = 0; i < gamemodel.N_PLAYERS; i++) {
+            // Player Observer
+            IPlayerObserver playerObserver = new PlayerObserver(gamemodel, i);
+            rootFirstStage.add((VBox) playerObserver, 0, rowCounter);
+
+            rowCounter ++;
+        }
+
+        for (int i = 0; i < gamemodel.N_PLAYERS; i++) {
+            // Player Setter
+            IPlayerSetter playerSetter = new PlayerSetter(gamemodel, i);
+            rootFirstStage.add((VBox) playerSetter, 0,rowCounter);
+
+            rowCounter ++;
+        }
+
+        // Continue Button (Observer)
+        IPlayerObserver continueButton = new PlayerContinueObserver(gamemodel);
+        rootFirstStage.add((VBox) continueButton, 0, rowCounter);
+
+        rowCounter++;
+
+        stage.setScene(new Scene(rootFirstStage, WIDTH, HEIGHT));
         stage.show();
     }
 
