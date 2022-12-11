@@ -4,6 +4,7 @@ import gamemodel.*;
 import gui.firstStage.IPlayerObserver;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class PlayerObserver extends Parent implements IPlayerObserver {
@@ -34,5 +35,9 @@ public class PlayerObserver extends Parent implements IPlayerObserver {
             text.setText(String.format("%s %s", aDefaultText, pName));
         }
     }
+
+    @Override
+    public void colorIsSet(Color pColor, String pName) {};
+
 
 }

@@ -1,15 +1,19 @@
 package gamemodel;
 
 import gui.firstStage.IPlayerObserver;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameModel implements GameModelView {
 
     public final int N_PLAYERS = 2;
     private final List<String> aPlayers = Arrays.asList(new String[N_PLAYERS]);
+    private final List<Color> aColors = Arrays.asList(new Color[N_PLAYERS]);
     private final List<IPlayerObserver> aPlayersObservers = new ArrayList<>();
 
     public GameModel() {
@@ -48,6 +52,7 @@ public class GameModel implements GameModelView {
     /**
      * Set the name of a player at pIndex
      * Assumes that no other player uses that exact name already
+     * Inform aPlayersObservers
      * @param pPlayerName The string of the player name to be set
      * @param pIndex Which of the players the new name is for
      */
@@ -68,12 +73,53 @@ public class GameModel implements GameModelView {
     }
 
     /**
+     * Set the color of a player with name pPlayerName
+     * @pre Assumes the String pPlayerName to be present exactly once in the list aPlayers
+     * Inform aPlayersObservers
+     */
+    public void setPlayerColor(Color pColor, String pPlayerName) {
+
+        assert aPlayers.contains(pPlayerName) && aPlayers.stream().filter(name -> name.equals(pPlayerName)).count() == 1;
+
+        int tmpIndex = aPlayers.indexOf(pPlayerName);
+        aColors.set(tmpIndex, pColor);
+        for (IPlayerObserver observer : aPlayersObservers) {
+            observer.colorIsSet(pColor, pPlayerName);
+        }
+
+        System.out.println(String.format("Setting color Player %s to %s", pPlayerName, pColor));
+
+        System.out.println(aColors);
+
+    }
+
+    /**
      * Check if all players have a distinct name
      * @return True if all players have a name different from "", false otherwise
      */
     @Override
-    public boolean allPlayersSet() {
+    public boolean playerNamesSet() {
         return !(aPlayers.contains(null) || aPlayers.contains(""));
+    }
+
+    /**
+     * Check if all players have a distinct color
+     * @return True if all players have a distinct color not null, false otherwise
+     */
+    @Override
+    public boolean playerColorSet() {
+        HashSet<Color> tmpColorHashSet = new HashSet(aColors);
+
+        return tmpColorHashSet.size() == aColors.size() && !aColors.contains(null);
+
+    }
+
+    /**
+     * Return an unmodifiable list of the current player names
+     * @return Unmodifiable list of strings
+     */
+    public List<String> getPlayerNames() {
+        return aPlayers.stream().collect(Collectors.toUnmodifiableList());
     }
 
 }
