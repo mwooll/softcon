@@ -1,10 +1,12 @@
-package gui;
+package gui.firstStage;
 
 import gamemodel.GameModel;
+import gui.firstStage.IPlayerObserver;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
-public class PlayerContinueObserver extends VBox implements IPlayerObserver {
+public class PlayerContinueObserver extends Parent implements IPlayerObserver {
 
     private final GameModel aGameModel;
     private final Button aButton;
@@ -25,11 +27,9 @@ public class PlayerContinueObserver extends VBox implements IPlayerObserver {
 
     @Override
     public void nameIsSet(String pName, int pIndex) {
-        if (aGameModel.allPlayersSet()) {
-            aButton.setVisible(true);
-        } else {
-            aButton.setVisible(false);
-        }
+        aButton.setVisible(aGameModel.allPlayersSet());
     }
+
+    public Button getButton() {return aButton;}
 
 }

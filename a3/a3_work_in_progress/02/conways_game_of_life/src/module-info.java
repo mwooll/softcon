@@ -5,5 +5,6 @@ module conways.game.of.life {
     requires javafx.fxml;
 
     opens gui;
+    opens gui.firstStage;
 
 }

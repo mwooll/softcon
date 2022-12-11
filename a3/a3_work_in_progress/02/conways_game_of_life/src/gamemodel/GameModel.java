@@ -1,11 +1,10 @@
 package gamemodel;
 
-import gui.IPlayerObserver;
+import gui.firstStage.IPlayerObserver;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ListIterator;
 
 public class GameModel implements GameModelView {
 

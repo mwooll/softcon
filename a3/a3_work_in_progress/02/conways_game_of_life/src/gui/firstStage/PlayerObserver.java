@@ -1,26 +1,25 @@
-package gui;
+package gui.firstStage;
 
 import gamemodel.*;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
+import gui.firstStage.IPlayerObserver;
+import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-public class PlayerObserver extends VBox implements IPlayerObserver {
+public class PlayerObserver extends Parent implements IPlayerObserver {
 
     private final GameModel aGameModel;
     private final int aIndex;
-    private String defaultText = "Name Player";
-    private String currentName;
-    private Text text = new Text();
+    private String aDefaultText = "Name Player";
+    private final Text text = new Text();
 
     public PlayerObserver(GameModel pGameModel, int pIndex) {
 
         aGameModel = pGameModel;
         aIndex = pIndex;
 
-        defaultText = String.format("%s %s:", defaultText, aIndex+1);
-        text.setText(defaultText);
+        aDefaultText = String.format("%s %s:", aDefaultText, aIndex+1);
+        text.setText(aDefaultText);
 
         VBox vbox = new VBox(text);
         getChildren().add(vbox);
@@ -32,7 +31,7 @@ public class PlayerObserver extends VBox implements IPlayerObserver {
     @Override
     public void nameIsSet(String pName, int pIndex) {
         if (pIndex == aIndex) {
-            text.setText(String.format("%s %s", defaultText, pName));
+            text.setText(String.format("%s %s", aDefaultText, pName));
         }
     }
 
