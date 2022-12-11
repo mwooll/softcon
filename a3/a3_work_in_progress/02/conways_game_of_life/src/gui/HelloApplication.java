@@ -54,7 +54,7 @@ public class HelloApplication extends Application {
             aRoot.add(ps1, 0, 3);
 
             // Create Continue Button
-            NameContinueObserver continueObserver = new NameContinueObserver(aGameModel);
+            ContinueObserver continueObserver = new ContinueObserver(aGameModel);
             aRoot.add((Parent) continueObserver, 0, 4);
 
             this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
@@ -100,7 +100,7 @@ public class HelloApplication extends Application {
             }
 
             // Create Continue Button
-            ColorContinueObserver continueObserver = new ColorContinueObserver(aGameModel);
+            ContinueObserver continueObserver = new ContinueObserver(aGameModel);
             aRoot.add(continueObserver, 0, tmpRowCt + 1);
 
             this.setScene(new Scene(aRoot, WIDTH, HEIGHT));

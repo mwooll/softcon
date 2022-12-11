@@ -1,4 +1,4 @@
-package gui.firstStage;
+package gui;
 
 import gamemodel.GameModel;
 import javafx.scene.Parent;
@@ -6,12 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-public class NameContinueObserver extends Parent implements IPlayerObserver {
+public class ContinueObserver extends Parent implements  IPlayerObserver {
 
-    private final GameModel aGameModel;
-    private final Button aButton;
+    protected final GameModel aGameModel;
+    protected final Button aButton;
 
-    public NameContinueObserver(GameModel pGameModel) {
+    public ContinueObserver(GameModel pGameModel) {
 
         aGameModel = pGameModel;
 
@@ -25,14 +25,18 @@ public class NameContinueObserver extends Parent implements IPlayerObserver {
 
     }
 
+
     @Override
     public void nameIsSet(String pName, int pIndex) {
         aButton.setVisible(aGameModel.playerNamesSet());
     }
 
     @Override
-    public void colorIsSet(Color pColor, String pName) {};
+    public void colorIsSet(Color pColor, String pName) {
+        aButton.setVisible(aGameModel.playerColorSet());
+    }
 
-    public Button getButton() {return aButton;}
-
+    public Button getButton() {
+        return aButton;
+    }
 }

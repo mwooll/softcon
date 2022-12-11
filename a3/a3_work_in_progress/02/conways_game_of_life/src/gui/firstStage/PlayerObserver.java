@@ -1,7 +1,7 @@
 package gui.firstStage;
 
 import gamemodel.*;
-import gui.firstStage.IPlayerObserver;
+import gui.*;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;

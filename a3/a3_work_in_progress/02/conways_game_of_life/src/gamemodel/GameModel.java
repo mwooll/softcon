@@ -1,6 +1,6 @@
 package gamemodel;
 
-import gui.firstStage.IPlayerObserver;
+import gui.IPlayerObserver;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
