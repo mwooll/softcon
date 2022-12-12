@@ -1,5 +1,7 @@
 package gamemodel;
 
+import gui.IContinue;
+import gui.IGridObserver;
 import gui.IPlayerObserver;
 import javafx.scene.paint.Color;
 
@@ -11,18 +13,32 @@ import java.util.stream.Collectors;
 
 public class GameModel implements GameModelView {
 
-    public final int N_PLAYERS = 2;
+    private final int MIN_SIZE = 10;
+    private final int MAX_SIZE = 50;
+    private final int N_PLAYERS = 2;
     private final List<String> aPlayers = Arrays.asList(new String[N_PLAYERS]);
     private final List<Color> aColors = Arrays.asList(new Color[N_PLAYERS]);
+    private int aGridH = -1;
+    private int aGridW = -1;
     private final List<IPlayerObserver> aPlayersObservers = new ArrayList<>();
+    private final List<IGridObserver> aGridObservers = new ArrayList<>();
+    private final List<IContinue> aContinueObservers = new ArrayList<>();
 
     public GameModel() {
 
         for (int i = 0; i < N_PLAYERS; i++) {aPlayers.set(i, "");}
     }
 
-    public void addPlayersObservers(IPlayerObserver pObserver) {
+    public void addPlayersObserver(IPlayerObserver pObserver) {
         aPlayersObservers.add(pObserver);
+    }
+
+    public void addGridObserver(IGridObserver pObserver) {
+        aGridObservers.add(pObserver);
+    }
+
+    public void addContinueObserver(IContinue pObserver) {
+        aContinueObservers.add(pObserver);
     }
 
     /**
@@ -52,7 +68,7 @@ public class GameModel implements GameModelView {
     /**
      * Set the name of a player at pIndex
      * Assumes that no other player uses that exact name already
-     * Inform aPlayersObservers
+     * Inform aPlayersObservers and aContinueObservers
      * @param pPlayerName The string of the player name to be set
      * @param pIndex Which of the players the new name is for
      */
@@ -67,6 +83,9 @@ public class GameModel implements GameModelView {
         aPlayers.set(pIndex, pPlayerName);
         for (IPlayerObserver observer : aPlayersObservers) {
             observer.nameIsSet(pPlayerName, pIndex);
+        }
+        for (IContinue observer : aContinueObservers) {
+            observer.setVisibility();
         }
 
         System.out.println(aPlayers);
@@ -86,10 +105,49 @@ public class GameModel implements GameModelView {
         for (IPlayerObserver observer : aPlayersObservers) {
             observer.colorIsSet(pColor, pPlayerName);
         }
+        for (IContinue observer : aContinueObservers) {
+            observer.setVisibility();
+        }
 
         System.out.println(String.format("Setting color Player %s to %s", pPlayerName, pColor));
 
         System.out.println(aColors);
+
+    }
+
+    /**
+     * Set the grids height and width, depending on the identifier
+     * Inform aGridObservers
+     * @param pValue The Value to be set
+     * @param pIdentifier The String that identifies which type of grid parameter is set
+     */
+    @Override
+    public void setGrid(int pValue, String pIdentifier) {
+        if (pIdentifier.equals("H")) {
+            aGridH = pValue;
+            for (IGridObserver observer : aGridObservers) {
+                observer.heightIsSet(pValue);
+            }
+            for (IContinue observer : aContinueObservers) {
+                observer.setVisibility();
+            }
+
+            System.out.println(String.format("Set height to %s", aGridH));
+
+        }
+
+        if (pIdentifier.equals("W")) {
+            aGridW = pValue;
+            for (IGridObserver observer : aGridObservers) {
+                observer.widthIsSet(pValue);
+            }
+            for (IContinue observer : aContinueObservers) {
+                observer.setVisibility();
+            }
+
+            System.out.println(String.format("Set width to %s", aGridW));
+
+        }
 
     }
 
@@ -115,11 +173,27 @@ public class GameModel implements GameModelView {
     }
 
     /**
+     * Check if both height and width are set to valid values
+     * @return True if both height and width are set valid, false otherwise
+     */
+    @Override
+    public boolean gridSizeSet() {
+        return (aGridH >= MIN_SIZE && aGridH <= MAX_SIZE) && (aGridW >= MIN_SIZE && aGridW <= MAX_SIZE);
+    }
+
+    /**
      * Return an unmodifiable list of the current player names
      * @return Unmodifiable list of strings
      */
     public List<String> getPlayerNames() {
         return aPlayers.stream().collect(Collectors.toUnmodifiableList());
     }
+
+    /**
+     * Return the current MIN and MAX GridSize
+     * @return pValue Integer either MIN or MAX
+     */
+    public int getMinGridSize() {return MIN_SIZE;}
+    public int getMaxGridSize() {return MAX_SIZE;}
 
 }

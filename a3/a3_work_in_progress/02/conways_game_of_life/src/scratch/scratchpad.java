@@ -17,16 +17,20 @@ public class scratchpad {
 //                mylist.stream().filter(string -> string.equals("c")).count()
 //        );
 
-        List<Color> aColors = Arrays.asList(new Color[3]);
-        aColors.set(0, Color.BLUE);
-        aColors.set(1, Color.RED);
-        aColors.set(2, Color.GREEN);
+//        List<Color> aColors = Arrays.asList(new Color[3]);
+//        aColors.set(0, Color.BLUE);
+//        aColors.set(1, Color.RED);
+//        aColors.set(2, Color.GREEN);
+//
+//        HashSet<Color> aHashSet = new HashSet<Color>(aColors);
+//        System.out.println(aHashSet);
+//        System.out.println(aHashSet.size());
+//        System.out.println(aColors.size());
+//        System.out.println(aColors.contains(null));
 
-        HashSet<Color> aHashSet = new HashSet<Color>(aColors);
-        System.out.println(aHashSet);
-        System.out.println(aHashSet.size());
-        System.out.println(aColors.size());
-        System.out.println(aColors.contains(null));
+        String mytext = "25.5";
+        int myint = Integer.parseInt(mytext);
+        System.out.println(myint);
 
 
 

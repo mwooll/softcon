@@ -1,6 +1,7 @@
 package gui.firstStage;
 
 import gamemodel.GameModel;
+import gui.ISetter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -12,7 +13,7 @@ import javafx.scene.layout.HBox;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class AbstractPlayerSetter extends Parent implements IPlayerSetter {
+public abstract class AbstractPlayerSetter extends Parent implements ISetter {
 
     protected GameModel aGameModel;
     protected final Label aLabel = new Label();
@@ -51,7 +52,7 @@ public abstract class AbstractPlayerSetter extends Parent implements IPlayerSett
             aGameModel.setPlayerName(tmpText, aIndex);
         }
 
-        if (!validatePlayerName(tmpText)) {return;}
+        if (!validate(tmpText)) {return;}
 
         // Check with the GameModel if this name can be set
         if (aGameModel.checkPlayerName(tmpText, aIndex)) {
@@ -62,11 +63,11 @@ public abstract class AbstractPlayerSetter extends Parent implements IPlayerSett
     };}
 
     @Override
-    public boolean validatePlayerName(String pName) {
+    public boolean validate(String pInput) {
 
         // only accept a-zA-Z
         Pattern patternLetters = Pattern.compile("^[a-zA-Z0-9\s]+$");
-        Matcher matcherLetters = patternLetters.matcher(pName);
+        Matcher matcherLetters = patternLetters.matcher(pInput);
         return matcherLetters.find();
 
     }

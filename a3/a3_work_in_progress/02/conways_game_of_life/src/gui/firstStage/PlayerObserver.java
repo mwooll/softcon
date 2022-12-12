@@ -25,7 +25,7 @@ public class PlayerObserver extends Parent implements IPlayerObserver {
         VBox vbox = new VBox(text);
         getChildren().add(vbox);
 
-        aGameModel.addPlayersObservers(this);
+        aGameModel.addPlayersObserver(this);
 
     }
 

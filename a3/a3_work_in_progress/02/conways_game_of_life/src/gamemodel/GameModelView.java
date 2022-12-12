@@ -10,8 +10,12 @@ public interface GameModelView {
 
     void setPlayerColor(Color pColor, String pPlayerName);
 
+    void setGrid(int pValue, String pIdentifier);
+
     boolean playerNamesSet();
 
     boolean playerColorSet();
+
+    boolean gridSizeSet();
 
 }
