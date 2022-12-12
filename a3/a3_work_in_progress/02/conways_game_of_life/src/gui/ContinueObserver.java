@@ -11,6 +11,8 @@ public class ContinueObserver extends Parent implements  IPlayerObserver {
     protected final GameModel aGameModel;
     protected final Button aButton;
 
+    private Color FORBIDDEN_COLOR = Color.WHITE;
+
     public ContinueObserver(GameModel pGameModel) {
 
         aGameModel = pGameModel;

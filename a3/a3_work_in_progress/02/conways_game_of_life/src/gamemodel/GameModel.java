@@ -108,9 +108,9 @@ public class GameModel implements GameModelView {
      */
     @Override
     public boolean playerColorSet() {
-        HashSet<Color> tmpColorHashSet = new HashSet(aColors);
+        HashSet<Color> tmpColorHashSet = new HashSet<>(aColors);
 
-        return tmpColorHashSet.size() == aColors.size() && !aColors.contains(null);
+        return tmpColorHashSet.size() == aColors.size() && !aColors.contains(null) && !aColors.contains(Color.WHITE);
 
     }
 

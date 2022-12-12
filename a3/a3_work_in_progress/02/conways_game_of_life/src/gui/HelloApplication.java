@@ -64,7 +64,10 @@ public class HelloApplication extends Application {
             Button continueButton = continueObserver.getButton();
 
 //            continueButton.setOnAction(t -> System.out.println("Continue to second stage"));
-            continueButton.setOnAction(t -> new SecondStage(aGameModel));
+            continueButton.setOnAction((t) -> {
+                new SecondStage(aGameModel);
+                this.close();
+            });
 
         }
 
