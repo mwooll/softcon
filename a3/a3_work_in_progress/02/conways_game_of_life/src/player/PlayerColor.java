@@ -8,7 +8,8 @@ public enum PlayerColor {
     GREEN("Green", Color.GREEN, 'G'),
     ORANGE("Orange", Color.ORANGE, 'O'),
     MAGENTA("Magenta", Color.MAGENTA, 'M'),
-    YELLOW("Yellow", Color.YELLOW, 'Y');
+    YELLOW("Yellow", Color.YELLOW, 'Y'),
+    WHITE("White", Color.WHITE, ' ');
 
     private final String aColorName;
     private final Color aColorPaint;
