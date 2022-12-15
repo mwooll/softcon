@@ -3,42 +3,44 @@ package cell;
 import player.PlayerColor;
 
 public class Cell {
-    private player.PlayerColor currentState;
-    private player.PlayerColor nextState;
+    private PlayerColor currentState;
+    private PlayerColor nextState;
     private boolean changedState;
 
     public Cell() {
-        currentState = player.PlayerColor.WHITE;
+        currentState = PlayerColor.WHITE;
         changedState = false;
     }
 
     /**
-     * @pre currentState != player.PlayerColor.WHITE
+     * @pre currentState != PlayerColor.WHITE
      */
     public void die() {
-        nextState = player.PlayerColor.WHITE;
+        nextState = PlayerColor.WHITE;
         changedState = true;
     }
 
     /**
-     * @pre currentState != player.PlayerColor.WHITE
+     * @pre currentState != PlayerColor.WHITE
      */
     public void instantDeath() {
-        currentState = player.PlayerColor.WHITE;
+        currentState = PlayerColor.WHITE;
     }
 
     /**
-     * @pre currentState == player.PlayerColor.WHITE
+     * @pre currentState == PlayerColor.WHITE
+     * @param newState != PlayerColor.WHITE
      */
-    public void arrive(player.PlayerColor newState) {
+    public void arrive(PlayerColor newState) {
         nextState = newState;
         changedState = true;
     }
 
     /**
-     * @pre currentState == player.PlayerColor.WHITE
+     * @pre currentState == PlayerColor.WHITE
+     * @param newState != PlayerColor.WHITE
      */
-    public void instantBirth(player.PlayerColor newState) {
+    public void instantBirth(PlayerColor newState) {
         currentState = newState;
     }
 
