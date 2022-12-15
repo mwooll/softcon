@@ -1,14 +1,14 @@
 package cell;
 
-import org.junit.jupiter.api.Test;
 import player.PlayerColor;
 
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CellTest {
 
-    Cell aCell = new Cell();
-    PlayerColor aColor = PlayerColor.RED;
+    Cell aTestCell = new Cell();
+    PlayerColor aTestColor = PlayerColor.RED;
 
     @Test
     public void testCreationAndGetters() {
@@ -19,56 +19,56 @@ public class CellTest {
 
     @Test
     public void testInstantBirth() {
-        aCell.instantBirth(aColor);
-        assertEquals(aColor, aCell.getState());
-        assertFalse(aCell.hasStateChanged());
+        aTestCell.instantBirth(aTestColor);
+        assertEquals(aTestColor, aTestCell.getState());
+        assertFalse(aTestCell.hasStateChanged());
     }
 
     @Test
     public void testInstantDeath() {
-        aCell.instantBirth(aColor);
-        aCell.instantDeath();
-        assertEquals(PlayerColor.WHITE, aCell.getState());
-        assertFalse(aCell.hasStateChanged());
+        aTestCell.instantBirth(aTestColor);
+        aTestCell.instantDeath();
+        assertEquals(PlayerColor.WHITE, aTestCell.getState());
+        assertFalse(aTestCell.hasStateChanged());
     }
 
     @Test
     public void testArrive() {
-        aCell.arrive(aColor);
-        assertEquals(PlayerColor.WHITE, aCell.getState());
-        assertTrue(aCell.hasStateChanged());
+        aTestCell.arrive(aTestColor);
+        assertEquals(PlayerColor.WHITE, aTestCell.getState());
+        assertTrue(aTestCell.hasStateChanged());
     }
 
     @Test
     public void testDie() {
-        aCell.instantBirth(aColor);
-        aCell.die();
-        assertEquals(aColor, aCell.getState());
-        assertTrue(aCell.hasStateChanged());
+        aTestCell.instantBirth(aTestColor);
+        aTestCell.die();
+        assertEquals(aTestColor, aTestCell.getState());
+        assertTrue(aTestCell.hasStateChanged());
     }
 
     @Test
     public void testResetStateChanged() {
-        aCell.arrive(aColor);
-        aCell.resetChangedState();
-        assertFalse(aCell.hasStateChanged());
+        aTestCell.arrive(aTestColor);
+        aTestCell.resetChangedState();
+        assertFalse(aTestCell.hasStateChanged());
     }
 
     @Test
     public void testUpdateStateArrive() {
-        aCell.arrive(aColor);
-        aCell.updateState();
-        assertEquals(aColor, aCell.getState());
-        assertFalse(aCell.hasStateChanged());
+        aTestCell.arrive(aTestColor);
+        aTestCell.updateState();
+        assertEquals(aTestColor, aTestCell.getState());
+        assertFalse(aTestCell.hasStateChanged());
     }
 
     @Test
     public void testUpdateStateArriveAndDie() {
-        aCell.arrive(aColor);
-        aCell.updateState();
-        aCell.die();
-        aCell.updateState();
-        assertEquals(PlayerColor.WHITE, aCell.getState());
-        assertFalse(aCell.hasStateChanged());
+        aTestCell.arrive(aTestColor);
+        aTestCell.updateState();
+        aTestCell.die();
+        aTestCell.updateState();
+        assertEquals(PlayerColor.WHITE, aTestCell.getState());
+        assertFalse(aTestCell.hasStateChanged());
     }
 }
