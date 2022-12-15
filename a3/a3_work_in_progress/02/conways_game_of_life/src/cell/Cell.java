@@ -5,11 +5,11 @@ import player.PlayerColor;
 public class Cell {
     private player.PlayerColor currentState;
     private player.PlayerColor nextState;
-    private boolean wasChanged;
+    private boolean changedState;
 
     public Cell() {
         currentState = player.PlayerColor.WHITE;
-        wasChanged = false;
+        changedState = false;
     }
 
     /**
@@ -17,7 +17,7 @@ public class Cell {
      */
     public void die() {
         nextState = player.PlayerColor.WHITE;
-        wasChanged = true;
+        changedState = true;
     }
 
     /**
@@ -32,7 +32,7 @@ public class Cell {
      */
     public void arrive(player.PlayerColor newState) {
         nextState = newState;
-        wasChanged = true;
+        changedState = true;
     }
 
     /**
@@ -48,9 +48,22 @@ public class Cell {
     public PlayerColor getState() { return currentState; }
 
     /**
-     * @pre wasChanged == true
+     * @return changedState
+     */
+    public boolean hasStateChanged() { return changedState; }
+
+    /**
+     * @pre (currentState != nextState) and (changedState == true)
+     */
+    public void updateState() {
+        currentState = nextState;
+        resetWasChanged();
+    }
+
+    /**
+     * @pre changedState == true
      */
     public void resetWasChanged() {
-        wasChanged = false;
+        changedState = false;
     }
 }
