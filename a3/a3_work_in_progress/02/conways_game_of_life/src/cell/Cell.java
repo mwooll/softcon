@@ -42,6 +42,9 @@ public class Cell {
         currentState = newState;
     }
 
+    /**
+     * @return currentState
+     */
     public PlayerColor getState() { return currentState; }
 
     /**
