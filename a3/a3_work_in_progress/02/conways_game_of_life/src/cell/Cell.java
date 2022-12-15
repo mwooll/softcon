@@ -53,17 +53,17 @@ public class Cell {
     public boolean hasStateChanged() { return changedState; }
 
     /**
+     * @pre changedState == true
+     */
+    public void resetChangedState() {
+        changedState = false;
+    }
+
+    /**
      * @pre (currentState != nextState) and (changedState == true)
      */
     public void updateState() {
         currentState = nextState;
-        resetWasChanged();
-    }
-
-    /**
-     * @pre changedState == true
-     */
-    public void resetWasChanged() {
-        changedState = false;
+        resetChangedState();
     }
 }
