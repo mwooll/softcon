@@ -39,7 +39,12 @@ public class GameModel implements GameModelView {
      * Assign a grid to aGrid
      */
     public void setInitialGrid(Grid pGrid) {
+
         aInitialGrid = pGrid;
+
+        // Set an observer for each cell
+
+
     }
 
     public void addPlayersObserver(IPlayerObserver pObserver) {

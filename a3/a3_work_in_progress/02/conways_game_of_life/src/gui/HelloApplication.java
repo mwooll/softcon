@@ -238,7 +238,7 @@ public class HelloApplication extends Application {
 
         // Game model
         final GameModel gamemodel = new GameModel();
-        gamemodel.setGrid(testGrid); // todo: Remove after debugging
+        gamemodel.setInitialGrid(testGrid); // todo: Remove after debugging
 
         new FirstStage(gamemodel);
 
