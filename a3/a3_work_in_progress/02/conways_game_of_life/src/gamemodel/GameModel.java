@@ -1,8 +1,11 @@
 package gamemodel;
 
+import cell.*;
+
 import gui.IContinue;
 import gui.IGridObserver;
 import gui.IPlayerObserver;
+
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -18,6 +21,8 @@ public class GameModel implements GameModelView {
     private final int N_PLAYERS = 2;
     private final List<String> aPlayers = Arrays.asList(new String[N_PLAYERS]);
     private final List<Color> aColors = Arrays.asList(new Color[N_PLAYERS]);
+    private Grid aGrid;
+    private Grid aInitialGrid;
     private int aGridH = -1;
     private int aGridW = -1;
     private final List<IPlayerObserver> aPlayersObservers = new ArrayList<>();
@@ -27,6 +32,14 @@ public class GameModel implements GameModelView {
     public GameModel() {
 
         for (int i = 0; i < N_PLAYERS; i++) {aPlayers.set(i, "");}
+    }
+
+    /**
+     * todo: Remove that, only for debugging
+     * Assign a grid to aGrid
+     */
+    public void setInitialGrid(Grid pGrid) {
+        aInitialGrid = pGrid;
     }
 
     public void addPlayersObserver(IPlayerObserver pObserver) {
@@ -122,7 +135,7 @@ public class GameModel implements GameModelView {
      * @param pIdentifier The String that identifies which type of grid parameter is set
      */
     @Override
-    public void setGrid(int pValue, String pIdentifier) {
+    public void setGridDimension(int pValue, String pIdentifier) {
         if (pIdentifier.equals("H")) {
             aGridH = pValue;
             for (IGridObserver observer : aGridObservers) {

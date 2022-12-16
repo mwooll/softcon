@@ -2,13 +2,13 @@ package gui;
 
 import gamemodel.GameModel;
 
+import cell.*;
+
 import gui.firstStage.*;
 import gui.secondStage.*;
+import gui.thirdStage.*;
+import gui.fourthStage.*;
 
-import gui.thirdStage.AbstractGridSetter;
-import gui.thirdStage.GridObserver;
-import gui.thirdStage.GridSetter;
-import gui.thirdStage.thirdStageContinue;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -173,7 +173,57 @@ public class HelloApplication extends Application {
             // Fetch the continue button, continue to second stage
             Button continueButton = cont.getButton();
 
-            continueButton.setOnAction(t -> System.out.println("Continue to fourth stage"));
+//            continueButton.setOnAction(t -> System.out.println("Continue to fourth stage"));
+            continueButton.setOnAction((t) -> {
+                new FourthStage(aGameModel);
+                this.close();
+            });
+
+        }
+
+    }
+
+    public static class FourthStage extends Stage {
+
+        private final GameModel aGameModel;
+
+        public FourthStage(GameModel pGameModel) {
+
+            aGameModel = pGameModel;
+
+            GridPane aRoot = new GridPane();
+
+            aRoot.setGridLinesVisible(true);
+            aRoot.setStyle("-fx-background-color: white");
+            aRoot.setHgap(MARGIN_OUTER);
+            aRoot.setVgap(MARGIN_OUTER);
+            aRoot.setPadding(new Insets(MARGIN_OUTER));
+
+            this.setTitle("Fourth Stage");
+
+            // Add label explaining
+            Label labelExplanation = new Label();
+            labelExplanation.setText(
+                    String.format("This is the initial grid configuration, based on the chosen size and a random start pattern")
+            );
+            aRoot.add(labelExplanation, 0, 0);
+
+
+            // Create the grid with the cells
+
+
+
+            // Create Continue Button
+            IContinue cont = new fourthStageContinue(aGameModel);
+            aRoot.add((Parent) cont, 0, 5);
+
+            this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
+            this.show();
+
+            // Fetch the continue button, continue to second stage
+            Button continueButton = cont.getButton();
+
+            continueButton.setOnAction(t -> System.out.println("Continue to fifth stage"));
 
         }
 
@@ -182,8 +232,13 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) {
 
+        // todo: Remove after debugging
+        // Test grid
+        Grid testGrid = new Grid(3,3);
+
         // Game model
         final GameModel gamemodel = new GameModel();
+        gamemodel.setGrid(testGrid); // todo: Remove after debugging
 
         new FirstStage(gamemodel);
 

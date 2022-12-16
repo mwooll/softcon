@@ -49,7 +49,7 @@ public class AbstractGridSetter extends Parent implements ISetter {
         // make int
         int tmpInt = Integer.parseInt(tmpText);
 
-        aGameModel.setGrid(tmpInt, aIdentifier);
+        aGameModel.setGridDimension(tmpInt, aIdentifier);
     };}
 
     @Override
