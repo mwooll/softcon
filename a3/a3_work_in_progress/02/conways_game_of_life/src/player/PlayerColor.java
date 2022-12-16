@@ -12,17 +12,17 @@ public enum PlayerColor {
     WHITE("White", Color.WHITE, ' ');
 
     private final String aColorName;
-    private final Color aColorPaint;
+    private final Color aColorHex;
     private final char aColorSymbol;
 
 
-    PlayerColor(String pColorName, Color pColorPaint, char pColorSymbol) {
+    PlayerColor(String pColorName, Color pColorHex, char pColorSymbol) {
         aColorName = pColorName;
-        aColorPaint = pColorPaint;
+        aColorHex = pColorHex;
         aColorSymbol = pColorSymbol;
     }
 
     public String getColorName() { return aColorName; }
-    public Color getColorPaint() { return aColorPaint; }
+    public Color getColorHex() { return aColorHex; }
     public char getColorSymbol() { return aColorSymbol; }
 }
