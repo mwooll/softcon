@@ -18,10 +18,50 @@ public class scratchpad {
         int h = 1;
         Grid g = new Grid(w,h);
 
+        // set first cell to RED
+        g.getCell(0,0).instantBirth(player.PlayerColor.RED);
+
         String tmp = "";
 
         int ct = 1;
-        for (Cell c : g) {
+        for (Cell c : g.getIterator()) {
+
+            String cstr = c.getState().getColorName();
+
+            if (ct%w == 0) {
+                tmp += String.format("%s\n", cstr);
+            } else {
+                tmp += String.format("%s ", cstr);
+            }
+            ct += 1;
+
+        }
+        System.out.println(tmp);
+
+        tmp = "";
+
+        ct = 1;
+        for (Cell c : g.getIterator()) {
+
+            String cstr = c.getState().getColorName();
+
+            if (ct%w == 0) {
+                tmp += String.format("%s\n", cstr);
+            } else {
+                tmp += String.format("%s ", cstr);
+            }
+            ct += 1;
+
+        }
+        System.out.println(tmp);
+
+
+
+
+        tmp = "";
+
+        ct = 1;
+        for (Cell c : g.getIteratorReversed()) {
 
             String cstr = c.getState().getColorName();
 

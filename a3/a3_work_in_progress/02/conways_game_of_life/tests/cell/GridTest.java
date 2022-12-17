@@ -62,11 +62,30 @@ public class GridTest {
 
         List<String> actualColors = new ArrayList<>();
 
-        for (Cell c : testGrid) {
+        for (Cell c : testGrid.getIterator()) {
             actualColors.add(c.getState().getColorName());
         }
 
         assertEquals("Red", actualColors.get(4));
+
+    }
+
+    @Test
+    public void testIteratorReversed() {
+        int testWidth = 3;
+        int testHeight = 2;
+        Grid testGrid = new Grid(testWidth, testHeight);
+
+        // Set Cell at (1,1) to RED
+        testGrid.getCell(1,1).instantBirth(player.PlayerColor.RED);
+
+        List<String> actualColors = new ArrayList<>();
+
+        for (Cell c : testGrid.getIteratorReversed()) {
+            actualColors.add(c.getState().getColorName());
+        }
+
+        assertEquals("Red", actualColors.get(1));
 
     }
 
@@ -78,13 +97,20 @@ public class GridTest {
         Grid testGrid = new Grid(testWidth, testHeight);
 
         List<String> actualColors = new ArrayList<>();
-
-        for (Cell c : testGrid) {
+        for (Cell c : testGrid.getIterator()) {
             actualColors.add(c.getState().getColorName());
         }
-
         assertEquals(1, actualColors.size());
         assertEquals("White", actualColors.get(0));
+
+
+        // Same for reversedIterator
+        List<String> actualColors2 = new ArrayList<>();
+        for (Cell c : testGrid.getIteratorReversed()) {
+            actualColors2.add(c.getState().getColorName());
+        }
+        assertEquals(1, actualColors2.size());
+        assertEquals("White", actualColors2.get(0));
 
     }
 }
