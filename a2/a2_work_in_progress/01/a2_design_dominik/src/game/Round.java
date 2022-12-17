@@ -5,7 +5,6 @@ import ruleset.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class Round {
 
     /**
@@ -128,11 +127,6 @@ public class Round {
 
             rollingCounter += 1;
 
-            // For the first roll, tell player that he has not rolled a null and show him his roll
-            if (rollingCounter == 0) {
-                System.out.println("Your dice:");
-                System.out.println(aDiceSet);
-            }
 
             // - Ask player which DiceCombo to remove, only possible if there are DiceCombos to remove
             boolean keepRemoving = true;
@@ -253,6 +247,7 @@ public class Round {
             }
             if (aCurrentRuleset.returnName().equals("CLOVERLEAF")) {
                 System.out.println("You scored a Tutto while CLOVERLEAF is uncovered.\nThe card stays, if you roll another Tutto you win the game!");
+
                 aNeedsNewRuleset = false;
             }
         }
@@ -262,6 +257,7 @@ public class Round {
          */
         if (isTutto && aCurrentRuleset.returnName().equals("PLUS/MINUS")) {
             System.out.println("You scored a Tutto while PLUS/MINUS is uncovered. The leading player(s) will have 1000 points deducted right now.");
+
             aDecrease = true;
         }
 

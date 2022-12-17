@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
+//import static java.lang.Math.min;
+import static java.lang.Math.max;
+
 public class Grid implements Iterator<Cell> {
     private final int aWidth;
     private final int aHeight;
-
+    private int aListIterator = 0;
     private final List<List<Cell>> aGrid = new ArrayList<List<Cell>>();
 
     public Grid(int pWidth, int pHeight) {
@@ -41,18 +45,39 @@ public class Grid implements Iterator<Cell> {
     public void generateNextGeneration() {
 
     }
-
-    public ArrayList<Cell> getNeighbors(Cell pCell) {
-        return null;
+    /**
+     * @pre valid coordinates of a cell
+     * @return an ArrayList of all Neighbors of the cell
+     */
+    public ArrayList<Cell> getNeighbors(int aCellHeight, int aCellWidth) {
+        ArrayList<Cell> aNeighbors = new ArrayList<Cell>();
+        if (aCellHeight != 0) {
+            for (int i = max(0, aCellWidth - 1); i <= max(aWidth - 1, aCellWidth + 1); i++) {
+                aNeighbors.add(aGrid.get(aCellHeight-1).get(i));
+            }
+        }
+        if (aCellHeight != aHeight-1){
+            for (int i = max(0, aCellWidth - 1); i <= max(aWidth - 1, aCellWidth + 1); i++) {
+                aNeighbors.add(aGrid.get(aCellHeight+1).get(i));
+            }
+        }
+        if (aCellWidth > 0){
+            aNeighbors.add(aGrid.get(aCellHeight).get(aCellWidth-1));
+        }
+        if (aCellWidth < 2*aWidth - 1){
+            aNeighbors.add(aGrid.get(aCellHeight).get(aCellWidth+1));
+        }
+        return aNeighbors;
     }
 
     @Override
     public boolean hasNext() {
-        return false;
+        return aListIterator < aWidth * aHeight - 1;
     }
 
     @Override
     public Cell next() {
-        return null;
+        aListIterator += 1;
+        return aGrid.get(aListIterator / aHeight).get(aListIterator % aHeight);
     }
 }
