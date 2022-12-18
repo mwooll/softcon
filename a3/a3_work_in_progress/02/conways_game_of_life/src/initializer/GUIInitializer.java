@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class GUIInitializer implements InitializerObservable, InitializerObserver {
+public abstract class GUIInitializer implements Initializer, InitializerObservable, InitializerObserver {
 
     private final int MIN_SIZE = 3;
     private final int MAX_SIZE = 10;
@@ -35,6 +35,11 @@ public abstract class GUIInitializer implements InitializerObservable, Initializ
     }
 
     public List<String> getPlayers() {return Collections.unmodifiableList(aPlayers);}
+
+    public Grid getGrid() {
+        Grid tmpGridCopy = new Grid(aInitialGrid);
+        return tmpGridCopy;
+    }
 
     public int getMinGridSize() {return MIN_SIZE;}
     public int getMaxGridSize() {return MAX_SIZE;}
@@ -142,4 +147,26 @@ public abstract class GUIInitializer implements InitializerObservable, Initializ
     @Override
     public boolean validateHeight(String pHeight) {return aParser.validateHeight(MAX_SIZE, MIN_SIZE, pHeight);}
 
+    @Override
+    public String choosePlayerName() {
+        return null;
+    }
+
+    @Override
+    public PlayerColor choosePlayerColor() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Integer> chooseGridDimensions() {
+        return null;
+    }
+
+    @Override
+    public Grid createStartingConfiguration() {
+        Grid tmpGrid = new Grid(aGridW,aGridH);
+        tmpGrid.getCell(0,0).instantBirth(PlayerColor.BLUE);
+        aInitialGrid = tmpGrid;
+        return null;
+    }
 }

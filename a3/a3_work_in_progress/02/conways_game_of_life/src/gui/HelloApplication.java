@@ -214,7 +214,20 @@ public class HelloApplication extends Application {
 
 
             // Create the grid with the cells
-            // todo: figure shit out.
+            aInitializer.createStartingConfiguration();
+            Grid currentInitialGrid = aInitializer.getGrid();
+            String tmpString = "";
+            int ct = 1;
+            for (Cell c : currentInitialGrid.getIterator()) {
+                tmpString += c.getState().getColorName();
+                if (ct%currentInitialGrid.getWidth() == 0) {
+                    tmpString += "\n";
+                } else {
+                    tmpString += " ";
+                }
+                ct ++;
+            }
+            System.out.println(tmpString);
 
 
             // Create Continue Button
