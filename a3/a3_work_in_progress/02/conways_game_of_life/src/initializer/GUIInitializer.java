@@ -6,15 +6,19 @@ import gui.IGridObserver;
 import gui.IPlayerObserver;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import parser.IParser;
 import player.PlayerColor;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class GUIInitializer implements Initializer, InitializerObservable, InitializerObserver {
+public abstract class GUIInitializer implements InitializerObservable, InitializerObserver {
 
-    private final int MIN_SIZE = 10;
-    private final int MAX_SIZE = 50;
+    private final int MIN_SIZE = 3;
+    private final int MAX_SIZE = 10;
     private final int N_PLAYERS = 2;
+
     private final List<String> aPlayers = Arrays.asList(new String[N_PLAYERS]);
     private final List<Color> aColors = Arrays.asList(new Color[N_PLAYERS]);
     private Grid aInitialGrid;
@@ -24,27 +28,16 @@ public class GUIInitializer implements Initializer, InitializerObservable, Initi
     private final List<IGridObserver> aGridObservers = new ArrayList<>();
     private final List<IContinue> aContinueObservers = new ArrayList<>();
 
-//    private final IParser aParser;
+    private final IParser aParser;
 
-    @Override
-    public String choosePlayerName() {
-        return null;
+    public GUIInitializer(IParser pParser) {
+        aParser = pParser;
     }
 
-    @Override
-    public PlayerColor choosePlayerColor() {
-        return null;
-    }
+    public List<String> getPlayers() {return Collections.unmodifiableList(aPlayers);}
 
-    @Override
-    public ArrayList<Integer> chooseGridDimensions() {
-        return null;
-    }
-
-    @Override
-    public Grid createStartingConfiguration() {
-        return null;
-    }
+    public int getMinGridSize() {return MIN_SIZE;}
+    public int getMaxGridSize() {return MAX_SIZE;}
 
     @Override
     public void addPlayerObserver(IPlayerObserver pPlayerObserver) {
@@ -140,4 +133,13 @@ public class GUIInitializer implements Initializer, InitializerObservable, Initi
 
         }
     }
+
+    @Override
+    public boolean validatePlayerName(String pPlayerName) {return aParser.validatePlayerName(aPlayers, pPlayerName);}
+
+    @Override
+    public boolean validateWidth(String pWidth) {return aParser.validateWidth(MAX_SIZE, MIN_SIZE, pWidth);}
+    @Override
+    public boolean validateHeight(String pHeight) {return aParser.validateHeight(MAX_SIZE, MIN_SIZE, pHeight);}
+
 }

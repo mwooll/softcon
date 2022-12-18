@@ -7,6 +7,4 @@ public interface ISetter {
 
     EventHandler<ActionEvent> handleSet();
 
-    default boolean validate(String pInput){return true;};
-
 }

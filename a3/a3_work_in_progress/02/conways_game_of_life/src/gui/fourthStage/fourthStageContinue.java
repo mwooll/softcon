@@ -2,16 +2,17 @@ package gui.fourthStage;
 
 import gamemodel.GameModel;
 import gui.AbstractContinue;
+import initializer.InitializerObservable;
 
 public class fourthStageContinue extends AbstractContinue {
 
-    public fourthStageContinue(GameModel pGameModel) {
-        super(pGameModel);
+    public fourthStageContinue(InitializerObservable pObservable) {
+        super(pObservable);
     }
 
     @Override
     public void setVisibility() {
-        aButton.setVisible(aGameModel.gridSizeSet());
+        aButton.setVisible(aObservable.gridSizeSet());
     }
 
 }

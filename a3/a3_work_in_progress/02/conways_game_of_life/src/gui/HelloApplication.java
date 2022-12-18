@@ -9,6 +9,8 @@ import gui.secondStage.*;
 import gui.thirdStage.*;
 import gui.fourthStage.*;
 
+import initializer.GUIInitializer;
+import initializer.Initializer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -17,6 +19,8 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
+import parser.IParser;
+import parser.InitializerParser;
 
 import java.util.List;
 
@@ -29,11 +33,11 @@ public class HelloApplication extends Application {
 
     public static class FirstStage extends Stage {
 
-        private final GameModel aGameModel;
+        private final GUIInitializer aInitializer;
 
-        public FirstStage(GameModel pGameModel) {
+        public FirstStage(GUIInitializer pInitializer) {
 
-            aGameModel = pGameModel;
+            aInitializer = pInitializer;
 
             GridPane aRoot = new GridPane();
 
@@ -46,19 +50,19 @@ public class HelloApplication extends Application {
             this.setTitle("First Stage");
 
             // Create Player Name Observers
-            IPlayerObserver po0 = new PlayerObserver(aGameModel, 0);
-            IPlayerObserver po1 = new PlayerObserver(aGameModel, 1);
+            IPlayerObserver po0 = new PlayerObserver(aInitializer, 0);
+            IPlayerObserver po1 = new PlayerObserver(aInitializer, 1);
             aRoot.add((Parent) po0, 0, 0);
             aRoot.add((Parent) po1, 0, 1);
 
             // Create Player Name Setters
-            ISetter ps0 = new PlayerSetter(aGameModel, 0);
-            ISetter ps1 = new PlayerSetter(aGameModel, 1);
+            ISetter ps0 = new PlayerSetter(aInitializer, 0);
+            ISetter ps1 = new PlayerSetter(aInitializer, 1);
             aRoot.add((Parent) ps0, 0, 2);
             aRoot.add((Parent) ps1, 0, 3);
 
             // Create Continue Button
-            IContinue cont = new firstStageContinue(aGameModel);
+            IContinue cont = new firstStageContinue(aInitializer);
             aRoot.add((Parent) cont, 0, 4);
 
             this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
@@ -69,7 +73,7 @@ public class HelloApplication extends Application {
 
 //            continueButton.setOnAction(t -> System.out.println("Continue to second stage"));
             continueButton.setOnAction((t) -> {
-                new SecondStage(aGameModel);
+                new SecondStage(aInitializer);
                 this.close();
             });
 
@@ -79,11 +83,11 @@ public class HelloApplication extends Application {
 
     public static class SecondStage extends Stage {
 
-        private final GameModel aGameModel;
+        private final GUIInitializer aInitializer;
 
-        public SecondStage(GameModel pGameModel) {
+        public SecondStage(GUIInitializer pInitializer) {
 
-            aGameModel = pGameModel;
+            aInitializer = pInitializer;
 
             GridPane aRoot = new GridPane();
 
@@ -96,18 +100,18 @@ public class HelloApplication extends Application {
             this.setTitle("Second Stage");
 
             // Fetch all currently registered players
-            List<String> currentPlayerNames = aGameModel.getPlayerNames();
+            List<String> currentPlayerNames = aInitializer.getPlayers();
 
             // Create Player Color Pickers
             int tmpRowCt = 0;
             for (String name : currentPlayerNames) {
-                ISetter cs = new ColorSetter(aGameModel, name);
+                ISetter cs = new ColorSetter(aInitializer, name);
                 aRoot.add((Parent) cs, 0, tmpRowCt);
                 tmpRowCt++;
             }
 
             // Create Continue Button
-            IContinue cont = new secondStageContinue(aGameModel);
+            IContinue cont = new secondStageContinue(aInitializer);
             aRoot.add((Parent) cont, 0, tmpRowCt + 1);
 
             this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
@@ -118,21 +122,21 @@ public class HelloApplication extends Application {
 
 //            continueButton.setOnAction(t -> System.out.println("Continue to third stage"));
             continueButton.setOnAction((t) -> {
-                new ThirdStage(aGameModel);
+                new ThirdStage(aInitializer);
                 this.close();
             });
 
         }
 
     }
-
+//
     public static class ThirdStage extends Stage {
 
-        private final GameModel aGameModel;
+        private final GUIInitializer aInitializer;
 
-        public ThirdStage(GameModel pGameModel) {
+        public ThirdStage(GUIInitializer pInitializer) {
 
-            aGameModel = pGameModel;
+            aInitializer = pInitializer;
 
             GridPane aRoot = new GridPane();
 
@@ -147,24 +151,24 @@ public class HelloApplication extends Application {
             // Add label explaining
             Label labelExplanation = new Label();
             labelExplanation.setText(
-                    String.format("Min size %s, Max size %s", aGameModel.getMinGridSize(), aGameModel.getMaxGridSize())
+                    String.format("Min size %s, Max size %s", aInitializer.getMinGridSize(), aInitializer.getMaxGridSize())
             );
             aRoot.add(labelExplanation, 0, 0);
 
             // Create Grid Observers
-            IGridObserver go0 = new GridObserver(aGameModel, "H");
-            IGridObserver go1 = new GridObserver(aGameModel, "W");
+            IGridObserver go0 = new GridObserver(aInitializer, "H");
+            IGridObserver go1 = new GridObserver(aInitializer, "W");
             aRoot.add((Parent) go0, 0, 1);
             aRoot.add((Parent) go1, 0, 2);
 
             // Create Grid Setters
-            ISetter gs0 = new GridSetter(aGameModel, "H");
-            ISetter gs1 = new GridSetter(aGameModel, "W");
+            ISetter gs0 = new GridSetter(aInitializer, "H");
+            ISetter gs1 = new GridSetter(aInitializer, "W");
             aRoot.add((Parent) gs0, 0, 3);
             aRoot.add((Parent) gs1, 0, 4);
 
             // Create Continue Button
-            IContinue cont = new thirdStageContinue(aGameModel);
+            IContinue cont = new thirdStageContinue(aInitializer);
             aRoot.add((Parent) cont, 0, 5);
 
             this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
@@ -175,21 +179,21 @@ public class HelloApplication extends Application {
 
 //            continueButton.setOnAction(t -> System.out.println("Continue to fourth stage"));
             continueButton.setOnAction((t) -> {
-                new FourthStage(aGameModel);
+                new FourthStage(aInitializer);
                 this.close();
             });
 
         }
 
     }
-
+//
     public static class FourthStage extends Stage {
 
-        private final GameModel aGameModel;
+        private final GUIInitializer aInitializer;
 
-        public FourthStage(GameModel pGameModel) {
+        public FourthStage(GUIInitializer pInitializer) {
 
-            aGameModel = pGameModel;
+            aInitializer = pInitializer;
 
             GridPane aRoot = new GridPane();
 
@@ -210,11 +214,11 @@ public class HelloApplication extends Application {
 
 
             // Create the grid with the cells
-
+            // todo: figure shit out.
 
 
             // Create Continue Button
-            IContinue cont = new fourthStageContinue(aGameModel);
+            IContinue cont = new fourthStageContinue(aInitializer);
             aRoot.add((Parent) cont, 0, 5);
 
             this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
@@ -232,15 +236,10 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) {
 
-        // todo: Remove after debugging
-        // Test grid
-        Grid testGrid = new Grid(3,3);
+        IParser initParser = new InitializerParser();
+        GUIInitializer guiInit = new GUIInitializer(initParser) {};
 
-        // Game model
-        final GameModel gamemodel = new GameModel();
-        gamemodel.setInitialGrid(testGrid); // todo: Remove after debugging
-
-        new FirstStage(gamemodel);
+        new FirstStage(guiInit);
 
     }
 
