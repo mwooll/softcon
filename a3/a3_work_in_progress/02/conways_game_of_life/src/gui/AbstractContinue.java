@@ -1,6 +1,7 @@
 package gui;
 
 import gamemodel.GameModel;
+import initializer.InitializerObservable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -8,12 +9,12 @@ import javafx.scene.paint.Color;
 
 public class AbstractContinue extends Parent implements IContinue {
 
-    protected final GameModel aGameModel;
+    protected final InitializerObservable aObservable;
     protected final Button aButton;
 
-    public AbstractContinue(GameModel pGameModel) {
+    public AbstractContinue(InitializerObservable pObservable) {
 
-        aGameModel = pGameModel;
+        aObservable = pObservable;
 
         aButton = new Button("Continue");
         aButton.setVisible(false);
@@ -21,7 +22,7 @@ public class AbstractContinue extends Parent implements IContinue {
         VBox vbox = new VBox(aButton);
         getChildren().add(vbox);
 
-        aGameModel.addContinueObserver(this);
+        aObservable.addContinueObserver(this);
 
     }
 

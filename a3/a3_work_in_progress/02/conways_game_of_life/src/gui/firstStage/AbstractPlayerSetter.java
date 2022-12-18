@@ -2,6 +2,7 @@ package gui.firstStage;
 
 import gamemodel.GameModel;
 import gui.ISetter;
+import initializer.InitializerObserver;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -15,7 +16,7 @@ import java.util.regex.Pattern;
 
 public abstract class AbstractPlayerSetter extends Parent implements ISetter {
 
-    protected GameModel aGameModel;
+    protected InitializerObserver aObserver;
     protected final Label aLabel = new Label();
     protected final TextField aTextField = new TextField();
     protected final Button aButton = new Button("Set");
@@ -24,8 +25,8 @@ public abstract class AbstractPlayerSetter extends Parent implements ISetter {
     protected String aDefaultText;
     protected String aCurrentText;
 
-    public AbstractPlayerSetter(GameModel pGameModel, int pIndex) {
-        aGameModel = pGameModel;
+    public AbstractPlayerSetter(InitializerObserver pObserver, int pIndex) {
+        aObserver = pObserver;
         aIndex = pIndex;
         aDefaultText = DEFAULT_TEXT;
 
@@ -49,29 +50,13 @@ public abstract class AbstractPlayerSetter extends Parent implements ISetter {
 
         // if an empty string is passed, clear the name
         if (tmpText.equals("")) {
-            aGameModel.setPlayerName(tmpText, aIndex);
+            aObserver.setPlayerName(tmpText, aIndex);
         }
-
-        if (!validate(tmpText)) {return;}
 
         // Check with the GameModel if this name can be set
-        if (aGameModel.checkPlayerName(tmpText, aIndex)) {
-            aGameModel.setPlayerName(tmpText, aIndex);
-        } else {
-            System.out.println("No duplicate names!");
+        if (aObserver.validatePlayerName(tmpText)) {
+            aObserver.setPlayerName(tmpText, aIndex);
         }
     };}
-
-    @Override
-    public boolean validate(String pInput) {
-
-        // only accept a-zA-Z
-        Pattern patternLetters = Pattern.compile("^[a-zA-Z0-9\s]+$");
-        Matcher matcherLetters = patternLetters.matcher(pInput);
-        return matcherLetters.find();
-
-    }
-
-
 
 }

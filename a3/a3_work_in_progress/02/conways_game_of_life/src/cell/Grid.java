@@ -27,6 +27,25 @@ public class Grid {
     }
 
     /**
+     * Copy Constructor
+     */
+    public Grid(Grid pOtherGrid) {
+
+        aWidth = pOtherGrid.aWidth;
+        aHeight = pOtherGrid.aHeight;
+        aGrid = new ArrayList<>();
+
+        // Create Cell objects for each field in the grid
+        for (int row = 0; row < aHeight; row++) {
+            aGrid.add(new ArrayList<>());
+            for (int col = 0; col < aWidth; col++) {
+                aGrid.get(row).add(pOtherGrid.getCell(row, col));
+            }
+        }
+
+    }
+
+    /**
      * Iterators must be implemented as nested classes within grid.$
      * Goal: Provide each Grid instance with a method to return an Iterator<Cell> object which can be used by
      * the client code

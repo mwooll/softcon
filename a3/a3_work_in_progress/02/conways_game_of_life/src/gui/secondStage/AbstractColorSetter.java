@@ -2,6 +2,7 @@ package gui.secondStage;
 
 import gamemodel.GameModel;
 import gui.ISetter;
+import initializer.InitializerObserver;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,19 +11,25 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import player.PlayerColor;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AbstractColorSetter extends Parent implements ISetter {
 
-    protected final ObservableList<String> OPTIONS = FXCollections.observableArrayList("RED", "BLUE");
-    protected GameModel aGameModel;
+    private final List<Color> allPlayerColors = Stream.of(PlayerColor.values()).map(PlayerColor::getColorHex).collect(Collectors.toList());
+    protected final ObservableList<Color> OPTIONS = FXCollections.observableArrayList(allPlayerColors);
+    protected InitializerObserver aObserver;
     protected final Label aLabel = new Label();
-    protected final ComboBox<String> aComboBox = new ComboBox<>(OPTIONS);
+    protected final ComboBox<Color> aComboBox = new ComboBox<>(OPTIONS);
 
     protected String aName;
 
-    public AbstractColorSetter(GameModel pGameModel, String pName) {
+    public AbstractColorSetter(InitializerObserver pObserver, String pName) {
 
-        aGameModel = pGameModel;
+        aObserver = pObserver;
         aName = pName;
 
         aLabel.setText(String.format("Color Player %s", aName));
@@ -37,14 +44,9 @@ public class AbstractColorSetter extends Parent implements ISetter {
     @Override
     public EventHandler<ActionEvent> handleSet() {return actionevent -> {
 
-        String tmpString = aComboBox.getValue();
+        Color tmpColor = aComboBox.getValue();
 
-        if (tmpString.equals("RED")) {
-            aGameModel.setPlayerColor(Color.RED, aName);
-        }
-        if (tmpString.equals("BLUE")) {
-            aGameModel.setPlayerColor(Color.BLUE, aName);
-        }
+        aObserver.setPlayerColor(tmpColor, aName);
 
     };}
 

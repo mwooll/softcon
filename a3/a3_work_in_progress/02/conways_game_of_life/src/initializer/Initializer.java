@@ -1,5 +1,7 @@
 package initializer;
 
+import parser.IParser;
+
 import java.util.ArrayList;
 
 public interface Initializer {

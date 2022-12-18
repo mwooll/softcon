@@ -2,16 +2,17 @@ package gui.firstStage;
 
 import gamemodel.GameModel;
 import gui.AbstractContinue;
+import initializer.InitializerObservable;
 
 public class firstStageContinue extends AbstractContinue {
 
 
-    public firstStageContinue(GameModel pGameModel) {
-        super(pGameModel);
+    public firstStageContinue(InitializerObservable pObservable) {
+        super(pObservable);
     }
 
     @Override
     public void setVisibility() {
-        aButton.setVisible(aGameModel.playerNamesSet());
+        aButton.setVisible(aObservable.playerNamesSet());
     }
 }
