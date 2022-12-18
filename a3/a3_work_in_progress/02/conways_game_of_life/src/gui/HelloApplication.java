@@ -215,6 +215,8 @@ public class HelloApplication extends Application {
 
             // Create the grid with the cells
             aInitializer.createStartingConfiguration();
+
+            // Printer for debugging
             Grid currentInitialGrid = aInitializer.getGrid();
             String tmpString = "";
             int ct = 1;
