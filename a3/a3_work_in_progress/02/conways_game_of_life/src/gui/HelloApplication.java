@@ -254,17 +254,20 @@ public class HelloApplication extends Application {
 
         IParser initParser = new InitializerParser();
 
-        GUIInitializer testGUIInitializer = new GUIInitializer() {
+        class testGUIInitializer extends GUIInitializer {
+
+            public testGUIInitializer(IParser pParser) {
+                super(pParser);
+            }
             @Override
             public Grid createStartingConfiguration() {
                     Grid tmpGrid = new Grid(3,3);
                     tmpGrid.getCell(0,0).instantBirth(PlayerColor.BLUE);
                     aInitialGrid = tmpGrid;
                     return null;
-                }
             }
         }
-        GUIInitializer guiInit = new GUIInitializer(initParser) {};
+        GUIInitializer guiInit = new testGUIInitializer(initParser) {};
 
         new FirstStage(guiInit);
 
