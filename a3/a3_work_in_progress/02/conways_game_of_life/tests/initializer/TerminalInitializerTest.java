@@ -8,47 +8,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class TerminalInitializerTest {
-
+    TerminalInitializer testInitializer = new TerminalInitializer();
 
     @Test
-    public void testChoosePlayerNameOneTry() {
+    public void testChoosePlayerName() {
         String testName = "Tester";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(testName.getBytes());
-        TerminalInitializer nameInitializer = new TerminalInitializer(inputStream, System.out);
-        String playerName = nameInitializer.choosePlayerName();
+        String playerName = testInitializer.choosePlayerName();
+        System.setIn(new ByteArrayInputStream(testName.getBytes()));
 
         assertEquals(testName, playerName);
     }
-
-    @Test
-    public void testChoosePlayerNameTwoTries() {
-        String badName = "%badName";
-        String testName = "Tester";
-        String testStream =  badName + "\n" + testName;
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(testStream.getBytes());
-        TerminalInitializer nameInitializer = new TerminalInitializer(inputStream, System.out);
-        String playerName = nameInitializer.choosePlayerName();
-
-        assertEquals(testName, playerName);
-    }
-
-    /*
-    @Test
-    public void testChoosePlayerColorRed() {
-        String testColor = "Red";
-        PlayerColor playerColor = testInitializer.choosePlayerColor();
-        System.setIn(new ByteArrayInputStream((testColor.getBytes())));
-
-        assertEquals(PlayerColor.RED, playerColor);
-    }
-
-    @Test
-    public void testChoosePlayerColorBlue() {
-        String testColor = "Blue";
-        PlayerColor playerColor = testInitializer.choosePlayerColor();
-        System.setIn(new ByteArrayInputStream((testColor.getBytes())));
-
-        assertEquals(PlayerColor.BLUE, playerColor);
-    }
-    */
 }
