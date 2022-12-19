@@ -37,6 +37,8 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
 
     public List<Player> getPlayers() {return Collections.unmodifiableList(aPlayers);}
     private List<String> getCurrentPlayerNames() {return aPlayers.stream().map(Player::getName).toList();}
+
+    private List<PlayerColor> getCurrentColors() {return aPlayers.stream().map(Player::getColor).toList();}
     private List<String> getCurrentColorNames() {return aPlayers.stream().map(p -> p.getColor().getColorName()).toList();}
 
     public Grid getGrid() {
@@ -166,10 +168,10 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
     }
 
     @Override
-    public boolean validateColorName(String pColorName) {
+    public boolean validateColorName(PlayerColor pPlayerColor) {
         // Give the parser a list of all currently used names as well as the name the input wants to set
-        List<String> allColorNamesInUse = getCurrentColorNames();
-        return aParser.validateColorName(allColorNamesInUse, pColorName);
+        List<PlayerColor> allColorsInUse = getCurrentColors();
+        return aParser.validateColor(allColorsInUse, pPlayerColor);
     }
 
     @Override

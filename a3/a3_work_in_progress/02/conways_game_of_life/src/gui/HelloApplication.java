@@ -21,6 +21,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 import parser.IParser;
 import parser.InitializerParser;
+import player.Player;
 import player.PlayerColor;
 
 import java.util.List;
