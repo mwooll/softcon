@@ -9,7 +9,7 @@ public interface InitializerObserver {
 
     boolean validatePlayerName(String pPlayerName);
 
-    boolean validateColorName(String pColorName);
+    boolean validateColorName(PlayerColor pPlayerColor);
 
     boolean validateWidth(String pWidth);
 
