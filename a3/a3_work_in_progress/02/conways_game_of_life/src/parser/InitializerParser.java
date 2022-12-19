@@ -1,9 +1,7 @@
 package parser;
 
 import cell.Cell;
-import initializer.GUIInitializer;
-import initializer.Initializer;
-import javafx.scene.paint.Color;
+import player.PlayerColor;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -25,7 +23,7 @@ public class InitializerParser implements IParser {
     }
 
     @Override
-    public boolean validateColor(List<Color> pColors, Color pColor) {
+    public boolean validateColor(List<PlayerColor> pColors, PlayerColor pColor) {
         return false;
     }
 
