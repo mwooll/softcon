@@ -43,6 +43,7 @@ public class TerminalInitializer implements Initializer{
             if (matcher.find()) {
                 return answer;
             }
+            System.out.println("Unrecognised symbol was used, please try again.");
         }
     }
 
