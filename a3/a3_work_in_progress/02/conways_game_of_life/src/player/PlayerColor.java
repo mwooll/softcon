@@ -9,7 +9,8 @@ public enum PlayerColor {
     ORANGE("Orange", Color.ORANGE, 'O'),
     MAGENTA("Magenta", Color.MAGENTA, 'M'),
     YELLOW("Yellow", Color.YELLOW, 'Y'),
-    WHITE("White", Color.WHITE, ' ');
+    WHITE("White", Color.WHITE, ' '),
+    BLACK("Black", Color.BLACK, 'X');
 
     private final String aColorName;
     private final Color aColorHex;

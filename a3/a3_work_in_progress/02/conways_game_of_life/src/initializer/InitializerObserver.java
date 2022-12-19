@@ -12,6 +12,7 @@ public interface InitializerObserver {
     boolean validateColorName(String pColorName);
 
     boolean validateWidth(String pWidth);
+
     boolean validateHeight(String pHeight);
 
     void setPlayerName(String pPlayerName, int pIndex);

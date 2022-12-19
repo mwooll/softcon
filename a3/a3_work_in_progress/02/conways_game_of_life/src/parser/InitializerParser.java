@@ -1,9 +1,7 @@
 package parser;
 
 import cell.Cell;
-import initializer.GUIInitializer;
-import initializer.Initializer;
-import javafx.scene.paint.Color;
+import player.PlayerColor;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -25,11 +23,14 @@ public class InitializerParser implements IParser {
     }
 
     @Override
-    public boolean validateColorName(List<String> pColorsInUse, String pColor) {
+    public boolean validateColor(List<PlayerColor> pColors, PlayerColor pColor) {
+        assert pColor != null;
 
-        // Check if any player has the same name yet
-        return !pColorsInUse.contains(pColor);
+        // pColor may not be white
+        if(pColor == PlayerColor.WHITE) { return false; }
 
+        // Check if any player has the same color yet
+        return !pColors.contains(pColor);
     }
 
     @Override

@@ -21,7 +21,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 import parser.IParser;
 import parser.InitializerParser;
-import player.Player;
 import player.PlayerColor;
 
 import java.util.List;
@@ -220,6 +219,8 @@ public class HelloApplication extends Application {
 
             // Create the grid with the cells
             aInitializer.createStartingConfiguration();
+
+            // Printer for debugging
             Grid currentInitialGrid = aInitializer.getGrid();
             String tmpString = "";
             int ct = 1;
@@ -256,20 +257,18 @@ public class HelloApplication extends Application {
 
         IParser initParser = new InitializerParser();
 
-//        GUIInitializer guiInit = new GUIInitializer(initParser) {};
-
-
         class testGUIInitializer extends GUIInitializer {
+
             public testGUIInitializer(IParser pParser) {
                 super(pParser);
             }
-
             @Override
             public Grid createStartingConfiguration() {
-                Grid tmpGrid = new Grid(3,3);
-                tmpGrid.getCell(0,0).instantBirth(PlayerColor.BLUE);
-                aInitialGrid = tmpGrid;
-                return null;
+                    Grid tmpGrid = new Grid(3,3);
+                    tmpGrid.getCell(0,0).instantBirth(PlayerColor.BLUE);
+                    aInitialGrid = tmpGrid;
+                    return null;
+
             }
         }
         GUIInitializer guiInit = new testGUIInitializer(initParser) {};

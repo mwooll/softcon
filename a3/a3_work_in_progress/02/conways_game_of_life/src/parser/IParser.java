@@ -1,15 +1,13 @@
 package parser;
 
-import javafx.scene.paint.Color;
+import player.PlayerColor;
 
 import java.util.List;
 
 public interface IParser {
 
     boolean validatePlayerName(List<String> pNamesInUse, String pName);
-
-    boolean validateColorName(List<String> pColorNamesInUse, String pColorName);
-
+    boolean validateColor(List<PlayerColor> pColors, PlayerColor pColor);
     boolean validateHeight(int pMaxHeight, int pMinHeight, String pHeight);
     boolean validateWidth(int pMaxWidth, int pMinWidth, String pWidth);
 

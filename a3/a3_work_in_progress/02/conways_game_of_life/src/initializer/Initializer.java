@@ -13,4 +13,6 @@ public interface Initializer {
     ArrayList<Integer> chooseGridDimensions();
 
     cell.Grid createStartingConfiguration();
+
+
 }

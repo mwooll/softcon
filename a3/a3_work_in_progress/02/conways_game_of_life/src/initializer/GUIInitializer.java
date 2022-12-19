@@ -18,13 +18,11 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
     private final int MIN_SIZE = 3;
     private final int MAX_SIZE = 10;
     private final int N_PLAYERS = 2;
-
 //    private final List<String> aPlayers = Arrays.asList(new String[N_PLAYERS]);
 //    private final List<Color> aColors = Arrays.asList(new Color[N_PLAYERS]);
 //    private Grid aInitialGrid;
     private final List<Player> aPlayers = Stream.generate(Player::new).limit(N_PLAYERS).collect(Collectors.toList());
     protected Grid aInitialGrid;
-
     private int aGridH = -1;
     private int aGridW = -1;
     private final List<IPlayerObserver> aPlayerObservers = new ArrayList<>();
@@ -45,7 +43,6 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
         Grid tmpGridCopy = new Grid(aInitialGrid);
         return tmpGridCopy;
     }
-
     public int getMinGridSize() {return MIN_SIZE;}
     public int getMaxGridSize() {return MAX_SIZE;}
 
@@ -197,9 +194,9 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
 
     @Override
     public Grid createStartingConfiguration() {
-        Grid tmpGrid = new Grid(aGridW,aGridH);
-        tmpGrid.getCell(0,0).instantBirth(PlayerColor.BLUE);
-        aInitialGrid = tmpGrid;
+        // create Grid with aHeight, aWidth
+        // set a random set of cells to a non-white color
+        // return Grid
         return null;
     }
 }
