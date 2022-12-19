@@ -4,14 +4,14 @@ import cell.Grid;
 import gui.IContinue;
 import gui.IGridObserver;
 import gui.IPlayerObserver;
-import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import parser.IParser;
+import player.Player;
 import player.PlayerColor;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class GUIInitializer implements Initializer, InitializerObservable, InitializerObserver {
 
@@ -19,9 +19,12 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
     private final int MAX_SIZE = 10;
     private final int N_PLAYERS = 2;
 
-    private final List<String> aPlayers = Arrays.asList(new String[N_PLAYERS]);
-    private final List<Color> aColors = Arrays.asList(new Color[N_PLAYERS]);
-    private Grid aInitialGrid;
+//    private final List<String> aPlayers = Arrays.asList(new String[N_PLAYERS]);
+//    private final List<Color> aColors = Arrays.asList(new Color[N_PLAYERS]);
+//    private Grid aInitialGrid;
+    private final List<Player> aPlayers = Stream.generate(Player::new).limit(N_PLAYERS).collect(Collectors.toList());
+    protected Grid aInitialGrid;
+
     private int aGridH = -1;
     private int aGridW = -1;
     private final List<IPlayerObserver> aPlayerObservers = new ArrayList<>();
@@ -34,7 +37,9 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
         aParser = pParser;
     }
 
-    public List<String> getPlayers() {return Collections.unmodifiableList(aPlayers);}
+    public List<Player> getPlayers() {return Collections.unmodifiableList(aPlayers);}
+    private List<String> getCurrentPlayerNames() {return aPlayers.stream().map(Player::getName).toList();}
+    private List<String> getCurrentColorNames() {return aPlayers.stream().map(p -> p.getColor().getColorName()).toList();}
 
     public Grid getGrid() {
         Grid tmpGridCopy = new Grid(aInitialGrid);
@@ -61,13 +66,24 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
 
     @Override
     public boolean playerNamesSet() {
-        return !(aPlayers.contains(null));
+        // check if all players are not null. No check for duplicates, that happened in the parser
+        for (Player p : aPlayers) {
+            if (p.getName().equals("")) {return false;}
+        }
+        return true;
     }
 
     @Override
     public boolean playerColorSet() {
-        HashSet<Color> tmpColorHashSet = new HashSet<>(aColors);
-        return tmpColorHashSet.size() == aColors.size() && !aColors.contains(null) && !aColors.contains(Color.WHITE);
+        // get all Colors currently in use
+        List<String> allColorNamesInUse = aPlayers.stream().map(p -> p.getColor().getColorName()).toList();
+
+        // check for duplicates with set operation
+        HashSet<String> tmpSet = new HashSet<String>(allColorNamesInUse);
+
+        return tmpSet.size() == allColorNamesInUse.size() &&
+                !allColorNamesInUse.contains(null) &&
+                !allColorNamesInUse.contains("White");
     }
 
     @Override
@@ -79,9 +95,11 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
     public void setPlayerName(String pPlayerName, int pIndex) {
         assert pIndex >= 0 && pIndex <= N_PLAYERS;
 
+        // assume the player name can be set, has been checked by the parser
+
         System.out.println(String.format("Setting name Player %s to %s", pIndex+1, pPlayerName));
 
-        aPlayers.set(pIndex, pPlayerName);
+        aPlayers.get(pIndex).setName(pPlayerName);
         for (IPlayerObserver observer : aPlayerObservers) {
             observer.nameIsSet(pPlayerName, pIndex);
         }
@@ -94,9 +112,14 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
 
     @Override
     public void setPlayerColor(Color pColor, String pPlayerName) {
-        assert aPlayers.contains(pPlayerName) && aPlayers.stream().filter(name -> name.equals(pPlayerName)).count() == 1;
 
-        int tmpIndex = aPlayers.indexOf(pPlayerName);
+        // assume the player color can be set, has been checked by the parser
+        // Assume player with name pPlayerName exists
+        List<String> allNamesInUse = getCurrentPlayerNames();
+        assert allNamesInUse.contains(pPlayerName);
+        assert Collections.frequency(allNamesInUse, pPlayerName) == 1;
+
+        int tmpIndex = 
         aColors.set(tmpIndex, pColor);
         for (IPlayerObserver observer : aPlayerObservers) {
             observer.colorIsSet(pColor, pPlayerName);
@@ -140,7 +163,18 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
     }
 
     @Override
-    public boolean validatePlayerName(String pPlayerName) {return aParser.validatePlayerName(aPlayers, pPlayerName);}
+    public boolean validatePlayerName(String pPlayerName) {
+        // Give the parser a list of all currently used names as well as the name the input wants to set
+        List<String> allNamesInUse = getCurrentPlayerNames();
+        return aParser.validatePlayerName(allNamesInUse, pPlayerName);
+    }
+
+    @Override
+    public boolean validateColorName(String pColorName) {
+        // Give the parser a list of all currently used names as well as the name the input wants to set
+        List<String> allColorNamesInUse = aPlayers.stream().map(p -> p.getColor().getColorName()).toList();
+        return aParser.validateColorName(allColorNamesInUse, pColorName);
+    }
 
     @Override
     public boolean validateWidth(String pWidth) {return aParser.validateWidth(MAX_SIZE, MIN_SIZE, pWidth);}

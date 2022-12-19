@@ -21,6 +21,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 import parser.IParser;
 import parser.InitializerParser;
+import player.Player;
+import player.PlayerColor;
 
 import java.util.List;
 
@@ -100,12 +102,14 @@ public class HelloApplication extends Application {
             this.setTitle("Second Stage");
 
             // Fetch all currently registered players
-            List<String> currentPlayerNames = aInitializer.getPlayers();
+            List<Player> currentPlayers = aInitializer.getPlayers();
 
             // Create Player Color Pickers
             int tmpRowCt = 0;
-            for (String name : currentPlayerNames) {
-                ISetter cs = new ColorSetter(aInitializer, name);
+            for (Player player : currentPlayers) {
+                PlayerColor playerColor = player.getColor();
+                String playerColorName = playerColor.getColorName();
+                ISetter cs = new ColorSetter(aInitializer, playerColorName);
                 aRoot.add((Parent) cs, 0, tmpRowCt);
                 tmpRowCt++;
             }
@@ -250,7 +254,24 @@ public class HelloApplication extends Application {
     public void start(Stage stage) {
 
         IParser initParser = new InitializerParser();
-        GUIInitializer guiInit = new GUIInitializer(initParser) {};
+
+//        GUIInitializer guiInit = new GUIInitializer(initParser) {};
+
+
+        class testGUIInitializer extends GUIInitializer {
+            public testGUIInitializer(IParser pParser) {
+                super(pParser);
+            }
+
+            @Override
+            public Grid createStartingConfiguration() {
+                Grid tmpGrid = new Grid(3,3);
+                tmpGrid.getCell(0,0).instantBirth(PlayerColor.BLUE);
+                aInitialGrid = tmpGrid;
+                return null;
+            }
+        }
+        GUIInitializer guiInit = new testGUIInitializer(initParser) {};
 
         new FirstStage(guiInit);
 

@@ -1,8 +1,8 @@
 package player;
 
 public class Player {
-    private final String aName;
-    private final PlayerColor aColor;
+    private String aName;
+    private PlayerColor aColor;
 
     /**
      * @param pColor must not be PlayerColor.WHITE
@@ -11,6 +11,17 @@ public class Player {
         aName = pName;
         aColor = pColor;
     }
+
+    /**
+     * Initialize without arguments, creating a Player with the String "" as name and color WHITE
+     */
+    public Player() {
+        aName = "";
+        aColor = PlayerColor.WHITE;
+    }
+
+    public void setName(String pName) {aName = pName;}
+    public void setColor(PlayerColor pColor) {aColor = pColor;}
 
     public String getName() { return aName; }
 

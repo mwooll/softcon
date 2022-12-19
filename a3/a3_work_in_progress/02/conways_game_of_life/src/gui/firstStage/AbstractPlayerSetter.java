@@ -53,7 +53,7 @@ public abstract class AbstractPlayerSetter extends Parent implements ISetter {
             aObserver.setPlayerName(tmpText, aIndex);
         }
 
-        // Check with the GameModel if this name can be set
+        // Check with the Observer if this name can be set
         if (aObserver.validatePlayerName(tmpText)) {
             aObserver.setPlayerName(tmpText, aIndex);
         }
