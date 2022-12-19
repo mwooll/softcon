@@ -18,6 +18,7 @@ public class cellObserver extends Parent implements ICellObserver {
         aObservable = pObservable;
 
         Rectangle rect = new Rectangle(SIZE, SIZE);
+        rect.setStroke(Color.BLACK);
         aFillColor = pObservable.getState().getColorHex();
         rect.setFill(aFillColor);
 

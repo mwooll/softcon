@@ -17,6 +17,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
@@ -27,6 +28,8 @@ import parser.InitializerParser;
 import player.Player;
 import player.PlayerColor;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -266,13 +269,12 @@ public class HelloApplication extends Application {
         public FifthStage(GUIInitializer pInitializer) {
             aGameModel = new GameModelNew(pInitializer, new GameParser());
 
-            GridPane aRoot = new GridPane();
+            VBox aRoot = new VBox();
 
-            aRoot.setGridLinesVisible(true);
             aRoot.setStyle("-fx-background-color: white");
-            aRoot.setHgap(MARGIN_OUTER);
-            aRoot.setVgap(MARGIN_OUTER);
-            aRoot.setPadding(new Insets(MARGIN_OUTER));
+            aRoot.setStyle("-fx-border-color: black");
+            aRoot.setPadding(new Insets(10));
+            aRoot.setSpacing(8);
 
             this.setTitle("Fifth Stage");
 
@@ -281,9 +283,10 @@ public class HelloApplication extends Application {
             labelExplanation.setText(
                     String.format("Lets start the game!")
             );
-            aRoot.add(labelExplanation, 0, 0);
+            aRoot.getChildren().add(labelExplanation);
 
             // Draw the Grid
+            GridPane aGridPane = new GridPane();
             int row_ct = 1;
             int col_ct = 0;
             for (Cell c : aGameModel.aGrid.getIterator()) {
@@ -292,9 +295,15 @@ public class HelloApplication extends Application {
                     row_ct++;
                     col_ct = 0;
                 }
-                aRoot.add((Parent) cObserver, row_ct, col_ct);
+                aGridPane.add((Parent) cObserver, col_ct, row_ct);
                 col_ct ++;
             }
+
+            // Add GridPane outlines
+
+
+            // Add Grid to VBox aRoot
+            aRoot.getChildren().add(aGridPane);
 
             this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
             this.show();
@@ -312,12 +321,22 @@ public class HelloApplication extends Application {
         class testGUIInitializer extends GUIInitializer {
 
             public testGUIInitializer(IParser pParser) {
+
                 super(pParser);
+                this.createStartingConfiguration();
+
             }
+
+            @Override
+            public List<Player> getPlayers() {
+                return Arrays.asList(new Player("player1", PlayerColor.RED), new Player("player2", PlayerColor.BLUE));
+            }
+
             @Override
             public Grid createStartingConfiguration() {
                     Grid tmpGrid = new Grid(3,3);
                     tmpGrid.getCell(0,0).instantBirth(PlayerColor.BLUE);
+                    tmpGrid.getCell(0,2).instantBirth(PlayerColor.RED);
                     aInitialGrid = tmpGrid;
                     return null;
 
@@ -325,7 +344,8 @@ public class HelloApplication extends Application {
         }
         GUIInitializer guiInit = new testGUIInitializer(initParser) {};
 
-        new FirstStage(guiInit);
+//        new FirstStage(guiInit);
+        new FifthStage(guiInit);
 
     }
 
