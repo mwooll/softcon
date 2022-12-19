@@ -24,7 +24,13 @@ public class InitializerParser implements IParser {
 
     @Override
     public boolean validateColor(List<PlayerColor> pColors, PlayerColor pColor) {
-        return false;
+        assert pColor != null;
+
+        // pColor may not be white
+        if(pColor == PlayerColor.WHITE) { return false; }
+
+        // Check if any player has the same color yet
+        return !pColors.contains(pColor);
     }
 
     @Override
