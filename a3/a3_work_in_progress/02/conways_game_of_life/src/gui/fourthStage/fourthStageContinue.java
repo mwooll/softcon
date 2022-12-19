@@ -8,11 +8,12 @@ public class fourthStageContinue extends AbstractContinue {
 
     public fourthStageContinue(InitializerObservable pObservable) {
         super(pObservable);
+        aButton.setVisible(true);
     }
 
     @Override
     public void setVisibility() {
-        aButton.setVisible(aObservable.gridSizeSet());
+        aButton.setVisible(true);
     }
 
 }

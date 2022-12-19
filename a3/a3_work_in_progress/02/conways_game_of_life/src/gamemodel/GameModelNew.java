@@ -7,14 +7,15 @@ import initializer.GUIInitializer;
 import parser.IParser;
 import player.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameModelNew {
 
-    private final int aHeight;
-    private final int aWidth;
-    private List<Player> aPlayers;
-    private final Grid aGrid;
+    public final int aHeight;
+    public final int aWidth;
+    private List<Player> aPlayers = new ArrayList<>();
+    public final Grid aGrid;
     private final IParser aParser;
 
     private List<ICellObserver> aCellObservers;

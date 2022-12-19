@@ -1,11 +1,13 @@
 package cell;
 
+import gui.ICellObserver;
 import player.PlayerColor;
 
-public class Cell {
+public class Cell implements ICellObservable {
     private PlayerColor currentState;
     private PlayerColor nextState;
     private boolean changedState;
+    private ICellObserver aObserver;
 
     public Cell() {
         currentState = PlayerColor.WHITE;
@@ -67,5 +69,15 @@ public class Cell {
     public void updateState() {
         currentState = nextState;
         resetChangedState();
+    }
+
+    @Override
+    public void addObserver(ICellObserver pObserver) {
+        aObserver = pObserver;
+    }
+
+    @Override
+    public void notifyObserver() {
+
     }
 }

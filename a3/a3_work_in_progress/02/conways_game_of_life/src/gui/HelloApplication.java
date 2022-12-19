@@ -5,6 +5,7 @@ import gamemodel.GameModel;
 import cell.*;
 
 import gamemodel.GameModelNew;
+import gui.fifthStage.cellObserver;
 import gui.firstStage.*;
 import gui.secondStage.*;
 import gui.thirdStage.*;
@@ -223,34 +224,37 @@ public class HelloApplication extends Application {
             // Create the grid with the cells
             aInitializer.createStartingConfiguration();
 
-            // Printer for debugging
-            Grid currentInitialGrid = aInitializer.getGrid();
-            String tmpString = "";
-            int ct = 1;
-            for (Cell c : currentInitialGrid.getIterator()) {
-                tmpString += c.getState().getColorName();
-                if (ct%currentInitialGrid.getWidth() == 0) {
-                    tmpString += "\n";
-                } else {
-                    tmpString += " ";
-                }
-                ct ++;
-            }
-            System.out.println(tmpString);
+//            // Printer for debugging
+//            Grid currentInitialGrid = aInitializer.getGrid();
+//            String tmpString = "";
+//            int ct = 1;
+//            for (Cell c : currentInitialGrid.getIterator()) {
+//                tmpString += c.getState().getColorName();
+//                if (ct%currentInitialGrid.getWidth() == 0) {
+//                    tmpString += "\n";
+//                } else {
+//                    tmpString += " ";
+//                }
+//                ct ++;
+//            }
+//            System.out.println(tmpString);
 
 
             // Create Continue Button
             IContinue cont = new fourthStageContinue(aInitializer);
             aRoot.add((Parent) cont, 0, 5);
 
-            this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
-            this.show();
-
             // Fetch the continue button, continue to second stage
             Button continueButton = cont.getButton();
 
-            continueButton.setOnAction(t -> System.out.println("Continue to fifth stage"));
+            this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
+            this.show();
 
+//            continueButton.setOnAction(t -> System.out.println("Continue to fifth stage"));
+            continueButton.setOnAction((t) -> {
+                new FifthStage(aInitializer);
+                this.close();
+            });
         }
 
     }
@@ -279,13 +283,23 @@ public class HelloApplication extends Application {
             );
             aRoot.add(labelExplanation, 0, 0);
 
+            // Draw the Grid
+            int row_ct = 1;
+            int col_ct = 0;
+            for (Cell c : aGameModel.aGrid.getIterator()) {
+                ICellObserver cObserver = new cellObserver(c);
+                if (col_ct%aGameModel.aWidth == 0) {
+                    row_ct++;
+                    col_ct = 0;
+                }
+                aRoot.add((Parent) cObserver, row_ct, col_ct);
+                col_ct ++;
+            }
 
-            // fetch the grid
-
+            this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
+            this.show();
 
         }
-
-
 
     }
 
