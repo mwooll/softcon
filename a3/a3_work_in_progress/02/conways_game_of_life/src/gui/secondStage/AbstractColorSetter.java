@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 
 public class AbstractColorSetter extends Parent implements ISetter {
 
-    private final List<String> allPlayerColors = Stream.of(PlayerColor.values()).map(PlayerColor::getColorName).collect(Collectors.toList());
+    private final List<String> allPlayerColors = Stream.of(PlayerColor.values()).map(PlayerColor::getColorName).filter(p -> !p.equals("White")).collect(Collectors.toList());
     protected final ObservableList<String> OPTIONS = FXCollections.observableArrayList(allPlayerColors);
     protected InitializerObserver aObserver;
     protected final Label aLabel = new Label();
@@ -49,7 +49,7 @@ public class AbstractColorSetter extends Parent implements ISetter {
         // get the respective Color
         for (PlayerColor pc : PlayerColor.values()) {
             if (pc.getColorName().equals(tmpColorName)) {
-                aObserver.setPlayerColor(pc.getColorHex(), aName);
+                aObserver.setPlayerColor(pc, aName);
             }
         }
 

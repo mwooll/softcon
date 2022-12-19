@@ -3,13 +3,14 @@ package gui;
 import gamemodel.GameModel;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import player.PlayerColor;
 
 public interface IPlayerObserver {
 
 
     void nameIsSet(String pName, int pIndex);
 
-    void colorIsSet(Color pColor, String pName);
+    void colorIsSet(PlayerColor pPlayerColor, String pName);
 
 
 }

@@ -76,10 +76,10 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
     @Override
     public boolean playerColorSet() {
         // get all Colors currently in use
-        List<String> allColorNamesInUse = aPlayers.stream().map(p -> p.getColor().getColorName()).toList();
+        List<String> allColorNamesInUse = getCurrentColorNames();
 
         // check for duplicates with set operation
-        HashSet<String> tmpSet = new HashSet<String>(allColorNamesInUse);
+        HashSet<String> tmpSet = new HashSet<>(allColorNamesInUse);
 
         return tmpSet.size() == allColorNamesInUse.size() &&
                 !allColorNamesInUse.contains(null) &&
@@ -107,11 +107,11 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
             observer.setVisibility();
         }
 
-        System.out.println(aPlayers);
+        System.out.println(getCurrentPlayerNames());
     }
 
     @Override
-    public void setPlayerColor(Color pColor, String pPlayerName) {
+    public void setPlayerColor(PlayerColor pPlayerColor, String pPlayerName) {
 
         // assume the player color can be set, has been checked by the parser
         // Assume player with name pPlayerName exists
@@ -119,18 +119,17 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
         assert allNamesInUse.contains(pPlayerName);
         assert Collections.frequency(allNamesInUse, pPlayerName) == 1;
 
-        int tmpIndex = 
-        aColors.set(tmpIndex, pColor);
+        int tmpIndex = allNamesInUse.indexOf(pPlayerName);
+        aPlayers.get(tmpIndex).setColor(pPlayerColor);
         for (IPlayerObserver observer : aPlayerObservers) {
-            observer.colorIsSet(pColor, pPlayerName);
+            observer.colorIsSet(pPlayerColor, pPlayerName);
         }
         for (IContinue observer : aContinueObservers) {
             observer.setVisibility();
         }
 
-        System.out.println(String.format("Setting color Player %s to %s", pPlayerName, pColor));
+        System.out.println(String.format("Setting color Player %s to %s", pPlayerName, pPlayerColor.getColorName()));
 
-        System.out.println(aColors);
     }
 
     @Override
@@ -172,7 +171,7 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
     @Override
     public boolean validateColorName(String pColorName) {
         // Give the parser a list of all currently used names as well as the name the input wants to set
-        List<String> allColorNamesInUse = aPlayers.stream().map(p -> p.getColor().getColorName()).toList();
+        List<String> allColorNamesInUse = getCurrentColorNames();
         return aParser.validateColorName(allColorNamesInUse, pColorName);
     }
 
