@@ -10,16 +10,16 @@ import java.util.regex.Pattern;
 public class InitializerParser implements IParser {
 
     @Override
-    public boolean validatePlayerName(List<String> pPlayers, String pPlayerName) {
-        assert pPlayerName != null;
+    public boolean validatePlayerName(List<String> pNamesInUse, String pName) {
+        assert pName != null;
 
         // only accept a-zA-Z
         Pattern patternLetters = Pattern.compile("^[a-zA-Z0-9\s]+$");
-        Matcher matcherLetters = patternLetters.matcher(pPlayerName);
+        Matcher matcherLetters = patternLetters.matcher(pName);
         if (!matcherLetters.find()) {return false;}
 
         // Check if any player has the same name yet
-        return !pPlayers.contains(pPlayerName);
+        return !pNamesInUse.contains(pName);
     }
 
     @Override

@@ -101,12 +101,15 @@ public class HelloApplication extends Application {
             this.setTitle("Second Stage");
 
             // Fetch all currently registered players
-            List<String> currentPlayerNames = aInitializer.getPlayers();
+            List<Player> currentPlayers = aInitializer.getPlayers();
 
             // Create Player Color Pickers
             int tmpRowCt = 0;
-            for (String name : currentPlayerNames) {
-                ISetter cs = new ColorSetter(aInitializer, name);
+            for (Player player : currentPlayers) {
+                String playerName = player.getName();
+                PlayerColor playerColor = player.getColor();
+                String playerColorName = playerColor.getColorName();
+                ISetter cs = new ColorSetter(aInitializer, playerName);
                 aRoot.add((Parent) cs, 0, tmpRowCt);
                 tmpRowCt++;
             }
@@ -209,7 +212,7 @@ public class HelloApplication extends Application {
             // Add label explaining
             Label labelExplanation = new Label();
             labelExplanation.setText(
-                    String.format("This is the initial grid configuration, based on the chosen size and a random start pattern")
+                    String.format("The System chooses an initial symmetric configuration for both players ...")
             );
             aRoot.add(labelExplanation, 0, 0);
 
@@ -265,6 +268,7 @@ public class HelloApplication extends Application {
                     tmpGrid.getCell(0,0).instantBirth(PlayerColor.BLUE);
                     aInitialGrid = tmpGrid;
                     return null;
+
             }
         }
         GUIInitializer guiInit = new testGUIInitializer(initParser) {};

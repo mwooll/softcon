@@ -121,7 +121,7 @@ public class GameModel implements GameModelView {
         int tmpIndex = aPlayers.indexOf(pPlayerName);
         aColors.set(tmpIndex, pColor);
         for (IPlayerObserver observer : aPlayersObservers) {
-            observer.colorIsSet(pColor, pPlayerName);
+            observer.colorIsSet(null, pPlayerName);
         }
         for (IContinue observer : aContinueObservers) {
             observer.setVisibility();

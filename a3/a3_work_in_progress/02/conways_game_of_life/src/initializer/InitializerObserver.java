@@ -1,10 +1,15 @@
 package initializer;
 
 import javafx.scene.paint.Color;
+import player.PlayerColor;
+
+import java.util.List;
 
 public interface InitializerObserver {
 
     boolean validatePlayerName(String pPlayerName);
+
+    boolean validateColorName(String pColorName);
 
     boolean validateWidth(String pWidth);
 
@@ -12,7 +17,7 @@ public interface InitializerObserver {
 
     void setPlayerName(String pPlayerName, int pIndex);
 
-    void setPlayerColor(Color pColor, String pPlayerName);
+    void setPlayerColor(PlayerColor pPlayerColor, String pPlayerName);
 
     void setGridDimension(int pValue, String pIdentifier);
 

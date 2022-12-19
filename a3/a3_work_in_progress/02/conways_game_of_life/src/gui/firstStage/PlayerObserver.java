@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import player.PlayerColor;
 
 public class PlayerObserver extends Parent implements IPlayerObserver {
 
@@ -38,7 +39,7 @@ public class PlayerObserver extends Parent implements IPlayerObserver {
     }
 
     @Override
-    public void colorIsSet(Color pColor, String pName) {};
+    public void colorIsSet(PlayerColor pPlayerColor, String pName) {};
 
 
 }
