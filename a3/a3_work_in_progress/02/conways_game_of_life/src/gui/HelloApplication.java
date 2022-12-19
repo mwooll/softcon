@@ -4,6 +4,7 @@ import gamemodel.GameModel;
 
 import cell.*;
 
+import gamemodel.GameModelNew;
 import gui.firstStage.*;
 import gui.secondStage.*;
 import gui.thirdStage.*;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
+import parser.GameParser;
 import parser.IParser;
 import parser.InitializerParser;
 import player.Player;
@@ -252,6 +254,41 @@ public class HelloApplication extends Application {
         }
 
     }
+
+    public static class FifthStage extends Stage {
+
+        private final GameModelNew aGameModel;
+
+        public FifthStage(GUIInitializer pInitializer) {
+            aGameModel = new GameModelNew(pInitializer, new GameParser());
+
+            GridPane aRoot = new GridPane();
+
+            aRoot.setGridLinesVisible(true);
+            aRoot.setStyle("-fx-background-color: white");
+            aRoot.setHgap(MARGIN_OUTER);
+            aRoot.setVgap(MARGIN_OUTER);
+            aRoot.setPadding(new Insets(MARGIN_OUTER));
+
+            this.setTitle("Fifth Stage");
+
+            // Add label explaining
+            Label labelExplanation = new Label();
+            labelExplanation.setText(
+                    String.format("Lets start the game!")
+            );
+            aRoot.add(labelExplanation, 0, 0);
+
+
+            // fetch the grid
+
+
+        }
+
+
+
+    }
+
 
     @Override
     public void start(Stage stage) {
