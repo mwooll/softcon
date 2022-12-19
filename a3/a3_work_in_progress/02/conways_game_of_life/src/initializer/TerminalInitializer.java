@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class TerminalInitializer implements Initializer{
     @Override
     public String choosePlayerName() {
-
         return null;
     }
 
