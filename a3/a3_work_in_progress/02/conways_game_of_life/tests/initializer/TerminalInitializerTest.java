@@ -1,7 +1,8 @@
 package initializer;
 
-import org.junit.jupiter.api.Test;
+import player.PlayerColor;
 
+import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,23 +33,23 @@ public class TerminalInitializerTest {
         assertEquals(testName, playerName);
     }
 
-    /*
     @Test
     public void testChoosePlayerColorRed() {
-        String testColor = "Red";
-        PlayerColor playerColor = testInitializer.choosePlayerColor();
-        System.setIn(new ByteArrayInputStream((testColor.getBytes())));
+        String redString = "Red";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(redString.getBytes());
+        TerminalInitializer colorInitializer = new TerminalInitializer(inputStream, System.out);
+        PlayerColor redColor = colorInitializer.choosePlayerColor();
 
-        assertEquals(PlayerColor.RED, playerColor);
+        assertEquals(PlayerColor.RED, redColor);
     }
 
     @Test
     public void testChoosePlayerColorBlue() {
-        String testColor = "Blue";
-        PlayerColor playerColor = testInitializer.choosePlayerColor();
-        System.setIn(new ByteArrayInputStream((testColor.getBytes())));
+        String blueString = "Blue";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(blueString.getBytes());
+        TerminalInitializer colorInitializer = new TerminalInitializer(inputStream, System.out);
+        PlayerColor blueColor = colorInitializer.choosePlayerColor();
 
-        assertEquals(PlayerColor.BLUE, playerColor);
+        assertEquals(PlayerColor.BLUE, blueColor);
     }
-    */
 }
