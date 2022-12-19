@@ -1,13 +1,13 @@
 package cell;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GridTest {
 
@@ -111,6 +111,56 @@ public class GridTest {
         }
         assertEquals(1, actualColors2.size());
         assertEquals("White", actualColors2.get(0));
+    }
 
+    @Test
+    public void testGetNeighbours1x1() {
+        int testWidth = 1;
+        int testHeight = 1;
+        Grid testGrid = new Grid(testWidth, testHeight);
+
+        ArrayList<Cell> neighbors = testGrid.getNeighbors(0, 0);
+        assertEquals(0, neighbors.size());
+    }
+
+    @Test
+    public void testGetNeighbours2x2() {
+        int testWidth = 2;
+        int testHeight = 2;
+        Grid testGrid = new Grid(testWidth, testHeight);
+
+        ArrayList<Cell> upperLeft = testGrid.getNeighbors(0, 0);
+        assertEquals(3, upperLeft.size());
+
+        ArrayList<Cell> upperRight = testGrid.getNeighbors(0, 1);
+        assertEquals(3, upperRight.size());
+
+        ArrayList<Cell> lowerLeft = testGrid.getNeighbors(1, 0);
+        assertEquals(3, lowerLeft.size());
+
+        ArrayList<Cell> lowerRight = testGrid.getNeighbors(1, 1);
+        assertEquals(3, lowerRight.size());
+    }
+
+    @Test
+    public void testGetNeighbours3x3() {
+        int testWidth = 3;
+        int testHeight = 3;
+        Grid testGrid = new Grid(testWidth, testHeight);
+
+        ArrayList<Cell> middleLeft = testGrid.getNeighbors(1, 0);
+        assertEquals(3, middleLeft.size());
+
+        ArrayList<Cell> middleRight = testGrid.getNeighbors(1, 2);
+        assertEquals(3, middleRight.size());
+
+        ArrayList<Cell> upperMiddle = testGrid.getNeighbors(0, 1);
+        assertEquals(3, upperMiddle.size());
+
+        ArrayList<Cell> lowerMiddle = testGrid.getNeighbors(2, 1);
+        assertEquals(3, lowerMiddle.size());
+
+        ArrayList<Cell> middleMiddle = testGrid.getNeighbors(1, 1);
+        assertEquals(8, lowerMiddle.size());
     }
 }
