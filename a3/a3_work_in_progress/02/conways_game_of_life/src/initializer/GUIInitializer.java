@@ -35,7 +35,20 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
         aParser = pParser;
     }
 
-    public List<Player> getPlayers() {return Collections.unmodifiableList(aPlayers);}
+    /**
+     * Return a list of all Players
+     * @return AS A LIST
+     */
+    public List<Player> getPlayers() {
+        List<Player> tmpList = new ArrayList<>();
+        aPlayers.stream().forEach(p -> tmpList.add(p));
+        return tmpList;
+    }
+
+    /**
+     * Return all currently used player names, as an unmodifiable list
+     * @return UNMODIFIABLE List
+     */
     private List<String> getCurrentPlayerNames() {return aPlayers.stream().map(Player::getName).toList();}
 
     private List<PlayerColor> getCurrentColors() {return aPlayers.stream().map(Player::getColor).toList();}
