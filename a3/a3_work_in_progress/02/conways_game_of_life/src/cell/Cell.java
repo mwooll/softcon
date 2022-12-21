@@ -27,6 +27,7 @@ public class Cell implements ICellObservable {
      */
     public void instantDeath() {
         currentState = PlayerColor.WHITE;
+        notifyObserver();
     }
 
     /**
@@ -43,7 +44,9 @@ public class Cell implements ICellObservable {
      * @param newState != PlayerColor.WHITE
      */
     public void instantBirth(PlayerColor newState) {
+
         currentState = newState;
+        notifyObserver();
     }
 
     /**
@@ -69,6 +72,7 @@ public class Cell implements ICellObservable {
     public void updateState() {
         currentState = nextState;
         resetChangedState();
+        notifyObserver();
     }
 
     @Override
@@ -78,6 +82,6 @@ public class Cell implements ICellObservable {
 
     @Override
     public void notifyObserver() {
-
+        if (aObserver != null) {aObserver.stateChanged();}
     }
 }

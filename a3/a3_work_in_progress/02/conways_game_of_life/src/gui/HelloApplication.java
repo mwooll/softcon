@@ -1,18 +1,17 @@
 package gui;
 
-import gamemodel.GameModel;
-
 import cell.*;
 
 import gamemodel.GameModelNew;
-import gui.fifthStage.cellObserver;
+import gamemodel.ITurnObserver;
+import gui.fifthStage.CellObserver;
+import gui.fifthStage.CellSetter;
 import gui.firstStage.*;
 import gui.secondStage.*;
 import gui.thirdStage.*;
 import gui.fourthStage.*;
 
 import initializer.GUIInitializer;
-import initializer.Initializer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -28,7 +27,6 @@ import parser.InitializerParser;
 import player.Player;
 import player.PlayerColor;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -285,21 +283,27 @@ public class HelloApplication extends Application {
             );
             aRoot.getChildren().add(labelExplanation);
 
-            // Draw the Grid
+            // play one turn
+            aGameModel.playTurn();
+            ITurnObserver currentTurn = aGameModel.getCurrentTurn();
+
+            // Draw the Grid, add Cell observers, Cell setters
             GridPane aGridPane = new GridPane();
             int row_ct = 1;
             int col_ct = 0;
             for (Cell c : aGameModel.aGrid.getIterator()) {
-                ICellObserver cObserver = new cellObserver(c);
+                ICellObserver cObserver = new CellObserver(c);
+                ISetter cSetter = new CellSetter(currentTurn, c);
                 if (col_ct%aGameModel.aWidth == 0) {
                     row_ct++;
                     col_ct = 0;
                 }
                 aGridPane.add((Parent) cObserver, col_ct, row_ct);
+                aGridPane.add((Parent) cSetter, col_ct, row_ct);
                 col_ct ++;
             }
 
-            // Add GridPane outlines
+
 
 
             // Add Grid to VBox aRoot
@@ -329,7 +333,9 @@ public class HelloApplication extends Application {
 
             @Override
             public List<Player> getPlayers() {
-                return Arrays.asList(new Player("player1", PlayerColor.RED), new Player("player2", PlayerColor.BLUE));
+                return Arrays.asList(
+                        new Player("player1", PlayerColor.RED),
+                        new Player("player2", PlayerColor.BLUE));
             }
 
             @Override

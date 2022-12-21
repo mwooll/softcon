@@ -18,6 +18,9 @@ public class GameModelNew {
     public final Grid aGrid;
     private final IParser aParser;
 
+    private int aCurrentTurnIndexPlayer;
+    private Turn aCurrentTurn;
+
     private List<ICellObserver> aCellObservers;
 
     public GameModelNew (GUIInitializer pInitializer, IParser pParser) {
@@ -37,6 +40,10 @@ public class GameModelNew {
         aHeight = aGrid.getHeight();
         aWidth = aGrid.getWidth();
 
+        // Determine the turn of which player it is. Default the first one
+        // todo: Must be in alphabetical order
+        aCurrentTurnIndexPlayer = 0;
+
     }
 
     public void startGame() {
@@ -44,7 +51,16 @@ public class GameModelNew {
     }
 
     public void playTurn() {
+        aCurrentTurn = new Turn(aPlayers.get(aCurrentTurnIndexPlayer), aGrid);
+        if (aCurrentTurnIndexPlayer == 0) {
+            aCurrentTurnIndexPlayer = 1;
+        } else {
+            aCurrentTurnIndexPlayer = 0;
+        }
+    }
 
+    public Turn getCurrentTurn() {
+        return aCurrentTurn;
     }
 
 }

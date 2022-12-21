@@ -7,20 +7,19 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class cellObserver extends Parent implements ICellObserver {
+public class CellObserver extends Parent implements ICellObserver {
 
     private final int SIZE = 40;
-    private final Color aFillColor;
+    private final Rectangle rect;
     private final ICellObservable aObservable;
 
-    public cellObserver(ICellObservable pObservable) {
+    public CellObserver(ICellObservable pObservable) {
 
         aObservable = pObservable;
 
-        Rectangle rect = new Rectangle(SIZE, SIZE);
+        rect = new Rectangle(SIZE, SIZE);
         rect.setStroke(Color.BLACK);
-        aFillColor = pObservable.getState().getColorHex();
-        rect.setFill(aFillColor);
+        rect.setFill(aObservable.getState().getColorHex());
 
         VBox vbox = new VBox(rect);
         getChildren().add(vbox);
@@ -31,5 +30,6 @@ public class cellObserver extends Parent implements ICellObserver {
 
     @Override
     public void stateChanged() {
+        rect.setFill(aObservable.getState().getColorHex());
     }
 }
