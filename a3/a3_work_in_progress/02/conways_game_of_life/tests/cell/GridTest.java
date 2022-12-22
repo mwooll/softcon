@@ -23,6 +23,19 @@ public class GridTest {
     }
 
     @Test
+    public void testCopyConstructor() {
+        int testWidth = 20;
+        int testHeight = 30;
+        Grid testGrid = new Grid(testWidth, testHeight);
+        testGrid.getCell(24, 12).instantBirth(PlayerColor.ORANGE);
+
+        Grid copyGrid = new Grid(testGrid);
+        assertEquals(testWidth, copyGrid.getWidth());
+        assertEquals(testHeight, copyGrid.getHeight());
+        assertEquals(PlayerColor.ORANGE, copyGrid.getCell(24, 12).getState());
+    }
+
+    @Test
     public void testGetCell() {
         int testWidth = 3;
         int testHeight = 2;
@@ -271,17 +284,18 @@ public class GridTest {
         // we hence create:
         //     _ b _
         //     _ _ y
-        //     _ b _
+        //     _ y _
         testGrid.getCell(1, 0).instantDeath();
+        testGrid.getCell(2, 1).instantBirth(PlayerColor.YELLOW);
 
         // now the next generation should look like:
         //     _ _ _
-        //     _ b y
+        //     _ y y
         //     _ _ _
         ArrayList<PlayerColor> newExpectedColors = new ArrayList<>(
                 Arrays.asList(
                         PlayerColor.WHITE, PlayerColor.WHITE, PlayerColor.WHITE,
-                        PlayerColor.WHITE, PlayerColor.BLUE, PlayerColor.YELLOW,
+                        PlayerColor.WHITE, PlayerColor.YELLOW, PlayerColor.YELLOW,
                         PlayerColor.WHITE, PlayerColor.WHITE, PlayerColor.WHITE
                 )
         );
