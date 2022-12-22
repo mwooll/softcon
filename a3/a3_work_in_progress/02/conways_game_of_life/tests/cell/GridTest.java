@@ -142,6 +142,8 @@ public class GridTest {
         assertEquals(3, lowerRight.size());
     }
 
+
+
     @Test
     public void testGetNeighbours3x3() {
         int testWidth = 3;
@@ -149,18 +151,20 @@ public class GridTest {
         Grid testGrid = new Grid(testWidth, testHeight);
 
         ArrayList<Cell> middleLeft = testGrid.getNeighbors(1, 0);
-        assertEquals(3, middleLeft.size());
+        assertEquals(5, middleLeft.size());
 
         ArrayList<Cell> middleRight = testGrid.getNeighbors(1, 2);
-        assertEquals(3, middleRight.size());
+        assertEquals(5, middleRight.size());
 
         ArrayList<Cell> upperMiddle = testGrid.getNeighbors(0, 1);
-        assertEquals(3, upperMiddle.size());
+        assertEquals(5, upperMiddle.size());
 
         ArrayList<Cell> lowerMiddle = testGrid.getNeighbors(2, 1);
-        assertEquals(3, lowerMiddle.size());
+        assertEquals(5, lowerMiddle.size());
+
+
 
         ArrayList<Cell> middleMiddle = testGrid.getNeighbors(1, 1);
-        assertEquals(8, lowerMiddle.size());
+        assertEquals(8, middleMiddle.size());
     }
 }
