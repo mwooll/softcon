@@ -176,25 +176,25 @@ public class Grid {
                     }
                 }
                 //update next state of every Cell
-                if(aGrid.get(column).get(row).isAlive()){
+                if(getCell(row, column).isAlive()){
                     if(neighbourColors.size() != 2 && neighbourColors.size() != 3){
-                        aGrid.get(column).get(row).die();
+                        getCell(row, column).die();
                     }
                     else{
-                        aGrid.get(column).get(row).arrive(aGrid.get(column).get(row).getState());
+                        getCell(row, column).arrive(getCell(row, column).getState());
                     }
                 }
                 else{
                     if(neighbourColors.size() == 3){
                         if(neighbourColors.get(0) == neighbourColors.get(1) || neighbourColors.get(0) == neighbourColors.get(2)){
-                            aGrid.get(column).get(row).arrive(neighbourColors.get(0));
+                            getCell(row, column).arrive(neighbourColors.get(0));
                         }
                         else{
-                            aGrid.get(column).get(row).arrive(neighbourColors.get(1));
+                            getCell(row, column).arrive(neighbourColors.get(1));
                         }
                     }
                     else{
-                        aGrid.get(column).get(row).arrive(aGrid.get(column).get(row).getState());
+                        getCell(row, column).arrive(getCell(row, column).getState());
                     }
                 }
 
@@ -203,7 +203,7 @@ public class Grid {
         //update all states
         for (int row = 0; row < aHeight; row++) {
             for (int column = 0; column < aWidth; column++) {
-                aGrid.get(column).get(row).updateState();
+                aGrid.get(row).get(column).updateState();
             }
         }
     }
@@ -212,7 +212,7 @@ public class Grid {
      * @return an ArrayList of all Neighbors of the cell
      */
     public ArrayList<Cell> getNeighbors(int aCellHeight, int aCellWidth) {
-        ArrayList<Cell> aNeighbors = new ArrayList<Cell>();
+        ArrayList<Cell> aNeighbors = new ArrayList<>();
         if (aCellHeight != 0) {
             for (int column = max(0, aCellWidth - 1); column <= min(aWidth - 1, aCellWidth + 1); column++) {
                 aNeighbors.add(aGrid.get(aCellHeight-1).get(column));
