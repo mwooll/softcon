@@ -2,7 +2,7 @@ package cell;
 
 import java.util.*;
 
-//import static java.lang.Math.min;
+import static java.lang.Math.min;
 import static java.lang.Math.max;
 
 public class Grid {
@@ -172,19 +172,19 @@ public class Grid {
     public ArrayList<Cell> getNeighbors(int aCellHeight, int aCellWidth) {
         ArrayList<Cell> aNeighbors = new ArrayList<Cell>();
         if (aCellHeight != 0) {
-            for (int i = max(0, aCellWidth - 1); i <= max(aWidth - 1, aCellWidth + 1); i++) {
-                aNeighbors.add(aGrid.get(aCellHeight-1).get(i));
+            for (int column = max(0, aCellWidth - 1); column <= min(aWidth - 1, aCellWidth + 1); column++) {
+                aNeighbors.add(aGrid.get(aCellHeight-1).get(column));
             }
         }
         if (aCellHeight != aHeight-1){
-            for (int i = max(0, aCellWidth - 1); i <= max(aWidth - 1, aCellWidth + 1); i++) {
-                aNeighbors.add(aGrid.get(aCellHeight+1).get(i));
+            for (int column = max(0, aCellWidth - 1); column <= min(aWidth - 1, aCellWidth + 1); column++) {
+                aNeighbors.add(aGrid.get(aCellHeight+1).get(column));
             }
         }
         if (aCellWidth > 0){
             aNeighbors.add(aGrid.get(aCellHeight).get(aCellWidth-1));
         }
-        if (aCellWidth < 2*aWidth - 1){
+        if (aCellWidth < aWidth - 1){
             aNeighbors.add(aGrid.get(aCellHeight).get(aCellWidth+1));
         }
         return aNeighbors;
