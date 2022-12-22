@@ -9,9 +9,12 @@ public class Cell implements ICellObservable {
     private boolean changedState;
     private ICellObserver aObserver;
 
+    private boolean lives;
+
     public Cell() {
         currentState = PlayerColor.WHITE;
         changedState = false;
+        lives = false;
     }
 
     /**
@@ -28,6 +31,7 @@ public class Cell implements ICellObservable {
     public void instantDeath() {
         currentState = PlayerColor.WHITE;
         notifyObserver();
+        lives = false;
     }
 
     /**
@@ -47,6 +51,7 @@ public class Cell implements ICellObservable {
 
         currentState = newState;
         notifyObserver();
+        lives = true;
     }
 
     /**
@@ -60,6 +65,10 @@ public class Cell implements ICellObservable {
     public boolean hasStateChanged() { return changedState; }
 
     /**
+     * @return lives
+     */
+    public boolean isAlive(){ return lives;}
+    /**
      * @pre changedState == true
      */
     public void resetChangedState() {
@@ -71,6 +80,12 @@ public class Cell implements ICellObservable {
      */
     public void updateState() {
         currentState = nextState;
+        if (currentState == PlayerColor.WHITE) {
+            lives = false;
+        }
+        else{
+            lives = false;
+        }
         resetChangedState();
         notifyObserver();
     }

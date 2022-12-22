@@ -1,5 +1,7 @@
 package cell;
 
+import player.PlayerColor;
+
 import java.util.*;
 
 import static java.lang.Math.min;
@@ -163,7 +165,41 @@ public class Grid {
 
 
     public void generateNextGeneration() {
+        //iterating through grid
+        for (int row = 0; row < aHeight; row++){
+            for (int column = 0; column < aWidth; column++){
+                //for each Cell make a list of non-white neighbour colors
+                List<PlayerColor> neighbourColors = new ArrayList<>();
+                for (Cell aCell: getNeighbors(row,column)){
+                    if(aCell.isAlive()) {
+                        neighbourColors.add(aCell.getState());
+                    }
+                }
+                //update next state of every Cell
+                if(aGrid.get(column).get(row).isAlive()){
+                    if(neighbourColors.size() != 2 && neighbourColors.size() != 3){
+                        aGrid.get(column).get(row).die();
+                    }
+                }
+                else{
+                    if(neighbourColors.size() == 3){
+                        if(neighbourColors.get(0) == neighbourColors.get(1) || neighbourColors.get(0) == neighbourColors.get(2)){
+                            aGrid.get(column).get(row).arrive(neighbourColors.get(0));
+                        }
+                        else{
+                            aGrid.get(column).get(row).arrive(neighbourColors.get(1));
+                        }
+                    }
+                }
 
+            }
+        }
+        //update all states
+        for (int row = 0; row < aHeight; row++) {
+            for (int column = 0; column < aWidth; column++) {
+                aGrid.get(column).get(row).updateState();
+            }
+        }
     }
     /**
      * @pre valid coordinates of a cell
