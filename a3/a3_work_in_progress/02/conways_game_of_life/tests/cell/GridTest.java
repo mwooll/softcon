@@ -2,6 +2,8 @@ package cell;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import player.Player;
+import player.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,6 +116,27 @@ public class GridTest {
     }
 
     @Test
+    public void testGenerateNextGeneration() {
+        int testWidth = 3;
+        int testHeight = 3;
+        Grid testGrid = new Grid(testWidth, testHeight);
+        testGrid.getCell(0, 0).instantBirth(player.PlayerColor.RED);
+        testGrid.getCell(1, 0).instantBirth(player.PlayerColor.RED);
+        testGrid.getCell(0, 1).instantBirth(player.PlayerColor.RED);
+
+        testGrid.generateNextGeneration();
+
+
+        PlayerColor middleMiddleColor = testGrid.getCell(1, 1).getState();
+        assertEquals(player.PlayerColor.RED, middleMiddleColor);
+
+        PlayerColor upperLeftColor = testGrid.getCell(0, 0).getState();
+        assertEquals(player.PlayerColor.RED, upperLeftColor);
+
+        PlayerColor lowerLeftColor = testGrid.getCell(2, 0).getState();
+        assertEquals(player.PlayerColor.WHITE, lowerLeftColor);
+    }
+    @Test
     public void testGetNeighbours1x1() {
         int testWidth = 1;
         int testHeight = 1;
@@ -142,13 +165,14 @@ public class GridTest {
         assertEquals(3, lowerRight.size());
     }
 
-
-
     @Test
     public void testGetNeighbours3x3() {
         int testWidth = 3;
         int testHeight = 3;
         Grid testGrid = new Grid(testWidth, testHeight);
+
+        ArrayList<Cell> upperLeft = testGrid.getNeighbors(0, 0);
+        assertEquals(3, upperLeft.size());
 
         ArrayList<Cell> middleLeft = testGrid.getNeighbors(1, 0);
         assertEquals(5, middleLeft.size());

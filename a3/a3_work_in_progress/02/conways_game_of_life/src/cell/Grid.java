@@ -180,6 +180,9 @@ public class Grid {
                     if(neighbourColors.size() != 2 && neighbourColors.size() != 3){
                         aGrid.get(column).get(row).die();
                     }
+                    else{
+                        aGrid.get(column).get(row).arrive(aGrid.get(column).get(row).getState());
+                    }
                 }
                 else{
                     if(neighbourColors.size() == 3){
@@ -189,6 +192,9 @@ public class Grid {
                         else{
                             aGrid.get(column).get(row).arrive(neighbourColors.get(1));
                         }
+                    }
+                    else{
+                        aGrid.get(column).get(row).arrive(aGrid.get(column).get(row).getState());
                     }
                 }
 
