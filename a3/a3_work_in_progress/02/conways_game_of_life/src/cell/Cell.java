@@ -84,7 +84,7 @@ public class Cell implements ICellObservable {
             lives = false;
         }
         else{
-            lives = false;
+            lives = true;
         }
         resetChangedState();
         notifyObserver();

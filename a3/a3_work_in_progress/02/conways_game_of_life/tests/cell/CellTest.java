@@ -15,6 +15,7 @@ public class CellTest {
         Cell testCell = new Cell();
         assertEquals(PlayerColor.WHITE, testCell.getState());
         assertFalse(testCell.hasStateChanged());
+        assertFalse(testCell.isAlive());
     }
 
     @Test
@@ -22,6 +23,7 @@ public class CellTest {
         aTestCell.instantBirth(aTestColor);
         assertEquals(aTestColor, aTestCell.getState());
         assertFalse(aTestCell.hasStateChanged());
+        assertTrue(aTestCell.isAlive());
     }
 
     @Test
@@ -30,6 +32,7 @@ public class CellTest {
         aTestCell.instantDeath();
         assertEquals(PlayerColor.WHITE, aTestCell.getState());
         assertFalse(aTestCell.hasStateChanged());
+        assertFalse(aTestCell.isAlive());
     }
 
     @Test
@@ -37,6 +40,7 @@ public class CellTest {
         aTestCell.arrive(aTestColor);
         assertEquals(PlayerColor.WHITE, aTestCell.getState());
         assertTrue(aTestCell.hasStateChanged());
+        assertFalse(aTestCell.isAlive());
     }
 
     @Test
@@ -45,6 +49,7 @@ public class CellTest {
         aTestCell.die();
         assertEquals(aTestColor, aTestCell.getState());
         assertTrue(aTestCell.hasStateChanged());
+        assertTrue(aTestCell.isAlive());
     }
 
     @Test
@@ -60,6 +65,7 @@ public class CellTest {
         aTestCell.updateState();
         assertEquals(aTestColor, aTestCell.getState());
         assertFalse(aTestCell.hasStateChanged());
+        assertTrue(aTestCell.isAlive());
     }
 
     @Test
@@ -70,5 +76,6 @@ public class CellTest {
         aTestCell.updateState();
         assertEquals(PlayerColor.WHITE, aTestCell.getState());
         assertFalse(aTestCell.hasStateChanged());
+        assertFalse(aTestCell.isAlive());
     }
 }
