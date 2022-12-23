@@ -34,7 +34,7 @@ public class TerminalInitializer implements Initializer{
     @Override
     public String choosePlayerName() {
 
-        aPrintStream.println("Please enter the name of the player ");
+        aPrintStream.println("Please enter the name of the player");
         aPrintStream.println("Only use a-z A-Z and numbers");
         return aScanner.nextLine();
     }
@@ -67,6 +67,30 @@ public class TerminalInitializer implements Initializer{
     @Override
     public ArrayList<Integer> chooseGridDimensions() {
         return null;
+    }
+
+    public int chooseGridDimensionsHeight() {
+        while(true) {
+            aPrintStream.println("Please choose the height for the grid");
+            String answer = aScanner.nextLine();
+            try {
+                return Integer.parseInt(answer);
+            } catch (Exception e) {
+                aPrintStream.println(answer + " is not a number. Please try again.");
+            }
+        }
+    }
+
+    public int chooseGridDimensionsWidth() {
+        while(true) {
+            aPrintStream.println("Please choose the width for the grid");
+            String answer = aScanner.nextLine();
+            try {
+                return Integer.parseInt(answer);
+            } catch (Exception e) {
+                aPrintStream.println(answer + " is not a number. Please try again.");
+            }
+        }
     }
 
     @Override
