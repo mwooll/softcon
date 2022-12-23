@@ -1,6 +1,5 @@
 package parser;
 
-import cell.Cell;
 import player.PlayerColor;
 
 import java.util.List;
@@ -28,5 +27,5 @@ public class GameParser implements IParser {
     }
 
     @Override
-    public boolean validateCellInGrid(int pHeight, int pWidth) { return false; };
+    public boolean validateCellInGrid(cell.Grid pGrid, int pHeight, int pWidth) { return false; };
 }
