@@ -44,6 +44,7 @@ public enum PlayerColor {
 
         return availableColors;
     }
+
     public static String getAvailableColorsAsString() {
         return getAvailableColors().toString();
     }

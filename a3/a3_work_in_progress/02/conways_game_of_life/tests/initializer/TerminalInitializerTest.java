@@ -5,14 +5,14 @@ import player.PlayerColor;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class TerminalInitializerTest {
 
 
     @Test
-    public void testChoosePlayerNameOneTry() {
+    public void testChoosePlayerName() {
         String testName = "Tester";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(testName.getBytes());
         TerminalInitializer nameInitializer = new TerminalInitializer(inputStream, System.out);
@@ -22,34 +22,92 @@ public class TerminalInitializerTest {
     }
 
     @Test
-    public void testChoosePlayerNameTwoTries() {
-        String badName = "%badName";
-        String testName = "Tester";
-        String testStream =  badName + "\n" + testName;
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(testStream.getBytes());
-        TerminalInitializer nameInitializer = new TerminalInitializer(inputStream, System.out);
-        String playerName = nameInitializer.choosePlayerName();
+    public void testChoosePlayerColorCamelCasing() {
+        String colorString = "Red";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(colorString.getBytes());
+        TerminalInitializer colorInitializer = new TerminalInitializer(inputStream, System.out);
+        PlayerColor chosenColor = colorInitializer.choosePlayerColor();
 
-        assertEquals(testName, playerName);
+        assertEquals(PlayerColor.RED, chosenColor);
     }
 
     @Test
-    public void testChoosePlayerColorRed() {
-        String redString = "Red";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(redString.getBytes());
+    public void testChoosePlayerColorAllLowerCase() {
+        String colorString = "blue";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(colorString.getBytes());
         TerminalInitializer colorInitializer = new TerminalInitializer(inputStream, System.out);
-        PlayerColor redColor = colorInitializer.choosePlayerColor();
+        PlayerColor chosenColor = colorInitializer.choosePlayerColor();
 
-        assertEquals(PlayerColor.RED, redColor);
+        assertEquals(PlayerColor.BLUE, chosenColor);
     }
 
     @Test
-    public void testChoosePlayerColorBlue() {
-        String blueString = "Blue";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(blueString.getBytes());
+    public void testChoosePlayerColorAllUpperCase() {
+        String colorString = "GREEN";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(colorString.getBytes());
         TerminalInitializer colorInitializer = new TerminalInitializer(inputStream, System.out);
-        PlayerColor blueColor = colorInitializer.choosePlayerColor();
+        PlayerColor chosenColor = colorInitializer.choosePlayerColor();
 
-        assertEquals(PlayerColor.BLUE, blueColor);
+        assertEquals(PlayerColor.GREEN, chosenColor);
+    }
+
+    @Test
+    public void testChoosePlayerColorCapslockCamel() {
+        String colorString = "oRANGE";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(colorString.getBytes());
+        TerminalInitializer colorInitializer = new TerminalInitializer(inputStream, System.out);
+        PlayerColor chosenColor = colorInitializer.choosePlayerColor();
+
+        assertEquals(PlayerColor.ORANGE, chosenColor);
+    }
+
+    @Test
+    public void testChoosePlayerColorReversedCamel() {
+        String colorString = "magentA";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(colorString.getBytes());
+        TerminalInitializer colorInitializer = new TerminalInitializer(inputStream, System.out);
+        PlayerColor chosenColor = colorInitializer.choosePlayerColor();
+
+        assertEquals(PlayerColor.MAGENTA, chosenColor);
+    }
+
+    @Test
+    public void testChoosePlayerColorStrokeCasing() {
+        String colorString = "yElLoW";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(colorString.getBytes());
+        TerminalInitializer colorInitializer = new TerminalInitializer(inputStream, System.out);
+        PlayerColor chosenColor = colorInitializer.choosePlayerColor();
+
+        assertEquals(PlayerColor.YELLOW, chosenColor);
+    }
+
+    @Test
+    public void testChoosePlayerColorRejectWhite() {
+        String colorString = "white\nOrange";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(colorString.getBytes());
+        TerminalInitializer colorInitializer = new TerminalInitializer(inputStream, System.out);
+        PlayerColor chosenColor = colorInitializer.choosePlayerColor();
+
+        assertEquals(PlayerColor.ORANGE, chosenColor);
+    }
+
+    @Test
+    public void testChoosePlayerColorRejectBlack() {
+        String colorString = "BLACK\ngreen";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(colorString.getBytes());
+        TerminalInitializer colorInitializer = new TerminalInitializer(inputStream, System.out);
+        PlayerColor chosenColor = colorInitializer.choosePlayerColor();
+
+        assertEquals(PlayerColor.GREEN, chosenColor);
+    }
+
+    @Test
+    public void testChoosePlayerColorRejectNonSense() {
+        String colorString = "uisuasudf\nMAGENTA";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(colorString.getBytes());
+        TerminalInitializer colorInitializer = new TerminalInitializer(inputStream, System.out);
+        PlayerColor chosenColor = colorInitializer.choosePlayerColor();
+
+        assertEquals(PlayerColor.MAGENTA, chosenColor);
     }
 }
