@@ -1,7 +1,6 @@
 package player;
 
 import javafx.scene.paint.Color;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +29,19 @@ public enum PlayerColor {
     public Color getColorHex() { return aColorHex; }
     public char getColorSymbol() { return aColorSymbol; }
 
-    public static List<PlayerColor> getAvailableColors() {
-        List<PlayerColor> availableColors = new ArrayList<>();
+    public static List<PlayerColor> getAllColors() {
+        List<PlayerColor> allColors = new ArrayList<>();
         for(PlayerColor color: PlayerColor.values()) {
-            availableColors.add(color);
+            allColors.add(color);
         }
+        return allColors;
+    }
+
+    public static List<PlayerColor> getAvailableColors() {
+        List<PlayerColor> availableColors = getAllColors();
+        availableColors.remove(PlayerColor.WHITE);
+        availableColors.remove(PlayerColor.BLACK);
+
         return availableColors;
     }
     public static String getAvailableColorsAsString() {
