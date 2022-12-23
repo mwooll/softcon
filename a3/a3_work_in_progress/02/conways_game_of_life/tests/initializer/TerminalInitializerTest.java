@@ -9,6 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class TerminalInitializerTest {
+    private final int maxHeight = 20;
+    private final int minHeight = 1;
+    private final int maxWidth = 20;
+    private final int minWidth = 1;
+
     @Test
     public void testChoosePlayerName() {
         String testName = "Tester";
@@ -120,41 +125,32 @@ public class TerminalInitializerTest {
     }
 
     @Test
-    public void testChooseGridDimensionHeightPositive() {
+    public void testChooseGridDimensionHeightValid() {
         String testHeight = "10";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(testHeight.getBytes());
         TerminalInitializer dimensionInitializer = new TerminalInitializer(inputStream, System.out);
-        int GridHeight = dimensionInitializer.chooseGridDimensionHeight();
+        int GridHeight = dimensionInitializer.chooseGridDimensionHeight(maxHeight, minHeight);
 
         assertEquals(10, GridHeight);
     }
 
     @Test
-    public void testChooseGridDimensionHeightNegative() {
-        String testHeight = "-20";
+    public void testChooseGridDimensionHeightRejectOutOfRange() {
+        String testHeight = "100\n10";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(testHeight.getBytes());
         TerminalInitializer dimensionInitializer = new TerminalInitializer(inputStream, System.out);
-        int GridHeight = dimensionInitializer.chooseGridDimensionHeight();
+        int GridHeight = dimensionInitializer.chooseGridDimensionHeight(maxHeight, minHeight);
 
-        assertEquals(-20, GridHeight);
+        assertEquals(10, GridHeight);
     }
 
-    @Test
-    public void testChooseGridDimensionHeightZero() {
-        String testHeight = "0";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(testHeight.getBytes());
-        TerminalInitializer dimensionInitializer = new TerminalInitializer(inputStream, System.out);
-        int GridHeight = dimensionInitializer.chooseGridDimensionHeight();
-
-        assertEquals(0, GridHeight);
-    }
 
     @Test
     public void testChooseGridDimensionHeightRejectFloat() {
         String testHeight = "2.5\n10";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(testHeight.getBytes());
         TerminalInitializer dimensionInitializer = new TerminalInitializer(inputStream, System.out);
-        int GridHeight = dimensionInitializer.chooseGridDimensionHeight();
+        int GridHeight = dimensionInitializer.chooseGridDimensionHeight(maxHeight, minHeight);
 
         assertEquals(10, GridHeight);
     }
@@ -164,7 +160,7 @@ public class TerminalInitializerTest {
         String testHeight = "dog\n10";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(testHeight.getBytes());
         TerminalInitializer dimensionInitializer = new TerminalInitializer(inputStream, System.out);
-        int GridHeight = dimensionInitializer.chooseGridDimensionHeight();
+        int GridHeight = dimensionInitializer.chooseGridDimensionHeight(maxHeight, minHeight);
 
         assertEquals(10, GridHeight);
     }
@@ -174,7 +170,7 @@ public class TerminalInitializerTest {
         String testHeight = "10dogs\n10";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(testHeight.getBytes());
         TerminalInitializer dimensionInitializer = new TerminalInitializer(inputStream, System.out);
-        int GridHeight = dimensionInitializer.chooseGridDimensionHeight();
+        int GridHeight = dimensionInitializer.chooseGridDimensionHeight(maxHeight, minHeight);
 
         assertEquals(10, GridHeight);
     }
@@ -184,37 +180,18 @@ public class TerminalInitializerTest {
         String testWidth = "10";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(testWidth.getBytes());
         TerminalInitializer dimensionInitializer = new TerminalInitializer(inputStream, System.out);
-        int GridWidth = dimensionInitializer.chooseGridDimensionWidth();
+        int GridWidth = dimensionInitializer.chooseGridDimensionWidth(maxWidth, minWidth);
 
         assertEquals(10, GridWidth);
     }
 
-    @Test
-    public void testChooseGridDimensionWidthNegative() {
-        String testWidth = "-20";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(testWidth.getBytes());
-        TerminalInitializer dimensionInitializer = new TerminalInitializer(inputStream, System.out);
-        int GridWidth = dimensionInitializer.chooseGridDimensionWidth();
-
-        assertEquals(-20, GridWidth);
-    }
-
-    @Test
-    public void testChooseGridDimensionWidthZero() {
-        String testWidth = "0";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(testWidth.getBytes());
-        TerminalInitializer dimensionInitializer = new TerminalInitializer(inputStream, System.out);
-        int GridWidth = dimensionInitializer.chooseGridDimensionWidth();
-
-        assertEquals(0, GridWidth);
-    }
 
     @Test
     public void testChooseGridDimensionWidthRejectFloat() {
         String testWidth = "2.5\n10";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(testWidth.getBytes());
         TerminalInitializer dimensionInitializer = new TerminalInitializer(inputStream, System.out);
-        int GridWidth = dimensionInitializer.chooseGridDimensionWidth();
+        int GridWidth = dimensionInitializer.chooseGridDimensionWidth(maxWidth, minWidth);
 
         assertEquals(10, GridWidth);
     }
@@ -224,7 +201,7 @@ public class TerminalInitializerTest {
         String testWidth = "dog\n10";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(testWidth.getBytes());
         TerminalInitializer dimensionInitializer = new TerminalInitializer(inputStream, System.out);
-        int GridWidth = dimensionInitializer.chooseGridDimensionWidth();
+        int GridWidth = dimensionInitializer.chooseGridDimensionWidth(maxWidth, minWidth);
 
         assertEquals(10, GridWidth);
     }
@@ -234,7 +211,7 @@ public class TerminalInitializerTest {
         String testWidth = "10dogs\n10";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(testWidth.getBytes());
         TerminalInitializer dimensionInitializer = new TerminalInitializer(inputStream, System.out);
-        int GridWidth = dimensionInitializer.chooseGridDimensionWidth();
+        int GridWidth = dimensionInitializer.chooseGridDimensionWidth(maxWidth, minWidth);
 
         assertEquals(10, GridWidth);
     }
