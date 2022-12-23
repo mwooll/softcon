@@ -2,6 +2,9 @@ package player;
 
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum PlayerColor {
     BLUE("Blue", Color.BLUE, 'B'),
     RED("Red", Color.RED, 'R'),
@@ -26,4 +29,15 @@ public enum PlayerColor {
     public String getColorName() { return aColorName; }
     public Color getColorHex() { return aColorHex; }
     public char getColorSymbol() { return aColorSymbol; }
+
+    public static List<PlayerColor> getAvailableColors() {
+        List<PlayerColor> availableColors = new ArrayList<>();
+        for(PlayerColor color: PlayerColor.values()) {
+            availableColors.add(color);
+        }
+        return availableColors;
+    }
+    public static String getAvailableColorsAsString() {
+        return getAvailableColors().toString();
+    }
 }
