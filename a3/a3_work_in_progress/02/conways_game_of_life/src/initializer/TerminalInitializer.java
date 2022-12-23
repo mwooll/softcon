@@ -60,7 +60,7 @@ public class TerminalInitializer implements Initializer{
                     }
                 }
             }
-            aPrintStream.println("Color is not one of the available colors: " + colorList + ". Please choose another one.");
+            aPrintStream.println("Color is not one of the available colors: " + colorList + ". Please try again.");
         }
     }
 
@@ -69,7 +69,7 @@ public class TerminalInitializer implements Initializer{
         return null;
     }
 
-    public int chooseGridDimensionsHeight() {
+    public int chooseGridDimensionHeight() {
         while(true) {
             aPrintStream.println("Please choose the height for the grid");
             String answer = aScanner.nextLine();
@@ -81,7 +81,7 @@ public class TerminalInitializer implements Initializer{
         }
     }
 
-    public int chooseGridDimensionsWidth() {
+    public int chooseGridDimensionWidth() {
         while(true) {
             aPrintStream.println("Please choose the width for the grid");
             String answer = aScanner.nextLine();
