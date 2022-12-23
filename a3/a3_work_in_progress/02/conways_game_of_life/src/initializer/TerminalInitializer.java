@@ -6,6 +6,7 @@ import player.PlayerColor;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,23 +33,35 @@ public class TerminalInitializer implements Initializer{
     }
     @Override
     public String choosePlayerName() {
-        Pattern patternExpected = Pattern.compile("^[a-zA-Z0-9]+$");
 
-        while(true) {
-            aPrintStream.println("Please enter the name of the player ");
-            aPrintStream.println("Only use a-z A-Z and numbers");
-            String answer = aScanner.nextLine();
-            Matcher matcher = patternExpected.matcher(answer);
-
-            if (matcher.find()) {
-                return answer;
-            }
-        }
+        aPrintStream.println("Please enter the name of the player ");
+        aPrintStream.println("Only use a-z A-Z and numbers");
+        return aScanner.nextLine();
     }
 
     @Override
     public PlayerColor choosePlayerColor() {
-        return null;
+
+        String colorList = PlayerColor.getAvailableColorsAsString();
+        Pattern patternExpected = Pattern.compile(colorList, Pattern.CASE_INSENSITIVE);
+
+        while(true) {
+            aPrintStream.println("Please choose a color for this player");
+            aPrintStream.println("Available colors are " + colorList);
+            String answer = aScanner.nextLine().toUpperCase();
+            Matcher matcher = patternExpected.matcher(answer);
+
+            if (matcher.find()) {
+                String shortenedColorList = colorList.substring(1, colorList.length()-1);
+                String[] stringList = shortenedColorList.split(", ");
+                for (int index = 0; index < stringList.length-1; index++) {
+                    if (Objects.equals(stringList[index], answer)) {
+                        return PlayerColor.getAvailableColors().get(index);
+                    }
+                }
+            }
+            aPrintStream.println("Color is not one of the available colors: " + colorList + ". Please choose another one.");
+        }
     }
 
     @Override
