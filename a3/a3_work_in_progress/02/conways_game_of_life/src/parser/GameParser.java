@@ -28,7 +28,5 @@ public class GameParser implements IParser {
     }
 
     @Override
-    public boolean validateCell(Cell pCell) {
-        return true;
-    }
+    public boolean validateCellInGrid(int pHeight, int pWidth) { return false; };
 }

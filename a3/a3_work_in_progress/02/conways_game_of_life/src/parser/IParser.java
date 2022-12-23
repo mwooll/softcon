@@ -11,6 +11,6 @@ public interface IParser {
     boolean validateHeight(int pMaxHeight, int pMinHeight, String pHeight);
     boolean validateWidth(int pMaxWidth, int pMinWidth, String pWidth);
 
-    boolean validateCell(cell.Cell pCell);
+    boolean validateCellInGrid(int pHeight, int pWidth);
 
 }

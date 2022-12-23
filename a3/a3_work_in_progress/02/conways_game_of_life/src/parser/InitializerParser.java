@@ -1,6 +1,5 @@
 package parser;
 
-import cell.Cell;
 import player.PlayerColor;
 
 import java.util.List;
@@ -63,9 +62,6 @@ public class InitializerParser implements IParser {
         return outInt <= pMaxWidth && outInt >= pMinWidth;
     }
 
-
     @Override
-    public boolean validateCell(Cell pCell) {
-        return false;
-    }
+    public boolean validateCellInGrid(int pHeight, int pWidth) { return false; };
 }
