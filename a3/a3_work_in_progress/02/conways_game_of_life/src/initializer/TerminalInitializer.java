@@ -54,7 +54,7 @@ public class TerminalInitializer implements Initializer{
             if (matcher.find()) {
                 String shortenedColorList = colorList.substring(1, colorList.length()-1);
                 String[] stringList = shortenedColorList.split(", ");
-                for (int index = 0; index < stringList.length-1; index++) {
+                for (int index = 0; index < stringList.length; index++) {
                     if (Objects.equals(stringList[index], answer)) {
                         return PlayerColor.getAvailableColors().get(index);
                     }
