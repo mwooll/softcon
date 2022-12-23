@@ -61,4 +61,12 @@ public class PlayerColorTest {
         assertEquals(Color.YELLOW, yellow.getColorHex());
         assertEquals('Y', yellow.getColorSymbol());
     }
+
+    @Test
+    public void testBlack() {
+        PlayerColor black = PlayerColor.BLACK;
+        assertEquals("Black", black.getColorName());
+        assertEquals(Color.BLACK, black.getColorHex());
+        assertEquals('X', black.getColorSymbol());
+    }
 }
