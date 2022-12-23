@@ -1,6 +1,8 @@
 package initializer;
 
 import cell.Grid;
+import parser.IParser;
+import parser.InitializerParser;
 import player.PlayerColor;
 
 import java.io.InputStream;
@@ -15,6 +17,7 @@ public class TerminalInitializer implements Initializer{
 
     private final Scanner aScanner;
     private final PrintStream aPrintStream;
+    private final IParser aParser = new InitializerParser();
 
     /**
      * Default Constructor which uses System.in and System.out
@@ -69,27 +72,26 @@ public class TerminalInitializer implements Initializer{
         return null;
     }
 
-    public int chooseGridDimensionHeight() {
+    public int chooseGridDimensionHeight(int pMaxHeight, int pMinHeight) {
         while(true) {
             aPrintStream.println("Please choose the height for the grid");
             String answer = aScanner.nextLine();
-            try {
+            if (aParser.validateHeight(pMaxHeight, pMinHeight, answer)){
                 return Integer.parseInt(answer);
-            } catch (Exception e) {
-                aPrintStream.println(answer + " is not a number. Please try again.");
             }
+            aPrintStream.println(answer + " is not a number. Please try again.");
         }
     }
 
-    public int chooseGridDimensionWidth() {
+
+    public int chooseGridDimensionWidth(int pMaxWidth, int pMinWidth) {
         while(true) {
             aPrintStream.println("Please choose the width for the grid");
             String answer = aScanner.nextLine();
-            try {
+            if (aParser.validateWidth(pMaxWidth, pMinWidth, answer)){
                 return Integer.parseInt(answer);
-            } catch (Exception e) {
-                aPrintStream.println(answer + " is not a number. Please try again.");
             }
+            aPrintStream.println(answer + " is not a number. Please try again.");
         }
     }
 
