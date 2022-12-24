@@ -7,6 +7,7 @@ import gamemodel.Turn;
 import gui.fifthStage.CellCreateSetter;
 import gui.fifthStage.CellObserver;
 import gui.fifthStage.CellDeleteSetter;
+import gui.fifthStage.deleteMoveContinue;
 import gui.firstStage.*;
 import gui.secondStage.*;
 import gui.thirdStage.*;
@@ -309,8 +310,9 @@ public class HelloApplication extends Application {
                 col_ct ++;
             }
 
-            // Add Label telling if the move has taken place or not
-
+            // Add Label telling if the moves have taken place or not
+            IContinue killContinue = new deleteMoveContinue(currentTurn);
+            aRoot.getChildren().add((Parent) killContinue);
 
 
 
