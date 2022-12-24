@@ -3,7 +3,8 @@ package gui;
 import cell.*;
 
 import gamemodel.GameModelNew;
-import gamemodel.ITurnObserver;
+import gamemodel.ICellSetterObserver;
+import gamemodel.Turn;
 import gui.fifthStage.CellObserver;
 import gui.fifthStage.CellSetter;
 import gui.firstStage.*;
@@ -285,7 +286,7 @@ public class HelloApplication extends Application {
 
             // play one turn
             aGameModel.playTurn();
-            ITurnObserver currentTurn = aGameModel.getCurrentTurn();
+            Turn currentTurn = aGameModel.getCurrentTurn();
 
             // Draw the Grid, add Cell observers, Cell setters
             GridPane aGridPane = new GridPane();
@@ -293,7 +294,7 @@ public class HelloApplication extends Application {
             int col_ct = 0;
             for (Cell c : aGameModel.aGrid.getIterator()) {
                 ICellObserver cObserver = new CellObserver(c);
-                ISetter cSetter = new CellSetter(currentTurn, c);
+                ISetter cSetter = new CellSetter(currentTurn, c, currentTurn);
                 if (col_ct%aGameModel.aWidth == 0) {
                     row_ct++;
                     col_ct = 0;
@@ -302,6 +303,9 @@ public class HelloApplication extends Application {
                 aGridPane.add((Parent) cSetter, col_ct, row_ct);
                 col_ct ++;
             }
+
+            // Add Label telling if delete/creation move has taken place or not
+
 
 
 
@@ -340,9 +344,16 @@ public class HelloApplication extends Application {
 
             @Override
             public Grid createStartingConfiguration() {
-                    Grid tmpGrid = new Grid(3,3);
+                    Grid tmpGrid = new Grid(10,10);
+
                     tmpGrid.getCell(0,0).instantBirth(PlayerColor.BLUE);
-                    tmpGrid.getCell(0,2).instantBirth(PlayerColor.RED);
+                    tmpGrid.getCell(1,0).instantBirth(PlayerColor.BLUE);
+                    tmpGrid.getCell(0,1).instantBirth(PlayerColor.BLUE);
+
+                    tmpGrid.getCell(5,7).instantBirth(PlayerColor.RED);
+                    tmpGrid.getCell(6,7).instantBirth(PlayerColor.RED);
+                    tmpGrid.getCell(7,4).instantBirth(PlayerColor.RED);
+
                     aInitialGrid = tmpGrid;
                     return null;
 
