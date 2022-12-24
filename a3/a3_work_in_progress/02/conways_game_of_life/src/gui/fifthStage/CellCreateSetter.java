@@ -10,15 +10,16 @@ import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import player.PlayerColor;
 
-public class CellSetter extends Parent implements ISetter, ITurnObserver {
+public class CellCreateSetter extends Parent implements ISetter, ITurnObserver {
 
     private ICellSetterObserver aObserver;
     private ITurnObservable aObservable;
     private Cell aCell;
-    protected final Button aButton = new Button("Kill");
+    protected final Button aButton = new Button("Create");
 
-    public CellSetter(ICellSetterObserver pObserver, Cell pCell, ITurnObservable pObservable) {
+    public CellCreateSetter(ICellSetterObserver pObserver, Cell pCell, ITurnObservable pObservable) {
         aObserver = pObserver;
         aObservable = pObservable;
         aCell = pCell;
@@ -32,20 +33,16 @@ public class CellSetter extends Parent implements ISetter, ITurnObserver {
 
     @Override
     public EventHandler<ActionEvent> handleSet() {return e -> {
-      // kill the cell
-      aObserver.makeDeleteMove(aCell);
+        // kill the cell
+        aObserver.makeBirthMove(aCell);
     };}
 
     boolean setVisibility() {
-        return aCell.getState() == aObserver.returnCurrentPlayer().getColor();
+        return aCell.getState() == PlayerColor.WHITE;
     }
 
     @Override
-    public void stateCanDeleteChanged() {
-        if (aObservable.getStatusCellDeleted()) {
-            aButton.setVisible(false);
-        }
-    }
+    public void stateCanDeleteChanged() {}
 
     @Override
     public void stateCanCreateChanged() {

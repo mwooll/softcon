@@ -3,10 +3,10 @@ package gui;
 import cell.*;
 
 import gamemodel.GameModelNew;
-import gamemodel.ICellSetterObserver;
 import gamemodel.Turn;
+import gui.fifthStage.CellCreateSetter;
 import gui.fifthStage.CellObserver;
-import gui.fifthStage.CellSetter;
+import gui.fifthStage.CellDeleteSetter;
 import gui.firstStage.*;
 import gui.secondStage.*;
 import gui.thirdStage.*;
@@ -288,23 +288,28 @@ public class HelloApplication extends Application {
             aGameModel.playTurn();
             Turn currentTurn = aGameModel.getCurrentTurn();
 
-            // Draw the Grid, add Cell observers, Cell setters
+            // Draw the Grid, add Cell observers, Add Cell Delete Setters
             GridPane aGridPane = new GridPane();
             int row_ct = 1;
             int col_ct = 0;
             for (Cell c : aGameModel.aGrid.getIterator()) {
                 ICellObserver cObserver = new CellObserver(c);
-                ISetter cSetter = new CellSetter(currentTurn, c, currentTurn);
+                ISetter cDeleteSetter = new CellDeleteSetter(currentTurn, c, currentTurn);
+                ISetter cCreateSetter = new CellCreateSetter(currentTurn, c, currentTurn);
                 if (col_ct%aGameModel.aWidth == 0) {
                     row_ct++;
                     col_ct = 0;
                 }
                 aGridPane.add((Parent) cObserver, col_ct, row_ct);
-                aGridPane.add((Parent) cSetter, col_ct, row_ct);
+
+                // For each cell, place a vbox with two setters in there
+                VBox vbox = new VBox((Parent) cDeleteSetter, (Parent) cCreateSetter);
+                aGridPane.add(vbox, col_ct, row_ct);
+
                 col_ct ++;
             }
 
-            // Add Label telling if delete/creation move has taken place or not
+            // Add Label telling if the move has taken place or not
 
 
 
