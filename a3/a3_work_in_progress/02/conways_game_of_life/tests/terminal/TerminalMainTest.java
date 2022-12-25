@@ -138,4 +138,49 @@ public class TerminalMainTest {
         assertEquals(PlayerColor.ORANGE, aGrid.getCell(0, 0).getState());
         assertEquals(PlayerColor.GREEN, aGrid.getCell(4, 4).getState());
     }
+
+    @Test
+    public void testHasAPlayerLostTie() {
+        Grid testGrid = new Grid(2, 2);
+        Player[] pPlayers = new Player[]{new Player("A", PlayerColor.ORANGE), new Player("Z", PlayerColor.GREEN)};
+
+        assertEquals(PlayerColor.BLACK, TerminalMain.hasAPlayerLost(testGrid, pPlayers));
+    }
+
+    @Test
+    public void testHasAPlayerLostFirst() {
+        Grid testGrid = new Grid(2, 2);
+        Player[] pPlayers = new Player[]{new Player("A", PlayerColor.ORANGE), new Player("Z", PlayerColor.GREEN)};
+
+        testGrid.getCell(0, 0).instantBirth(pPlayers[0].getColor());
+        assertEquals(PlayerColor.GREEN, TerminalMain.hasAPlayerLost(testGrid, pPlayers));
+    }
+
+    @Test
+    public void testHasAPlayerLostSecond() {
+        Grid testGrid = new Grid(2, 2);
+        Player[] pPlayers = new Player[]{new Player("A", PlayerColor.ORANGE), new Player("Z", PlayerColor.GREEN)};
+
+        testGrid.getCell(0, 0).instantBirth(pPlayers[1].getColor());
+        assertEquals(PlayerColor.ORANGE, TerminalMain.hasAPlayerLost(testGrid, pPlayers));
+    }
+
+    @Test
+    public void testHasAPlayerLostNo() {
+        Grid testGrid = new Grid(2, 2);
+        Player[] pPlayers = new Player[]{new Player("A", PlayerColor.ORANGE), new Player("Z", PlayerColor.GREEN)};
+
+        testGrid.getCell(0, 0).instantBirth(pPlayers[0].getColor());
+        testGrid.getCell(1, 1).instantBirth(pPlayers[1].getColor());
+        assertEquals(PlayerColor.WHITE, TerminalMain.hasAPlayerLost(testGrid, pPlayers));
+    }
+
+    @Test
+    public void testHasAPlayerLostIgnoresOtherColors() {
+        Grid testGrid = new Grid(2, 2);
+        Player[] pPlayers = new Player[]{new Player("A", PlayerColor.ORANGE), new Player("Z", PlayerColor.GREEN)};
+        testGrid.getCell(0, 0).instantBirth(PlayerColor.BLUE);
+
+        assertEquals(PlayerColor.BLACK, TerminalMain.hasAPlayerLost(testGrid, pPlayers));
+    }
 }

@@ -178,17 +178,17 @@ public class TerminalMain {
         }
     }
 
-    public PlayerColor hasAPlayerLost() {
-        int firstCells = aGrid.getNumberOfMatchingCells(sortedPlayers[0].getColor());
-        int secondCells = aGrid.getNumberOfMatchingCells(sortedPlayers[1].getColor());
+    public static PlayerColor hasAPlayerLost(Grid pGrid, Player[] pPlayers) {
+        int firstCells = pGrid.getNumberOfMatchingCells(pPlayers[0].getColor());
+        int secondCells = pGrid.getNumberOfMatchingCells(pPlayers[1].getColor());
         if (firstCells == 0 && secondCells == 0) {
             return PlayerColor.BLACK;
         }
         if (firstCells == 0) {
-            return sortedPlayers[0].getColor();
+            return pPlayers[0].getColor();
         }
         if (secondCells == 0) {
-            return sortedPlayers[1].getColor();
+            return pPlayers[1].getColor();
         }
         return PlayerColor.WHITE;
     }
@@ -211,7 +211,7 @@ public class TerminalMain {
     }
     public void startGame(int pIndex) {
         aTurnNumber = 0;
-        while (hasAPlayerLost() == PlayerColor.WHITE) {
+        while (hasAPlayerLost(aGrid, sortedPlayers) == PlayerColor.WHITE) {
             playTurn(pIndex);
             aPrintStream.println("\nGrid after the moves:");
             printGrid(aGrid);
@@ -222,7 +222,7 @@ public class TerminalMain {
             getStatistics();
         }
 
-        PlayerColor loserColor = hasAPlayerLost();
+        PlayerColor loserColor = hasAPlayerLost(aGrid, sortedPlayers);
         determineWinner(loserColor);
     }
     public void playTurn(int pIndex) {
