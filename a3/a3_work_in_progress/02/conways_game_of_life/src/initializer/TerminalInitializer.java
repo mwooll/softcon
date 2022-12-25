@@ -97,16 +97,75 @@ public class TerminalInitializer implements Initializer{
 
     @Override
     public Grid tacticalStartingConfiguration(int gridWidth, int gridHeight, Player choosingPlayer, Player otherPlayer) {
-        System.out.println("Player " + choosingPlayer.getName()
-                + " gets to choose the starting configuration.");
+        aPrintStream.println(choosingPlayer.getName() + " gets to choose the starting configuration.");
         Grid aGrid = new Grid(gridWidth, gridHeight);
+        int numCells = gridWidth*gridHeight;
 
+        aPrintStream.println("Enter the coordinates of the cells you want to give your color to.");
+        aPrintStream.println("If you choose 'x,y', your opponent will get '-x,-y'.");
+        aPrintStream.println("Coordinates have the form '4,2'. The first number is for the row and the second for the column.");
+        aPrintStream.println("Type 'quit' to stop selecting cells.");
 
+        int coloredCells = 0;
+        while (true) {
+            String input = aScanner.nextLine();
+            if (Objects.equals(input, "quit")) break;
+
+            int[] coordinates = getCoordinates(aGrid, input);
+            if (coordinates == null) {
+                aPrintStream.println("This is not a valid cell, try again.");
+                continue;
+            }
+
+            int row = coordinates[0];
+            int column = coordinates[1];
+            Cell selectedCell = aGrid.getCell(row, column);
+            if (selectedCell.getState() != PlayerColor.WHITE) {
+                aPrintStream.println("This cell has already been marked.");
+                continue;
+            }
+
+            int otherRow = gridHeight - row - 1;
+            int otherColumn = gridWidth - column - 1;
+            if (!aParser.validateCellInGrid(aGrid, otherColumn, otherRow)) { //should never be true
+                aPrintStream.println("This cell can not be chosen.");
+                continue;
+            }
+
+            Cell otherCell = aGrid.getCell(otherRow, otherColumn);
+            selectedCell.instantBirth(choosingPlayer.getColor());
+            otherCell.instantBirth(otherPlayer.getColor());
+            coloredCells = coloredCells + 2;
+
+            aPrintStream.println("Cell at " + row + "," + column + " was marked "
+                    + choosingPlayer.getColor().getColorName() + ".");
+            aPrintStream.println("Cell at " + otherRow + "," + otherColumn + " was marked "
+                    + otherPlayer.getColor().getColorName()+ ".");
+
+            if (coloredCells >= numCells) {
+                aPrintStream.println("All cells have been marked.");
+                break;
+            }
+        }
+        aPrintStream.println("The grid was configured.");
         return aGrid;
     }
 
-    public Cell chooseCell(Grid pGrid) {
+    private int[] getCoordinates(Grid pGrid, String coordinates) {
+        String[] answerList = coordinates.replaceAll(" ", "").split(",");
+        try {
+            int row = Integer.parseInt(answerList[0]);
+            int column = Integer.parseInt(answerList[1]);
+            if (answerList.length == 2 && aParser.validateCellInGrid(pGrid, column, row)){
+                return new int[]{row, column};
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        return null;
+    }
 
+    public Cell chooseCell(Grid pGrid) {
         while(true) {
             aPrintStream.println("Enter the coordinates of a starting cell e.g. 4,2");
             aPrintStream.println("The first number is for the row and the second for the column.");

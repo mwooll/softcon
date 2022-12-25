@@ -2,6 +2,7 @@ package initializer;
 
 import cell.Cell;
 import cell.Grid;
+import player.Player;
 import player.PlayerColor;
 
 import org.junit.jupiter.api.Test;
@@ -241,7 +242,6 @@ public class TerminalInitializerTest {
         Cell cellCoordinates = cellInitializer.chooseCell(pGrid);
 
         assertEquals(testActual, cellCoordinates);
-
     }
 
     @Test
@@ -281,5 +281,100 @@ public class TerminalInitializerTest {
 
         assertEquals(testActual, cellCoordinates);
 
+    }
+
+    private int getNumberOfColoredCells(Grid pGrid) {
+        int count = 0;
+        for (Cell cell : pGrid.getIterator()) {
+            if (cell.getState() != PlayerColor.WHITE) {
+                count++;
+            }
+        }
+        return count;
+    }
+    @Test
+    public void testTacticalStartingConfigurationTerminate() {
+        String inputString = "quit";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(inputString.getBytes());
+        TerminalInitializer gridInitializer = new TerminalInitializer(inputStream, System.out);
+
+        Player playerA = new Player("player a", PlayerColor.YELLOW);
+        Player playerB = new Player("player b", PlayerColor.MAGENTA);
+        Grid configuredGrid = gridInitializer.tacticalStartingConfiguration(2, 2, playerA, playerB);
+
+        assertEquals(0, getNumberOfColoredCells(configuredGrid));
+    }
+
+    @Test
+    public void testTacticalStartingConfigurationTerminateValidCell() {
+        String inputString = """
+                0,0
+                quit
+                """;
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(inputString.getBytes());
+        TerminalInitializer gridInitializer = new TerminalInitializer(inputStream, System.out);
+
+        Player playerA = new Player("player a", PlayerColor.YELLOW);
+        Player playerB = new Player("player b", PlayerColor.MAGENTA);
+        Grid configuredGrid = gridInitializer.tacticalStartingConfiguration(2, 2, playerA, playerB);
+
+        assertEquals(2, getNumberOfColoredCells(configuredGrid));
+        assertEquals(PlayerColor.YELLOW, configuredGrid.getCell(0, 0).getState());
+        assertEquals(PlayerColor.MAGENTA, configuredGrid.getCell(1, 1).getState());
+    }
+
+    @Test
+    public void testTacticalStartingConfigurationTerminateInvalidInput() {
+        String inputString = """
+                cool
+                quit
+                """;
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(inputString.getBytes());
+        TerminalInitializer gridInitializer = new TerminalInitializer(inputStream, System.out);
+
+        Player playerA = new Player("player a", PlayerColor.YELLOW);
+        Player playerB = new Player("player b", PlayerColor.MAGENTA);
+        Grid configuredGrid = gridInitializer.tacticalStartingConfiguration(2, 2, playerA, playerB);
+
+        assertEquals(0, getNumberOfColoredCells(configuredGrid));
+    }
+
+    @Test
+    public void testTacticalStartingConfigurationTerminateDuplicateCell() {
+        String inputString = """
+                0,0
+                1,1
+                quit
+                """;
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(inputString.getBytes());
+        TerminalInitializer gridInitializer = new TerminalInitializer(inputStream, System.out);
+
+        Player playerA = new Player("player a", PlayerColor.YELLOW);
+        Player playerB = new Player("player b", PlayerColor.MAGENTA);
+        Grid configuredGrid = gridInitializer.tacticalStartingConfiguration(2, 2, playerA, playerB);
+
+        assertEquals(2, getNumberOfColoredCells(configuredGrid));
+        assertEquals(PlayerColor.YELLOW, configuredGrid.getCell(0, 0).getState());
+        assertEquals(PlayerColor.MAGENTA, configuredGrid.getCell(1, 1).getState());
+    }
+
+    @Test
+    public void testTacticalStartingConfigurationTerminateFull() {
+        String inputString = """
+                0,0
+                0,1
+                """;
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(inputString.getBytes());
+        TerminalInitializer gridInitializer = new TerminalInitializer(inputStream, System.out);
+
+        Player playerA = new Player("player a", PlayerColor.YELLOW);
+        Player playerB = new Player("player b", PlayerColor.MAGENTA);
+        Grid configuredGrid = gridInitializer.tacticalStartingConfiguration(2, 2, playerA, playerB);
+
+        assertEquals(4, getNumberOfColoredCells(configuredGrid));
+        assertEquals(PlayerColor.YELLOW, configuredGrid.getCell(0, 0).getState());
+        assertEquals(PlayerColor.MAGENTA, configuredGrid.getCell(1, 1).getState());
+        assertEquals(PlayerColor.YELLOW, configuredGrid.getCell(0, 1).getState());
+        assertEquals(PlayerColor.MAGENTA, configuredGrid.getCell(1, 0).getState());
     }
 }
