@@ -71,24 +71,26 @@ public class TerminalInitializer implements Initializer{
     @Override
     public int chooseGridDimensionHeight(int pMaxHeight, int pMinHeight) {
         while(true) {
-            aPrintStream.println("Please choose the height for the grid");
+            aPrintStream.println("Please choose the height for the grid in the range: ["
+                    + pMinHeight + ", " + pMaxHeight + "]");
             String answer = aScanner.nextLine();
             if (aParser.validateHeight(pMaxHeight, pMinHeight, answer)){
                 return Integer.parseInt(answer);
             }
-            aPrintStream.println(answer + " is not a number. Please try again.");
+            aPrintStream.println(answer + " is either not a number or not in range. Please try again.");
         }
     }
 
     @Override
     public int chooseGridDimensionWidth(int pMaxWidth, int pMinWidth) {
         while(true) {
-            aPrintStream.println("Please choose the width for the grid");
+            aPrintStream.println("Please choose the width for the grid in the range: ["
+                    + pMinWidth + ", " + pMaxWidth + "]");
             String answer = aScanner.nextLine();
             if (aParser.validateWidth(pMaxWidth, pMinWidth, answer)){
                 return Integer.parseInt(answer);
             }
-            aPrintStream.println(answer + " is not a number. Please try again.");
+            aPrintStream.println(answer + " is either not a number or not in range. Please try again.");
         }
     }
 
@@ -127,7 +129,7 @@ public class TerminalInitializer implements Initializer{
 
             int otherRow = gridHeight - row - 1;
             int otherColumn = gridWidth - column - 1;
-            if (!aParser.validateCellInGrid(aGrid, otherColumn, otherRow)) { //should never be true
+            if (!aParser.validateCellInGrid(aGrid, otherColumn, otherRow) || (otherRow == row && otherColumn == column)) {
                 aPrintStream.println("This cell can not be chosen.");
                 continue;
             }
