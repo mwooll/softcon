@@ -13,5 +13,7 @@ public interface Initializer {
 
     int chooseGridDimensionWidth(int pMaxWidth, int pMinWidth);
 
-    Grid createStartingConfiguration(int gridWidth, int gridHeight, Player pPlayer);
+    Grid createStartingConfiguration();
+
+    Grid tacticalStartingConfiguration(int gridWidth, int gridHeight, Player choosingPlayer, player.Player otherPlayer);
 }

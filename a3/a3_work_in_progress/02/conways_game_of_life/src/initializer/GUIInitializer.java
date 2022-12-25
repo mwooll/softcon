@@ -210,10 +210,15 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
     public int chooseGridDimensionWidth(int pMaxWidth, int pMinWidth) { return 10; }
 
     @Override
-    public Grid createStartingConfiguration(int gridWidth, int gridHeight, Player pPlayer) {
+    public Grid createStartingConfiguration() {
         // create Grid with aHeight, aWidth
         // set a random set of cells to a non-white color
         // return Grid
+        return null;
+    }
+
+    @Override
+    public Grid tacticalStartingConfiguration(int gridWidth, int gridHeight, Player choosingPlayer, Player otherPlayer) {
         return null;
     }
 }
