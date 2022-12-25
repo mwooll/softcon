@@ -231,4 +231,14 @@ public class Grid {
         }
         return aNeighbors;
     }
+
+    public int getNumberOfColoredCells() {
+        int count = 0;
+        for (Cell cell : getIterator()) {
+            if (cell.getState() != PlayerColor.WHITE) {
+                count++;
+            }
+        }
+        return count;
+    }
 }

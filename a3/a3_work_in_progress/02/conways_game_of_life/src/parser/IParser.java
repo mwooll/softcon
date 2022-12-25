@@ -10,7 +10,6 @@ public interface IParser {
     boolean validateColor(List<PlayerColor> pColors, PlayerColor pColor);
     boolean validateHeight(int pMaxHeight, int pMinHeight, String pHeight);
     boolean validateWidth(int pMaxWidth, int pMinWidth, String pWidth);
-
     boolean validateCellInGrid(cell.Grid pGrid, int pWidth, int pHeight);
 
 }
