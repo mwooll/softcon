@@ -241,4 +241,14 @@ public class Grid {
         }
         return count;
     }
+
+    public int getNumberOfMatchingCells(PlayerColor matchColor) {
+        int count = 0;
+        for (Cell cell : getIterator()) {
+            if (cell.getState() == matchColor) {
+                count++;
+            }
+        }
+        return count;
+    }
 }

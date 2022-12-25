@@ -323,4 +323,30 @@ public class GridTest {
         }
         assertEquals(finalExpectedColors, actualColorsDeadGen);
     }
+
+    @Test
+    public void testGetNumberOfColoredCells() {
+        int testWidth = 3;
+        int testHeight = 2;
+        Grid testGrid = new Grid(testWidth, testHeight);
+
+        testGrid.getCell(1,1).instantBirth(PlayerColor.RED);
+        testGrid.getCell(0,1).instantBirth(PlayerColor.BLUE);
+        testGrid.getCell(1,0).instantBirth(PlayerColor.BLACK);
+
+        assertEquals(3, testGrid.getNumberOfColoredCells());
+    }
+
+    @Test
+    public void testGetNumberOfMatchingCells() {
+        int testWidth = 3;
+        int testHeight = 2;
+        Grid testGrid = new Grid(testWidth, testHeight);
+
+        testGrid.getCell(1,1).instantBirth(PlayerColor.RED);
+        testGrid.getCell(0,1).instantBirth(PlayerColor.BLUE);
+        testGrid.getCell(1,0).instantBirth(PlayerColor.BLACK);
+
+        assertEquals(1, testGrid.getNumberOfMatchingCells(PlayerColor.BLACK));
+    }
 }
