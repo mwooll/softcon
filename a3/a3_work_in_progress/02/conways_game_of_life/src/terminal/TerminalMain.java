@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.io.PrintStream;
+import java.util.stream.IntStream;
 
 public class TerminalMain {
     private int maxHeight = 20;
@@ -131,5 +132,37 @@ public class TerminalMain {
         int gridHeight = aInitializer.chooseGridDimensionHeight(maxHeight, minHeight);
         Grid aGrid = aInitializer.tacticalStartingConfiguration(gridWidth, gridHeight, pPlayers[0], pPlayers[1]);
         return aGrid;
+    }
+
+    public void printGrid(int pWidth, int pHeight) {
+        Grid aGrid = new Grid(pWidth, pHeight);
+        String title = "Game of Life";
+        // Strings for the Coordinate System
+        List<Integer> rangeHeight = IntStream.range(0,pHeight).boxed().toList();
+        int numOfDigitsOfMaxHeightNumber = String.valueOf(pHeight-1).length();
+        List<Integer> rangeWidth = IntStream.range(0,pWidth).boxed().toList();
+        int numOfDigitsOfMaxWidthNumber = String.valueOf(pWidth-1).length();
+        int fullWidth = (rangeWidth.size()+1)*(numOfDigitsOfMaxWidthNumber+1);
+        String divider = String.format("%" + fullWidth + "s", "").replace(" ", "-");
+
+        // Printing
+        System.out.println(divider);
+        System.out.printf("%" + (fullWidth+title.length())/2 + "s%n", title);
+
+        // First row
+        System.out.print(String.format("%1$" + numOfDigitsOfMaxHeightNumber + "s", "") + "|");
+        for (int i = 0; i < aGrid.getWidth(); i++) {
+            System.out.printf("%1$-" + numOfDigitsOfMaxHeightNumber + "s", rangeWidth.get(i));
+            System.out.print("|");
+        }
+        System.out.print("\n");
+        // Rest
+        for (int i = 0; i < pHeight; i++) {
+            System.out.print(String.format("%1$" + numOfDigitsOfMaxHeightNumber + "s", rangeHeight.get(i)) +"|");
+            for (int j = 0; j < pWidth; j++){
+                System.out.print(String.format("%1$" + numOfDigitsOfMaxHeightNumber + "s", aGrid.getCell(i, j).getState().getColorSymbol()) + "|");
+            }
+            System.out.print("\n");
+        }
     }
 }
