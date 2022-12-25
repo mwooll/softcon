@@ -2,6 +2,7 @@ package parser;
 
 import org.junit.jupiter.api.Test;
 import player.PlayerColor;
+import cell.Grid;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,4 +129,30 @@ public class InitializerParserTest {
         assertFalse(widthParser.validateWidth(maxWidth, minWidth, "dog"));
         assertFalse(widthParser.validateWidth(maxWidth, minWidth, "4."));
     }
+
+    @Test
+    public void testValidateCellInGridValid() {
+        int width = 101;
+        int height = 101;
+        Grid testGrid = new Grid(width, height);
+        InitializerParser cellInGridParser = new InitializerParser();
+
+        assertTrue(cellInGridParser.validateCellInGrid(testGrid, 10, 100));
+        assertTrue(cellInGridParser.validateCellInGrid(testGrid, 2, 30));
+        assertTrue(cellInGridParser.validateCellInGrid(testGrid, 0, 0));
+    }
+
+    @Test
+    public void testValidateCellInGridInvalid() {
+        int width = 200;
+        int height = 10;
+        Grid testGrid = new Grid(width, height);
+        InitializerParser cellInGridParser = new InitializerParser();
+
+        assertFalse(cellInGridParser.validateCellInGrid(testGrid, 10, 100));
+        assertFalse(cellInGridParser.validateCellInGrid(testGrid, 2, 30));
+        assertFalse(cellInGridParser.validateCellInGrid(testGrid, 0, -5));
+    }
+
+
 }

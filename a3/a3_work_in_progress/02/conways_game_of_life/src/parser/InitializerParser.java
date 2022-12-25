@@ -63,5 +63,9 @@ public class InitializerParser implements IParser {
     }
 
     @Override
-    public boolean validateCellInGrid(cell.Grid pGrid, int pHeight, int pWidth) { return false; };
+    public boolean validateCellInGrid(cell.Grid pGrid, int pWidth, int pHeight) {
+        if (pHeight < 0 || pWidth < 0) {
+            return false;
+        } else return pHeight < pGrid.getHeight() && pWidth < pGrid.getWidth();
+    }
 }
