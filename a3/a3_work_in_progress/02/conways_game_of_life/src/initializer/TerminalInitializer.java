@@ -4,11 +4,11 @@ import cell.Cell;
 import cell.Grid;
 import parser.IParser;
 import parser.InitializerParser;
+import player.Player;
 import player.PlayerColor;
 
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -69,10 +69,6 @@ public class TerminalInitializer implements Initializer{
     }
 
     @Override
-    public ArrayList<Integer> chooseGridDimensions() {
-        return null;
-    }
-
     public int chooseGridDimensionHeight(int pMaxHeight, int pMinHeight) {
         while(true) {
             aPrintStream.println("Please choose the height for the grid");
@@ -84,7 +80,7 @@ public class TerminalInitializer implements Initializer{
         }
     }
 
-
+    @Override
     public int chooseGridDimensionWidth(int pMaxWidth, int pMinWidth) {
         while(true) {
             aPrintStream.println("Please choose the width for the grid");
@@ -97,8 +93,13 @@ public class TerminalInitializer implements Initializer{
     }
 
     @Override
-    public Grid createStartingConfiguration() {
-        return null;
+    public Grid createStartingConfiguration(int gridWidth, int gridHeight, Player pPlayer) {
+        System.out.println("Player " + pPlayer.getName()
+                + " gets to choose the starting configuration.");
+        Grid aGrid = new Grid(gridWidth, gridHeight);
+
+
+        return aGrid;
     }
 
     public Cell chooseCell(Grid pGrid) {

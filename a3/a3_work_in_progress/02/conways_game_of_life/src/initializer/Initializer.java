@@ -1,8 +1,7 @@
 package initializer;
 
-import parser.IParser;
-
-import java.util.ArrayList;
+import cell.Grid;
+import player.Player;
 
 public interface Initializer {
 
@@ -10,9 +9,9 @@ public interface Initializer {
 
     player.PlayerColor choosePlayerColor();
 
-    ArrayList<Integer> chooseGridDimensions();
+    int chooseGridDimensionHeight(int pMaxHeight, int pMinHeight);
 
-    cell.Grid createStartingConfiguration();
+    int chooseGridDimensionWidth(int pMaxWidth, int pMinWidth);
 
-
+    Grid createStartingConfiguration(int gridWidth, int gridHeight, Player pPlayer);
 }

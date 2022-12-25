@@ -4,12 +4,14 @@ import cell.Grid;
 import gui.IContinue;
 import gui.IGridObserver;
 import gui.IPlayerObserver;
-import javafx.scene.paint.Color;
 import parser.IParser;
 import player.Player;
 import player.PlayerColor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -203,12 +205,12 @@ public abstract class GUIInitializer implements Initializer, InitializerObservab
     }
 
     @Override
-    public ArrayList<Integer> chooseGridDimensions() {
-        return null;
-    }
+    public int chooseGridDimensionHeight(int pMaxHeight, int pMinHeight) { return 10; }
+
+    public int chooseGridDimensionWidth(int pMaxWidth, int pMinWidth) { return 10; }
 
     @Override
-    public Grid createStartingConfiguration() {
+    public Grid createStartingConfiguration(int gridWidth, int gridHeight, Player pPlayer) {
         // create Grid with aHeight, aWidth
         // set a random set of cells to a non-white color
         // return Grid
