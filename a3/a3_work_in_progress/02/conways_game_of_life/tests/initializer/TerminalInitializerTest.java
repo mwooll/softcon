@@ -1,5 +1,7 @@
 package initializer;
 
+import cell.Cell;
+import cell.Grid;
 import player.PlayerColor;
 
 import org.junit.jupiter.api.Test;
@@ -214,5 +216,70 @@ public class TerminalInitializerTest {
         int GridWidth = dimensionInitializer.chooseGridDimensionWidth(maxWidth, minWidth);
 
         assertEquals(10, GridWidth);
+    }
+
+    @Test
+    public void testChooseCellValid() {
+        Grid pGrid = new Grid(100, 100);
+        Cell testActual = pGrid.getCell(7, 5);
+        String testCell = "7,5";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(testCell.getBytes());
+        TerminalInitializer cellInitializer = new TerminalInitializer(inputStream, System.out);
+        Cell cellCoordinates = cellInitializer.chooseCell(pGrid);
+
+        assertEquals(testActual, cellCoordinates);
+
+    }
+
+    @Test
+    public void testChooseCellInvalidSymbol() {
+        Grid pGrid = new Grid(100, 100);
+        Cell testActual = pGrid.getCell(4, 44);
+        String testCell = "2.5\n4,44";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(testCell.getBytes());
+        TerminalInitializer cellInitializer = new TerminalInitializer(inputStream, System.out);
+        Cell cellCoordinates = cellInitializer.chooseCell(pGrid);
+
+        assertEquals(testActual, cellCoordinates);
+
+    }
+
+    @Test
+    public void testChooseCellInvalidType() {
+        Grid pGrid = new Grid(100, 100);
+        Cell testActual = pGrid.getCell(25, 8);
+        String testCell = "A,10\n 25,8";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(testCell.getBytes());
+        TerminalInitializer cellInitializer = new TerminalInitializer(inputStream, System.out);
+        Cell cellCoordinates = cellInitializer.chooseCell(pGrid);
+
+        assertEquals(testActual, cellCoordinates);
+
+    }
+
+    @Test
+    public void testChooseCellMixedType() {
+        Grid pGrid = new Grid(100, 100);
+        Cell testActual = pGrid.getCell(45, 0);
+        String testCell = "A15,28\n 45,0";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(testCell.getBytes());
+        TerminalInitializer cellInitializer = new TerminalInitializer(inputStream, System.out);
+        Cell cellCoordinates = cellInitializer.chooseCell(pGrid);
+
+        assertEquals(testActual, cellCoordinates);
+
+    }
+
+    @Test
+    public void testChooseCellLongInput() {
+        Grid pGrid = new Grid(100, 100);
+        Cell testActual = pGrid.getCell(90, 34);
+        String testCell = "15,500\n90,34";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(testCell.getBytes());
+        TerminalInitializer cellInitializer = new TerminalInitializer(inputStream, System.out);
+        Cell cellCoordinates = cellInitializer.chooseCell(pGrid);
+
+        assertEquals(testActual, cellCoordinates);
+
     }
 }

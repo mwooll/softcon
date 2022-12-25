@@ -1,5 +1,6 @@
 package initializer;
 
+import cell.Cell;
 import cell.Grid;
 import parser.IParser;
 import parser.InitializerParser;
@@ -99,4 +100,25 @@ public class TerminalInitializer implements Initializer{
     public Grid createStartingConfiguration() {
         return null;
     }
+
+    public Cell chooseCell(Grid pGrid) {
+
+        while(true) {
+            aPrintStream.println("Enter the coordinates of a starting cell e.g. 4,2");
+            aPrintStream.println("The first number is for the row and the second for the column.");
+            String answer = aScanner.nextLine();
+            String[] answerList = answer.replaceAll(" ", "").split(",");
+            try {
+                int row = Integer.parseInt(answerList[0]);
+                int column = Integer.parseInt(answerList[1]);
+                if (answerList.length == 2 && aParser.validateCellInGrid(pGrid, column, row)){
+                    return pGrid.getCell(row, column);
+                }
+                aPrintStream.println(answer + " is not a valid coordinate. Please try again.");
+            } catch (Exception e) {
+                aPrintStream.println(answer + " is not a valid coordinate. Please try again.");
+            }
+        }
+    }
 }
+
