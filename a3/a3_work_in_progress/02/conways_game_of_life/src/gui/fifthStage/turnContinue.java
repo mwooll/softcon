@@ -1,23 +1,21 @@
 package gui.fifthStage;
 
 import gamemodel.ITurnObservable;
-import gui.AbstractContinue;
 import gui.IContinue;
 import gui.ITurnObserver;
-import initializer.InitializerObservable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
-public class deleteMoveContinue extends Parent implements IContinue, ITurnObserver {
+public class turnContinue extends Parent implements IContinue, ITurnObserver {
 
     protected final ITurnObservable aObservable;
     protected final Button aButton;
 
-    public deleteMoveContinue(ITurnObservable pObservable) {
+    public turnContinue(ITurnObservable pObservable) {
         aObservable = pObservable;
 
-        aButton = new Button("A cell has been killed");
+        aButton = new Button("You killed and created a cell. Go through generation.");
         aButton.setVisible(false);
 
         VBox vbox = new VBox(aButton);
@@ -27,7 +25,9 @@ public class deleteMoveContinue extends Parent implements IContinue, ITurnObserv
     }
 
     public void setVisibility() {
-        aButton.setVisible(aObservable.getStatusCellDeleted());
+        aButton.setVisible(
+                aObservable.getStatusCellDeleted() && aObservable.getStatusCellCreated()
+        );
     }
 
     public Button getButton() {
@@ -36,13 +36,15 @@ public class deleteMoveContinue extends Parent implements IContinue, ITurnObserv
 
     @Override
     public void stateCanDeleteChanged() {
-        if (aObservable.getStatusCellDeleted()) {
+        if (aObservable.getStatusCellDeleted() && aObservable.getStatusCellCreated()) {
             setVisibility();
         }
     }
 
     @Override
     public void stateCanCreateChanged() {
-
+        if (aObservable.getStatusCellDeleted() && aObservable.getStatusCellCreated()) {
+            setVisibility();
+        }
     }
 }

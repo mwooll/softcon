@@ -7,7 +7,7 @@ import gamemodel.Turn;
 import gui.fifthStage.CellCreateSetter;
 import gui.fifthStage.CellObserver;
 import gui.fifthStage.CellDeleteSetter;
-import gui.fifthStage.deleteMoveContinue;
+import gui.fifthStage.turnContinue;
 import gui.firstStage.*;
 import gui.secondStage.*;
 import gui.thirdStage.*;
@@ -310,11 +310,14 @@ public class HelloApplication extends Application {
                 col_ct ++;
             }
 
-            // Add Label telling if the moves have taken place or not
-            IContinue killContinue = new deleteMoveContinue(currentTurn);
-            aRoot.getChildren().add((Parent) killContinue);
-
-
+            // Add Button telling if the moves have taken place or not
+            IContinue turnContinue = new turnContinue(currentTurn);
+            aRoot.getChildren().add((Parent) turnContinue);
+            // Fetch the turnContinue button, calculate generation
+            Button turnContinueButton = turnContinue.getButton();
+            turnContinueButton.setOnAction((t) -> {
+                System.out.println("next turn!");
+            });
 
 
             // Add Grid to VBox aRoot
