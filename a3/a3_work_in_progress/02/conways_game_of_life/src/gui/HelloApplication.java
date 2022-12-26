@@ -338,6 +338,11 @@ public class HelloApplication extends Application {
                     }
                 }
                 aGameModel.playTurn();
+                Turn newTurn = aGameModel.getCurrentTurn();
+                Grid newGrid = newTurn.returnCurrentGrid();
+                Player newCurrentPlayer = newTurn.returnCurrentPlayer();
+                int newCurrentTurnNumber = currentTurn.returnCurrentTurnNumber();
+                currentTurn.refreshTurn(newCurrentPlayer, newGrid, newCurrentTurnNumber);
             });
 
 

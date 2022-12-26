@@ -12,8 +12,8 @@ import java.util.List;
 public class Turn implements ICellSetterObserver, ITurnObservable {
 
     private int aCurrentTurnNumber;
-    private final Player aCurrentPlayer;
-    private final Grid aCurrentGrid;
+    private Player aCurrentPlayer;
+    private Grid aCurrentGrid;
     private boolean aCellDeleted;
     private boolean aCellCreated;
     private final List<ITurnObserver> aObservers = new ArrayList<>();
@@ -28,16 +28,22 @@ public class Turn implements ICellSetterObserver, ITurnObservable {
         aCellCreated = false;
     }
 
-    public boolean hasLost() {
+    /**
+     * Refresh a turn instance to start a new turn
+     * @param pPlayer
+     * @param pGrid
+     * @param pNumber
+     */
+    public void refreshTurn(Player pPlayer, Grid pGrid, int pNumber) {
+        aCurrentPlayer = pPlayer;
+        aCurrentGrid = pGrid;
+        aCurrentTurnNumber = pNumber;
 
-        if (countCellsAlive() == 0) {
-            return true;
-        }
-        return false;
-    }
+        aCellDeleted = false;
+        aCellCreated = false;
 
-    public void updateGrid() {
-        // is this needed? The moves operations operate directly on the Cells
+        notifyObservers();
+
     }
 
     public Player returnCurrentPlayer() {
