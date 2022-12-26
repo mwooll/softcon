@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import player.PlayerColor;
 
 public class CellDeleteSetter extends Parent implements ISetter, ITurnObserver {
 
@@ -37,7 +38,10 @@ public class CellDeleteSetter extends Parent implements ISetter, ITurnObserver {
     };}
 
     boolean setVisibility() {
-        return aCell.getState() == aObserver.returnCurrentPlayer().getColor();
+        // Only cells that are not white and not of own color
+        PlayerColor currentCellColor = aCell.getState();
+        PlayerColor currentPlayerColor = aObserver.returnCurrentPlayer().getColor();
+        return currentCellColor != PlayerColor.WHITE && currentPlayerColor != currentCellColor;
     }
 
     @Override

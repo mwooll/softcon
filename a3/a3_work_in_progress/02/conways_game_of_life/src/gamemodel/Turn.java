@@ -28,10 +28,11 @@ public class Turn implements ICellSetterObserver, ITurnObservable {
         aCellCreated = false;
     }
 
-    public boolean hasWon() {
+    public boolean hasLost() {
 
-        // Check with grid of aCurrentPlayer if he has any cells left
-
+        if (countCellsAlive() == 0) {
+            return true;
+        }
         return false;
     }
 
@@ -42,9 +43,16 @@ public class Turn implements ICellSetterObserver, ITurnObservable {
     public Player returnCurrentPlayer() {
         return aCurrentPlayer;
     }
-
     public Grid returnCurrentGrid() {return aCurrentGrid;}
     public int returnCurrentTurnNumber() {return aCurrentTurnNumber;}
+
+    public int countCellsAlive() {
+        int nCellsAlive = 0;
+        for (Cell c : aCurrentGrid.getIterator()) {
+            if (c.getState() == aCurrentPlayer.getColor()) {nCellsAlive += 1;}
+        }
+        return nCellsAlive;
+    }
 
 
     @Override

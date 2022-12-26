@@ -5,6 +5,7 @@ import gui.ICellObserver;
 import initializer.GUIInitializer;
 import parser.IParser;
 import player.Player;
+import player.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,6 @@ public class GameModel {
 
     private int aCurrentTurnIndexPlayer;
     private Turn aCurrentTurn;
-
-    private List<ICellObserver> aCellObservers;
 
     public GameModel(GUIInitializer pInitializer, IParser pParser) {
 
@@ -47,8 +46,23 @@ public class GameModel {
 
     }
 
-    public void startGame() {
+    /**
+     * @param pPlayer for which player to check if he has lost
+     * @return True if Player pPlayer has lost, false otherwise
+     */
+    public boolean playerHasLost(Player pPlayer) {
+        PlayerColor playerColor = pPlayer.getColor();
+        return aGrid.getNumberOfMatchingCells(playerColor) == 0;
+    }
 
+    /**
+     * Return a list of all Players
+     * @return AS A LIST
+     */
+    public List<Player> getPlayers() {
+        List<Player> tmpList = new ArrayList<>();
+        aPlayers.stream().forEach(p -> tmpList.add(p));
+        return tmpList;
     }
 
     public void playTurn() {

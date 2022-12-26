@@ -268,6 +268,7 @@ public class HelloApplication extends Application {
 
         public FifthStage(GUIInitializer pInitializer) {
             aGameModel = new GameModel(pInitializer, new GameParser());
+            List<Player> aPlayers = aGameModel.getPlayers();
 
             VBox aRoot = new VBox();
 
@@ -285,7 +286,7 @@ public class HelloApplication extends Application {
             );
             aRoot.getChildren().add(labelExplanation);
 
-            // Create a turn, fetch the player and grid
+            // Create a turn, fetch the current player and grid
             aGameModel.playTurn();
             Turn currentTurn = aGameModel.getCurrentTurn();
             Grid currentGrid = currentTurn.returnCurrentGrid();
@@ -294,7 +295,10 @@ public class HelloApplication extends Application {
 
             // Add Label with current player and which turn it is
             Label labelTurn = new Label();
-            labelTurn.setText(String.format("Player %s Turn Number %s", currentPlayer.getName(), currentTurnNumber));
+            labelTurn.setText(String.format("Player %s with Color %s  -  Turn Number %s",
+                    currentPlayer.getName(),
+                    currentPlayer.getColor().getColorName(),
+                    currentTurnNumber));
             aRoot.getChildren().add(labelTurn);
 
             // Create the drawn Grid, add Cell observers, Add Cell Delete Setters
@@ -323,9 +327,18 @@ public class HelloApplication extends Application {
             aRoot.getChildren().add((Parent) turnContinue);
             // Fetch the turnContinue button, calculate generation
             Button turnContinueButton = turnContinue.getButton();
-            turnContinueButton.setOnAction((t) ->
-                System.out.println("next turn!")
-            );
+            turnContinueButton.setOnAction((t) -> {
+                System.out.println("do generation action!!!");
+                currentGrid.generateNextGeneration();
+                for (Player p : aPlayers) {
+                    if (aGameModel.playerHasLost(p)) {
+                        System.out.println(String.format("Player %s has lost! GAME OVER", p.getName()));
+                        this.close();
+                        // todo: Create final stage where you show the final grid and proclaim the winner.
+                    }
+                }
+                aGameModel.playTurn();
+            });
 
 
             // Add Grid to VBox aRoot
