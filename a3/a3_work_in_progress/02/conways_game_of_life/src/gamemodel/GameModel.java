@@ -11,10 +11,12 @@ import java.util.List;
 
 public class GameModel {
 
+
     public final int aHeight;
     public final int aWidth;
     private List<Player> aPlayers = new ArrayList<>();
-    public final Grid aGrid;
+    private int aTurnNumber = 0;
+    private final Grid aGrid;
     private final IParser aParser;
 
     private int aCurrentTurnIndexPlayer;
@@ -50,7 +52,9 @@ public class GameModel {
     }
 
     public void playTurn() {
-        aCurrentTurn = new Turn(aPlayers.get(aCurrentTurnIndexPlayer), aGrid);
+        // whenever CurrentTurnIndex is 0, increase by 1
+        if (aCurrentTurnIndexPlayer == 0) {aTurnNumber += 1;}
+        aCurrentTurn = new Turn(aPlayers.get(aCurrentTurnIndexPlayer), aGrid, aTurnNumber);
         if (aCurrentTurnIndexPlayer == 0) {
             aCurrentTurnIndexPlayer = 1;
         } else {

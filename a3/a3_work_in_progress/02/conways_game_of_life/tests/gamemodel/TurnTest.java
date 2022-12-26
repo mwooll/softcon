@@ -14,7 +14,7 @@ public class TurnTest {
     public void testConstructorAndGetters() {
         Player testPlayer = new Player("TestName", PlayerColor.MAGENTA);
         Grid testGrid = new Grid(5, 5);
-        Turn testTurn = new Turn(testPlayer, testGrid);
+        Turn testTurn = new Turn(testPlayer, testGrid, 0);
 
         assertEquals(testPlayer, testTurn.returnCurrentPlayer());
     }
@@ -23,7 +23,7 @@ public class TurnTest {
     public void testMakeBirthMove() {
         Player testPlayer = new Player("TestName", PlayerColor.MAGENTA);
         Grid testGrid = new Grid(5, 5);
-        Turn testTurn = new Turn(testPlayer, testGrid);
+        Turn testTurn = new Turn(testPlayer, testGrid, 0);
         Cell testCell = testGrid.getCell(2, 2);
 
         testTurn.makeBirthMove(testCell);
@@ -34,7 +34,7 @@ public class TurnTest {
     public void testMakeDeleteMove() {
         Player testPlayer = new Player("TestName", PlayerColor.MAGENTA);
         Grid testGrid = new Grid(5, 5);
-        Turn testTurn = new Turn(testPlayer, testGrid);
+        Turn testTurn = new Turn(testPlayer, testGrid, 0);
         Cell testCell = testGrid.getCell(2, 2);
 
         testTurn.makeBirthMove(testCell);

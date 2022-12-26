@@ -276,7 +276,7 @@ public class HelloApplication extends Application {
             aRoot.setPadding(new Insets(10));
             aRoot.setSpacing(8);
 
-            this.setTitle("Fifth Stage");
+            this.setTitle("Let's play the game!");
 
             // Add label explaining
             Label labelExplanation = new Label();
@@ -285,15 +285,23 @@ public class HelloApplication extends Application {
             );
             aRoot.getChildren().add(labelExplanation);
 
-            // play one turn
+            // Create a turn, fetch the player and grid
             aGameModel.playTurn();
             Turn currentTurn = aGameModel.getCurrentTurn();
+            Grid currentGrid = currentTurn.returnCurrentGrid();
+            Player currentPlayer = currentTurn.returnCurrentPlayer();
+            int currentTurnNumber = currentTurn.returnCurrentTurnNumber();
 
-            // Draw the Grid, add Cell observers, Add Cell Delete Setters
+            // Add Label with current player and which turn it is
+            Label labelTurn = new Label();
+            labelTurn.setText(String.format("Player %s Turn Number %s", currentPlayer.getName(), currentTurnNumber));
+            aRoot.getChildren().add(labelTurn);
+
+            // Create the drawn Grid, add Cell observers, Add Cell Delete Setters
             GridPane aGridPane = new GridPane();
             int row_ct = 1;
             int col_ct = 0;
-            for (Cell c : aGameModel.aGrid.getIterator()) {
+            for (Cell c : currentGrid.getIterator()) {
                 ICellObserver cObserver = new CellObserver(c);
                 ISetter cDeleteSetter = new CellDeleteSetter(currentTurn, c, currentTurn);
                 ISetter cCreateSetter = new CellCreateSetter(currentTurn, c, currentTurn);
@@ -315,9 +323,9 @@ public class HelloApplication extends Application {
             aRoot.getChildren().add((Parent) turnContinue);
             // Fetch the turnContinue button, calculate generation
             Button turnContinueButton = turnContinue.getButton();
-            turnContinueButton.setOnAction((t) -> {
-                System.out.println("next turn!");
-            });
+            turnContinueButton.setOnAction((t) ->
+                System.out.println("next turn!")
+            );
 
 
             // Add Grid to VBox aRoot

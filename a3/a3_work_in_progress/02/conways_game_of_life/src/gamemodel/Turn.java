@@ -2,24 +2,24 @@ package gamemodel;
 
 import cell.Cell;
 import cell.Grid;
-import gui.ICellObserver;
 import gui.ITurnObserver;
 import move.Moves;
 import player.Player;
-import player.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Turn implements ICellSetterObserver, ITurnObservable {
 
+    private int aCurrentTurnNumber;
     private final Player aCurrentPlayer;
     private final Grid aCurrentGrid;
     private boolean aCellDeleted;
     private boolean aCellCreated;
     private final List<ITurnObserver> aObservers = new ArrayList<>();
 
-    public Turn(Player pPlayer, Grid pGrid) {
+    public Turn(Player pPlayer, Grid pGrid, int pNumber) {
+        aCurrentTurnNumber = pNumber;
         aCurrentPlayer = pPlayer;
         aCurrentGrid = pGrid;
 
@@ -39,10 +39,13 @@ public class Turn implements ICellSetterObserver, ITurnObservable {
         // is this needed? The moves operations operate directly on the Cells
     }
 
-    @Override
     public Player returnCurrentPlayer() {
         return aCurrentPlayer;
     }
+
+    public Grid returnCurrentGrid() {return aCurrentGrid;}
+    public int returnCurrentTurnNumber() {return aCurrentTurnNumber;}
+
 
     @Override
     public void makeBirthMove(Cell pCell) {
