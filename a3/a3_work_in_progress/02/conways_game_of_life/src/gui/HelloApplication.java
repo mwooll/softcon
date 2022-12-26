@@ -380,6 +380,9 @@ public class HelloApplication extends Application {
                     tmpGrid.getCell(0,0).instantBirth(PlayerColor.BLUE);
                     tmpGrid.getCell(1,0).instantBirth(PlayerColor.BLUE);
                     tmpGrid.getCell(0,1).instantBirth(PlayerColor.BLUE);
+                    tmpGrid.getCell(1,1).instantBirth(PlayerColor.BLUE);
+                    tmpGrid.getCell(2,1).instantBirth(PlayerColor.BLUE);
+                    tmpGrid.getCell(1,2).instantBirth(PlayerColor.BLUE);
 
                     tmpGrid.getCell(5,7).instantBirth(PlayerColor.RED);
                     tmpGrid.getCell(6,7).instantBirth(PlayerColor.RED);
