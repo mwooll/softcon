@@ -1,8 +1,6 @@
 package gui.thirdStage;
 
-import gamemodel.GameModel;
 import gui.ISetter;
-import initializer.InitializerObservable;
 import initializer.InitializerObserver;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

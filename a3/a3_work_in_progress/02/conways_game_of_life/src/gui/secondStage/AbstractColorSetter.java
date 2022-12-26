@@ -1,6 +1,5 @@
 package gui.secondStage;
 
-import gamemodel.GameModel;
 import gui.ISetter;
 import initializer.InitializerObserver;
 import javafx.collections.FXCollections;
@@ -10,7 +9,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import player.PlayerColor;
 
 import java.util.List;

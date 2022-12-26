@@ -1,11 +1,9 @@
 package gui;
 
-import gamemodel.GameModel;
 import initializer.InitializerObservable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 public class AbstractContinue extends Parent implements IContinue {
 

@@ -2,7 +2,7 @@ package gui;
 
 import cell.*;
 
-import gamemodel.GameModelNew;
+import gamemodel.GameModel;
 import gamemodel.Turn;
 import gui.fifthStage.CellCreateSetter;
 import gui.fifthStage.CellObserver;
@@ -264,10 +264,10 @@ public class HelloApplication extends Application {
 
     public static class FifthStage extends Stage {
 
-        private final GameModelNew aGameModel;
+        private final GameModel aGameModel;
 
         public FifthStage(GUIInitializer pInitializer) {
-            aGameModel = new GameModelNew(pInitializer, new GameParser());
+            aGameModel = new GameModel(pInitializer, new GameParser());
 
             VBox aRoot = new VBox();
 

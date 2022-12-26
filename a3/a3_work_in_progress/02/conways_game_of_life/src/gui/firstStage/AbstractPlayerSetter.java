@@ -1,6 +1,5 @@
 package gui.firstStage;
 
-import gamemodel.GameModel;
 import gui.ISetter;
 import initializer.InitializerObserver;
 import javafx.event.ActionEvent;
@@ -10,9 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public abstract class AbstractPlayerSetter extends Parent implements ISetter {
 

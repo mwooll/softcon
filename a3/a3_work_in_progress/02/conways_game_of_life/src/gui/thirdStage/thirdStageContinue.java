@@ -1,6 +1,5 @@
 package gui.thirdStage;
 
-import gamemodel.GameModel;
 import gui.AbstractContinue;
 import initializer.InitializerObservable;
 

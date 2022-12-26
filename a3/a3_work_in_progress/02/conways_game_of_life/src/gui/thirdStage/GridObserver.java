@@ -1,6 +1,5 @@
 package gui.thirdStage;
 
-import gamemodel.GameModel;
 import gui.IGridObserver;
 import initializer.InitializerObservable;
 import javafx.scene.Parent;
