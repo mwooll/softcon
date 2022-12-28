@@ -1,7 +1,7 @@
 package gui.secondStage;
 
 import gui.ISetter;
-import initializer.InitializerObserver;
+import initializer.IInitializerSetterObserver;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,13 +19,13 @@ public class AbstractColorSetter extends Parent implements ISetter {
 
     private final List<String> allPlayerColors = Stream.of(PlayerColor.values()).map(PlayerColor::getColorName).filter(p -> !p.equals("White") && !p.equals("Black")).collect(Collectors.toList());
     protected final ObservableList<String> OPTIONS = FXCollections.observableArrayList(allPlayerColors);
-    protected InitializerObserver aObserver;
+    protected IInitializerSetterObserver aObserver;
     protected final Label aLabel = new Label();
     protected final ComboBox<String> aComboBox = new ComboBox<>(OPTIONS);
 
     protected String aName;
 
-    public AbstractColorSetter(InitializerObserver pObserver, String pName) {
+    public AbstractColorSetter(IInitializerSetterObserver pObserver, String pName) {
 
         aObserver = pObserver;
         aName = pName;

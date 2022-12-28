@@ -4,8 +4,9 @@ import initializer.InitializerObservable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import player.PlayerColor;
 
-public class AbstractContinue extends Parent implements IContinue {
+public class AbstractContinue extends Parent implements IContinue, IInitializerObserver {
 
     protected final InitializerObservable aObservable;
     protected final Button aButton;
@@ -20,12 +21,27 @@ public class AbstractContinue extends Parent implements IContinue {
         VBox vbox = new VBox(aButton);
         getChildren().add(vbox);
 
-        aObservable.addContinueObserver(this);
+        aObservable.addObserver(this);
 
     }
 
     @Override
-    public void setVisibility(){aButton.setVisible(false);};
+    public void nameIsSet(String pName, int pIndex) {}
+
+    @Override
+    public void colorIsSet(PlayerColor pPlayerColor, String pName) {}
+
+    @Override
+    public void heightIsSet(int pHeight) {}
+
+    @Override
+    public void widthIsSet(int pWidth) {}
+
+    @Override
+    public void setVisibility(){aButton.setVisible(false);}
+
+    @Override
+    public void cellIsChosen() {}
 
     @Override
     public Button getButton(){return aButton;}

@@ -1,7 +1,7 @@
 package gui.firstStage;
 
 import gui.ISetter;
-import initializer.InitializerObserver;
+import initializer.IInitializerSetterObserver;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -12,7 +12,7 @@ import javafx.scene.layout.HBox;
 
 public abstract class AbstractPlayerSetter extends Parent implements ISetter {
 
-    protected InitializerObserver aObserver;
+    protected IInitializerSetterObserver aObserver;
     protected final Label aLabel = new Label();
     protected final TextField aTextField = new TextField();
     protected final Button aButton = new Button("Set");
@@ -21,7 +21,7 @@ public abstract class AbstractPlayerSetter extends Parent implements ISetter {
     protected String aDefaultText;
     protected String aCurrentText;
 
-    public AbstractPlayerSetter(InitializerObserver pObserver, int pIndex) {
+    public AbstractPlayerSetter(IInitializerSetterObserver pObserver, int pIndex) {
         aObserver = pObserver;
         aIndex = pIndex;
         aDefaultText = DEFAULT_TEXT;

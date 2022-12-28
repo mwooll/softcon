@@ -1,11 +1,8 @@
 package initializer;
 
-import javafx.scene.paint.Color;
 import player.PlayerColor;
 
-import java.util.List;
-
-public interface InitializerObserver {
+public interface IInitializerSetterObserver {
 
     boolean validatePlayerName(String pPlayerName);
 
@@ -20,5 +17,7 @@ public interface InitializerObserver {
     void setPlayerColor(PlayerColor pPlayerColor, String pPlayerName);
 
     void setGridDimension(int pValue, String pIdentifier);
+
+    void setCellChosen();
 
 }

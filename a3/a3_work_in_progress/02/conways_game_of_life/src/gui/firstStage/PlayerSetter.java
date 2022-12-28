@@ -1,10 +1,10 @@
 package gui.firstStage;
 
-import initializer.InitializerObserver;
+import initializer.IInitializerSetterObserver;
 
 public class PlayerSetter extends AbstractPlayerSetter {
 
-    public PlayerSetter(InitializerObserver pObserver, int pIndex) {
+    public PlayerSetter(IInitializerSetterObserver pObserver, int pIndex) {
         super(pObserver, pIndex);
     }
 

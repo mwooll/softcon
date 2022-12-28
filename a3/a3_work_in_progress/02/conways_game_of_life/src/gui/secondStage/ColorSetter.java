@@ -1,10 +1,10 @@
 package gui.secondStage;
 
-import initializer.InitializerObserver;
+import initializer.IInitializerSetterObserver;
 
 public class ColorSetter extends AbstractColorSetter {
 
-    public ColorSetter(InitializerObserver pObserver, String pName) {
+    public ColorSetter(IInitializerSetterObserver pObserver, String pName) {
         super(pObserver, pName);
     }
 

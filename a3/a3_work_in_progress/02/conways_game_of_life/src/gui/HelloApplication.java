@@ -54,8 +54,8 @@ public class HelloApplication extends Application {
             this.setTitle("First Stage");
 
             // Create Player Name Observers
-            IPlayerObserver po0 = new PlayerObserver(aInitializer, 0);
-            IPlayerObserver po1 = new PlayerObserver(aInitializer, 1);
+            IInitializerObserver po0 = new PlayerObserver(aInitializer, 0);
+            IInitializerObserver po1 = new PlayerObserver(aInitializer, 1);
             aRoot.add((Parent) po0, 0, 0);
             aRoot.add((Parent) po1, 0, 1);
 
@@ -163,8 +163,8 @@ public class HelloApplication extends Application {
             aRoot.add(labelExplanation, 0, 0);
 
             // Create Grid Observers
-            IGridObserver go0 = new GridObserver(aInitializer, "H");
-            IGridObserver go1 = new GridObserver(aInitializer, "W");
+            IInitializerObserver go0 = new GridObserver(aInitializer, "H");
+            IInitializerObserver go1 = new GridObserver(aInitializer, "W");
             aRoot.add((Parent) go0, 0, 1);
             aRoot.add((Parent) go1, 0, 2);
 
@@ -212,9 +212,10 @@ public class HelloApplication extends Application {
             this.setTitle("Choosing initial grid configuration");
 
             // Create the grid with empty cells
-            Grid aInitialGrid = aInitializer.createStartingConfiguration();
+            aInitializer.createStartingConfiguration();
+            Grid aInitialGrid = aInitializer.getGrid();
 
-            // Add label explaining
+                    // Add label explaining
             Label labelExplanation = new Label();
             labelExplanation.setText(
                     String.format("Choose initial grid configuration. The complete grid will be two times what you see now\nBoth players will have the same mirrored configuration.")
@@ -309,7 +310,11 @@ public class HelloApplication extends Application {
             );
             aRoot.getChildren().add(labelExplanation);
 
-            // Play the first turn
+            // Play the first turn, end game directly if someone has lost already by faulty starting config
+            if (aGameModel.hasAPlayerLost()) {
+                this.close();
+                new FinalStage(aGameModel);
+            }
             aGameModel.playTurn();
 
             // Add Label with current player and which turn it is
@@ -355,8 +360,11 @@ public class HelloApplication extends Application {
             // Add Grid to VBox aRoot
             aRoot.getChildren().add(aGridPane);
 
-            this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
-            this.show();
+            // only show if not over already
+            if (!aGameModel.hasAPlayerLost()) {
+                this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
+                this.show();
+            }
 
         }
 
@@ -421,7 +429,7 @@ public class HelloApplication extends Application {
             public testGUIInitializer(IParser pParser) {
 
                 super(pParser);
-//                this.createStartingConfiguration();
+                this.createStartingConfiguration();
 
             }
 
@@ -432,25 +440,30 @@ public class HelloApplication extends Application {
 //                        new Player("adam", PlayerColor.BLUE));
 //            }
 
-//            @Override
-//            public Grid createStartingConfiguration() {
-//                    Grid tmpGrid = new Grid(20,20);
+            @Override
+            public Grid createStartingConfiguration() {
+                    Grid tmpGrid = new Grid(aGridW,aGridH);
+
+//                    // Add for both players some coloured cells
+//                    List<Player> tmpPlayers = getPlayers();
+//                    PlayerColor pc1 = getPlayers().get(0).getColor();
+//                    PlayerColor pc2 = getPlayers().get(1).getColor();
 //
-//                    tmpGrid.getCell(0,0).instantBirth(PlayerColor.BLUE);
-//                    tmpGrid.getCell(1,0).instantBirth(PlayerColor.BLUE);
-//                    tmpGrid.getCell(0,1).instantBirth(PlayerColor.BLUE);
-//                    tmpGrid.getCell(1,1).instantBirth(PlayerColor.BLUE);
-//                    tmpGrid.getCell(2,1).instantBirth(PlayerColor.BLUE);
-//                    tmpGrid.getCell(1,2).instantBirth(PlayerColor.BLUE);
+//                    tmpGrid.getCell(0,0).instantBirth(pc1);
+//                    tmpGrid.getCell(1,0).instantBirth(pc1);
+//                    tmpGrid.getCell(0,1).instantBirth(pc1);
+//                    tmpGrid.getCell(1,1).instantBirth(pc1);
+//                    tmpGrid.getCell(2,1).instantBirth(pc1);
+//                    tmpGrid.getCell(1,2).instantBirth(pc1);
 //
-//                    tmpGrid.getCell(5,7).instantBirth(PlayerColor.RED);
-//                    tmpGrid.getCell(6,7).instantBirth(PlayerColor.RED);
-//                    tmpGrid.getCell(7,4).instantBirth(PlayerColor.RED);
-//
-//                    aInitialGrid = tmpGrid;
-//                    return null;
-//
-//            }
+//                    tmpGrid.getCell(5,7).instantBirth(pc2);
+//                    tmpGrid.getCell(6,7).instantBirth(pc2);
+//                    tmpGrid.getCell(7,4).instantBirth(pc2);
+
+                    aInitialGrid = tmpGrid;
+                    return null;
+
+            }
         }
         GUIInitializer guiInit = new testGUIInitializer(initParser) {};
 //        GUIInitializer guiInit = new GUIInitializer(initParser) {};

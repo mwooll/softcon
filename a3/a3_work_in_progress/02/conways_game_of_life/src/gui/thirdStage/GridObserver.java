@@ -1,12 +1,13 @@
 package gui.thirdStage;
 
-import gui.IGridObserver;
+import gui.IInitializerObserver;
 import initializer.InitializerObservable;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import player.PlayerColor;
 
-public class GridObserver extends Parent implements IGridObserver {
+public class GridObserver extends Parent implements IInitializerObserver {
 
     private final InitializerObservable aObservable;
     private String aIdentifier;
@@ -22,10 +23,9 @@ public class GridObserver extends Parent implements IGridObserver {
         VBox vbox = new VBox(text);
         getChildren().add(vbox);
 
-        aObservable.addGridObserver(this);
+        aObservable.addObserver(this);
 
     }
-
     @Override
     public void heightIsSet(int pHeight) {
         if (aIdentifier.equals("H")) {
@@ -55,5 +55,14 @@ public class GridObserver extends Parent implements IGridObserver {
             text.setText(String.format("%s : %s", aIdentifier, pHeightString));
         }
     }
+
+    @Override
+    public void nameIsSet(String pName, int pIndex) {}
+    @Override
+    public void colorIsSet(PlayerColor pPlayerColor, String pName) {}
+    @Override
+    public void setVisibility() {}
+    @Override
+    public void cellIsChosen() {}
 
 }

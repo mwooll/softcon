@@ -1,7 +1,7 @@
 package gui.thirdStage;
 
 import gui.ISetter;
-import initializer.InitializerObserver;
+import initializer.IInitializerSetterObserver;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -12,7 +12,7 @@ import javafx.scene.layout.HBox;
 
 public class AbstractGridSetter extends Parent implements ISetter {
 
-    protected InitializerObserver aObserver;
+    protected IInitializerSetterObserver aObserver;
     protected final Label aLabel = new Label();
     protected final Label aLabelButton = new Label();
     protected final TextField aTextField = new TextField();
@@ -20,7 +20,7 @@ public class AbstractGridSetter extends Parent implements ISetter {
     protected final String aDefaultText = "Set ";
     protected final String aIdentifier;
 
-    public AbstractGridSetter(InitializerObserver pObserver, String pIdentifier) {
+    public AbstractGridSetter(IInitializerSetterObserver pObserver, String pIdentifier) {
 
         aObserver = pObserver;
         aIdentifier = pIdentifier;

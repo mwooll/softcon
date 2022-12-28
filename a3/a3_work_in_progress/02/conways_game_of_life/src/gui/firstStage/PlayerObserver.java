@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import player.PlayerColor;
 
-public class PlayerObserver extends Parent implements IPlayerObserver {
+public class PlayerObserver extends Parent implements IInitializerObserver {
 
     private final InitializerObservable aObservable;
     private final int aIndex;
@@ -27,7 +27,7 @@ public class PlayerObserver extends Parent implements IPlayerObserver {
         VBox vbox = new VBox(text);
         getChildren().add(vbox);
 
-        aObservable.addPlayerObserver(this);
+        aObservable.addObserver(this);
 
     }
 
@@ -39,7 +39,18 @@ public class PlayerObserver extends Parent implements IPlayerObserver {
     }
 
     @Override
-    public void colorIsSet(PlayerColor pPlayerColor, String pName) {};
+    public void colorIsSet(PlayerColor pPlayerColor, String pName) {}
 
+    @Override
+    public void heightIsSet(int pHeight) {}
+
+    @Override
+    public void widthIsSet(int pWidth) {}
+
+    @Override
+    public void setVisibility() {}
+
+    @Override
+    public void cellIsChosen() {}
 
 }

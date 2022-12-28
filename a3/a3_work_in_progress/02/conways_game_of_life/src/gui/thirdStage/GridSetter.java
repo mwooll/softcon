@@ -1,10 +1,10 @@
 package gui.thirdStage;
 
-import initializer.InitializerObserver;
+import initializer.IInitializerSetterObserver;
 
 public class GridSetter extends AbstractGridSetter {
 
-    public GridSetter(InitializerObserver pObserver, String pIdentifier) {
+    public GridSetter(IInitializerSetterObserver pObserver, String pIdentifier) {
         super(pObserver, pIdentifier);
     }
 
