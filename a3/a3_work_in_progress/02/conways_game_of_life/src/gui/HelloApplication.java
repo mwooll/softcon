@@ -202,26 +202,53 @@ public class HelloApplication extends Application {
 
             aInitializer = pInitializer;
 
-            GridPane aRoot = new GridPane();
+            VBox aRoot = new VBox();
 
-            aRoot.setGridLinesVisible(true);
             aRoot.setStyle("-fx-background-color: white");
-            aRoot.setHgap(MARGIN_OUTER);
-            aRoot.setVgap(MARGIN_OUTER);
-            aRoot.setPadding(new Insets(MARGIN_OUTER));
+            aRoot.setStyle("-fx-border-color: black");
+            aRoot.setPadding(new Insets(10));
+            aRoot.setSpacing(8);
 
-            this.setTitle("Fourth Stage");
+            this.setTitle("Choosing initial grid configuration");
+
+            // Create the grid with empty cells
+            Grid aInitialGrid = aInitializer.createStartingConfiguration();
 
             // Add label explaining
             Label labelExplanation = new Label();
             labelExplanation.setText(
-                    String.format("The System chooses an initial symmetric configuration for both players ...")
+                    String.format("Choose initial grid configuration. The complete grid will be two times what you see now\nBoth players will have the same mirrored configuration.")
             );
-            aRoot.add(labelExplanation, 0, 0);
+            aRoot.getChildren().add(labelExplanation);
 
 
-            // Create the grid with the cells
-            aInitializer.createStartingConfiguration();
+
+
+            // Draw the grid
+            GridPane aGridPane = new GridPane();
+            int row_ct = 1;
+            int col_ct = 0;
+            for (Cell c : aInitialGrid.getIterator()) {
+                ICellObserver cObserver = new CellObserver(c);
+//                ISetter cChooseSetter = new CellChooseSetter(c);
+                if (col_ct%aInitialGrid.getWidth() == 0) {
+                    row_ct++;
+                    col_ct = 0;
+                }
+                aGridPane.add((Parent) cObserver, col_ct, row_ct);
+
+                // For each cell, place a vbox with two setters in there
+//                VBox vbox = new VBox((Parent) cChooseSetter);
+//                aGridPane.add(vbox, col_ct, row_ct);
+
+                col_ct ++;
+            }
+
+            // Add Grid to VBox aRoot
+            aRoot.getChildren().add(aGridPane);
+
+
+
 
 //            // Printer for debugging
 //            Grid currentInitialGrid = aInitializer.getGrid();
@@ -241,7 +268,7 @@ public class HelloApplication extends Application {
 
             // Create Continue Button
             IContinue cont = new fourthStageContinue(aInitializer);
-            aRoot.add((Parent) cont, 0, 5);
+            aRoot.getChildren().add((Parent) cont);
 
             // Fetch the continue button, continue to second stage
             Button continueButton = cont.getButton();
@@ -264,8 +291,6 @@ public class HelloApplication extends Application {
 
         public FifthStage(GUIInitializer pInitializer) {
             aGameModel = new GameModel(pInitializer, new GameParser());
-            List<Player> aPlayers = aGameModel.returnPlayers();
-            Player aCurrentPlayer = aGameModel.returnCurrentPlayer();
             Grid aGrid = aGameModel.returnGrid();
 
             VBox aRoot = new VBox();
@@ -321,7 +346,7 @@ public class HelloApplication extends Application {
                 System.out.println("do generation action!!!");
                 aGrid.generateNextGeneration();
                 if (aGameModel.hasAPlayerLost()) {
-                    new finalStage(aGameModel);
+                    new FinalStage(aGameModel);
                     this.close();
                 }
                 aGameModel.playTurn();
@@ -337,11 +362,11 @@ public class HelloApplication extends Application {
 
     }
 
-    public static class finalStage extends Stage {
+    public static class FinalStage extends Stage {
 
         private final GameModel aGameModel;
 
-        public finalStage(GameModel pGameModel) {
+        public FinalStage(GameModel pGameModel) {
             aGameModel = pGameModel;
             Grid aGrid = aGameModel.returnGrid();
 
@@ -396,36 +421,36 @@ public class HelloApplication extends Application {
             public testGUIInitializer(IParser pParser) {
 
                 super(pParser);
-                this.createStartingConfiguration();
+//                this.createStartingConfiguration();
 
             }
 
-            @Override
-            public List<Player> getPlayers() {
-                return Arrays.asList(
-                        new Player("bob", PlayerColor.RED),
-                        new Player("adam", PlayerColor.BLUE));
-            }
+//            @Override
+//            public List<Player> getPlayers() {
+//                return Arrays.asList(
+//                        new Player("bob", PlayerColor.RED),
+//                        new Player("adam", PlayerColor.BLUE));
+//            }
 
-            @Override
-            public Grid createStartingConfiguration() {
-                    Grid tmpGrid = new Grid(20,20);
-
-                    tmpGrid.getCell(0,0).instantBirth(PlayerColor.BLUE);
-                    tmpGrid.getCell(1,0).instantBirth(PlayerColor.BLUE);
-                    tmpGrid.getCell(0,1).instantBirth(PlayerColor.BLUE);
-                    tmpGrid.getCell(1,1).instantBirth(PlayerColor.BLUE);
-                    tmpGrid.getCell(2,1).instantBirth(PlayerColor.BLUE);
-                    tmpGrid.getCell(1,2).instantBirth(PlayerColor.BLUE);
-
-                    tmpGrid.getCell(5,7).instantBirth(PlayerColor.RED);
-                    tmpGrid.getCell(6,7).instantBirth(PlayerColor.RED);
-                    tmpGrid.getCell(7,4).instantBirth(PlayerColor.RED);
-
-                    aInitialGrid = tmpGrid;
-                    return null;
-
-            }
+//            @Override
+//            public Grid createStartingConfiguration() {
+//                    Grid tmpGrid = new Grid(20,20);
+//
+//                    tmpGrid.getCell(0,0).instantBirth(PlayerColor.BLUE);
+//                    tmpGrid.getCell(1,0).instantBirth(PlayerColor.BLUE);
+//                    tmpGrid.getCell(0,1).instantBirth(PlayerColor.BLUE);
+//                    tmpGrid.getCell(1,1).instantBirth(PlayerColor.BLUE);
+//                    tmpGrid.getCell(2,1).instantBirth(PlayerColor.BLUE);
+//                    tmpGrid.getCell(1,2).instantBirth(PlayerColor.BLUE);
+//
+//                    tmpGrid.getCell(5,7).instantBirth(PlayerColor.RED);
+//                    tmpGrid.getCell(6,7).instantBirth(PlayerColor.RED);
+//                    tmpGrid.getCell(7,4).instantBirth(PlayerColor.RED);
+//
+//                    aInitialGrid = tmpGrid;
+//                    return null;
+//
+//            }
         }
         GUIInitializer guiInit = new testGUIInitializer(initParser) {};
 //        GUIInitializer guiInit = new GUIInitializer(initParser) {};

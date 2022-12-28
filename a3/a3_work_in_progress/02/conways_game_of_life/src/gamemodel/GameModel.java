@@ -94,22 +94,17 @@ public class GameModel implements IGameModelObservable, ICellSetterObserver {
         }
     }
 
-    /**
-     * Return a list of all Players
-     * @return AS A LIST
-     */
-    public List<Player> returnPlayers() {
-        List<Player> tmpList = new ArrayList<>();
-        aPlayers.stream().forEach(p -> tmpList.add(p));
-        return tmpList;
-    }
+
 
     public Grid returnGrid() {return aGrid;}
 
+    @Override
     public Player returnCurrentPlayer() {
         return aCurrentPlayer;
     }
     public int returnCurrentTurnNumber() {return aTurnNumber;}
+
+
 
     public void playTurn() {
 
