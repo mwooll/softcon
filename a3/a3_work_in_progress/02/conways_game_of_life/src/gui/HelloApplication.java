@@ -404,46 +404,7 @@ public class HelloApplication extends Application {
 
         IParser initParser = new InitializerParser();
 
-        class testGUIInitializer extends GUIInitializer {
 
-            public testGUIInitializer(IParser pParser) {
-
-                super(pParser);
-                this.createStartingConfiguration();
-
-            }
-
-//            @Override
-//            public List<Player> getPlayers() {
-//                return Arrays.asList(
-//                        new Player("bob", PlayerColor.RED),
-//                        new Player("adam", PlayerColor.BLUE));
-//            }
-
-            @Override
-            public void createStartingConfiguration() {
-                    Grid tmpGrid = new Grid(aGridW,aGridH);
-
-//                    // Add for both players some coloured cells
-//                    List<Player> tmpPlayers = getPlayers();
-//                    PlayerColor pc1 = getPlayers().get(0).getColor();
-//                    PlayerColor pc2 = getPlayers().get(1).getColor();
-//
-//                    tmpGrid.getCell(0,0).instantBirth(pc1);
-//                    tmpGrid.getCell(1,0).instantBirth(pc1);
-//                    tmpGrid.getCell(0,1).instantBirth(pc1);
-//                    tmpGrid.getCell(1,1).instantBirth(pc1);
-//                    tmpGrid.getCell(2,1).instantBirth(pc1);
-//                    tmpGrid.getCell(1,2).instantBirth(pc1);
-//
-//                    tmpGrid.getCell(5,7).instantBirth(pc2);
-//                    tmpGrid.getCell(6,7).instantBirth(pc2);
-//                    tmpGrid.getCell(7,4).instantBirth(pc2);
-
-                    aInitialGrid = tmpGrid;
-
-            }
-        }
 //        GUIInitializer guiInit = new testGUIInitializer(initParser) {};
         GUIInitializer guiInit = new GUIInitializer(initParser) {};
 
