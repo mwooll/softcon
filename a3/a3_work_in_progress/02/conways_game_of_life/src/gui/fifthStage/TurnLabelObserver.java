@@ -39,12 +39,8 @@ public class TurnLabelObserver extends Parent implements IGameModelObserver {
     }
 
     @Override
-    public void stateCanDeleteChanged() {
-
-    }
+    public void stateCanDeleteChanged() {}
 
     @Override
-    public void stateCanCreateChanged() {
-
-    }
+    public void stateCanCreateChanged() {}
 }

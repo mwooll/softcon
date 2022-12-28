@@ -153,7 +153,6 @@ public class Grid {
 
     /**
      * 0 Indexed
-     * @throws IndexOutOfBoundsException when the indices are out of bounds
      * @pre pRow and pCol must be bigger than 0
      * @return The Cell at row pRow and col pCol
      */

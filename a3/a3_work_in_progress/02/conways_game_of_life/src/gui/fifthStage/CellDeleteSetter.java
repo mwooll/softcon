@@ -58,7 +58,9 @@ public class CellDeleteSetter extends Parent implements ISetter, IGameModelObser
     public void stateCanCreateChanged() {}
 
     @Override
-    public void currentPlayerChanged() {}
+    public void currentPlayerChanged() {
+        aButton.setVisible(setVisibility());
+    }
 
     @Override
     public void stateChanged() {

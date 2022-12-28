@@ -136,7 +136,7 @@ public class HelloApplication extends Application {
         }
 
     }
-//
+
     public static class ThirdStage extends Stage {
 
         private final GUIInitializer aInitializer;
@@ -193,7 +193,7 @@ public class HelloApplication extends Application {
         }
 
     }
-//
+
     public static class FourthStage extends Stage {
 
         private final GUIInitializer aInitializer;
@@ -321,45 +321,59 @@ public class HelloApplication extends Application {
                 System.out.println("do generation action!!!");
                 aGrid.generateNextGeneration();
                 if (aGameModel.hasAPlayerLost()) {
-                    String whoWon = aGameModel.determineWinner();
-                    System.out.println(whoWon);
+                    new finalStage(aGameModel);
                     this.close();
-                    // todo: Create final stage where you show the final grid and proclaim the winner.
                 }
                 aGameModel.playTurn();
             });
 
-//            // play the game for as long as nobody lost
-//            // Check if anybody lost, if so end this stage
-//            if (aGameModel.hasAPlayerLost()) {
-//                // get the string of the player who lost and go to next stage
-//                String whoWon = aGameModel.determineWinner();
-//                // todo: Go to final stage ending the game
-//            }
-//
-//            // Add Button telling if the moves have taken place or not
-//            IContinue turnContinue = new turnContinue(currentTurn);
-//            aRoot.getChildren().add((Parent) turnContinue);
-//            // Fetch the turnContinue button, calculate generation
-//            Button turnContinueButton = turnContinue.getButton();
-//            turnContinueButton.setOnAction((t) -> {
-//                System.out.println("do generation action!!!");
-//                currentGrid.generateNextGeneration();
-//                for (Player p : aPlayers) {
-//                    if (aGameModel.playerHasLost(p)) {
-//                        System.out.println(String.format("Player %s has lost! GAME OVER", p.getName()));
-//                        this.close();
-//                        // todo: Create final stage where you show the final grid and proclaim the winner.
-//                    }
-//                }
-//                aGameModel.playTurn();
-//                Turn newTurn = aGameModel.getCurrentTurn();
-//                Grid newGrid = newTurn.returnCurrentGrid();
-//                Player newCurrentPlayer = newTurn.returnCurrentPlayer();
-//                int newCurrentTurnNumber = currentTurn.returnCurrentTurnNumber();
-//                currentTurn.refreshTurn(newCurrentPlayer, newGrid, newCurrentTurnNumber);
-//            });
+            // Add Grid to VBox aRoot
+            aRoot.getChildren().add(aGridPane);
 
+            this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
+            this.show();
+
+        }
+
+    }
+
+    public static class finalStage extends Stage {
+
+        private final GameModel aGameModel;
+
+        public finalStage(GameModel pGameModel) {
+            aGameModel = pGameModel;
+            Grid aGrid = aGameModel.returnGrid();
+
+            VBox aRoot = new VBox();
+
+            aRoot.setStyle("-fx-background-color: white");
+            aRoot.setStyle("-fx-border-color: black");
+            aRoot.setPadding(new Insets(10));
+            aRoot.setSpacing(8);
+
+            this.setTitle("Game over. Final Board:");
+
+            // Add label explaining
+            Label labelExplanation = new Label();
+            labelExplanation.setText(
+                    String.format(aGameModel.determineWinner())
+            );
+            aRoot.getChildren().add(labelExplanation);
+
+            // Draw the grid
+            GridPane aGridPane = new GridPane();
+            int row_ct = 2;
+            int col_ct = 0;
+            for (Cell c : aGrid.getIterator()) {
+                ICellObserver cObserver = new CellObserver(c);
+                if (col_ct%aGameModel.aWidth == 0) {
+                    row_ct++;
+                    col_ct = 0;
+                }
+                aGridPane.add((Parent) cObserver, col_ct, row_ct);
+                col_ct ++;
+            }
 
             // Add Grid to VBox aRoot
             aRoot.getChildren().add(aGridPane);
@@ -389,13 +403,13 @@ public class HelloApplication extends Application {
             @Override
             public List<Player> getPlayers() {
                 return Arrays.asList(
-                        new Player("player1", PlayerColor.RED),
-                        new Player("player2", PlayerColor.BLUE));
+                        new Player("bob", PlayerColor.RED),
+                        new Player("adam", PlayerColor.BLUE));
             }
 
             @Override
             public Grid createStartingConfiguration() {
-                    Grid tmpGrid = new Grid(10,10);
+                    Grid tmpGrid = new Grid(20,20);
 
                     tmpGrid.getCell(0,0).instantBirth(PlayerColor.BLUE);
                     tmpGrid.getCell(1,0).instantBirth(PlayerColor.BLUE);
@@ -414,9 +428,10 @@ public class HelloApplication extends Application {
             }
         }
         GUIInitializer guiInit = new testGUIInitializer(initParser) {};
+//        GUIInitializer guiInit = new GUIInitializer(initParser) {};
 
-//        new FirstStage(guiInit);
-        new FifthStage(guiInit);
+        new FirstStage(guiInit);
+//        new FifthStage(guiInit);
 
     }
 

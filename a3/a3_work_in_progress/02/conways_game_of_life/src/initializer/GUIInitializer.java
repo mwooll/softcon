@@ -17,8 +17,8 @@ import java.util.stream.Stream;
 
 public abstract class GUIInitializer implements Initializer, InitializerObservable, InitializerObserver {
 
-    private final int MIN_SIZE = 3;
-    private final int MAX_SIZE = 10;
+    private final int MIN_SIZE = 10;
+    private final int MAX_SIZE = 40;
     private final int N_PLAYERS = 2;
 //    private final List<String> aPlayers = Arrays.asList(new String[N_PLAYERS]);
 //    private final List<Color> aColors = Arrays.asList(new Color[N_PLAYERS]);

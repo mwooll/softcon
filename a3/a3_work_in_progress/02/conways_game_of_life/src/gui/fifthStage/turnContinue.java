@@ -49,5 +49,7 @@ public class turnContinue extends Parent implements IContinue, IGameModelObserve
     }
 
     @Override
-    public void currentPlayerChanged() {}
+    public void currentPlayerChanged() {
+        setVisibility();
+    }
 }

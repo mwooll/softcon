@@ -55,7 +55,9 @@ public class CellCreateSetter extends Parent implements ISetter, IGameModelObser
     }
 
     @Override
-    public void currentPlayerChanged() {}
+    public void currentPlayerChanged() {
+        aButton.setVisible(setVisibility());
+    }
 
     @Override
     public void stateChanged() {
