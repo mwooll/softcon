@@ -3,11 +3,14 @@ package cell;
 import gui.ICellObserver;
 import player.PlayerColor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cell implements ICellObservable {
     private PlayerColor currentState;
     private PlayerColor nextState;
     private boolean changedState;
-    private ICellObserver aObserver;
+    private List<ICellObserver> aObservers = new ArrayList<>();
 
     private boolean lives;
 
@@ -92,11 +95,13 @@ public class Cell implements ICellObservable {
 
     @Override
     public void addObserver(ICellObserver pObserver) {
-        aObserver = pObserver;
+        aObservers.add(pObserver);
     }
 
     @Override
     public void notifyObserver() {
-        if (aObserver != null) {aObserver.stateChanged();}
+        for (ICellObserver observer : aObservers) {
+            observer.stateChanged();
+        }
     }
 }

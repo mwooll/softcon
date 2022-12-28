@@ -23,12 +23,7 @@ public class Player {
     }
 
     public static Comparator<Player> nameComparator() {
-        return new Comparator<Player>() {
-            @Override
-            public int compare(Player o1, Player o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        };
+        return Comparator.comparing(Player::getName);
     }
 
     public void setName(String pName) {aName = pName;}

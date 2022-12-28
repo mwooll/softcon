@@ -1,10 +1,12 @@
 package gui.fifthStage;
 
 import cell.Cell;
+import cell.ICellObservable;
 import gamemodel.ICellSetterObserver;
-import gamemodel.ITurnObservable;
+import gamemodel.IGameModelObservable;
+import gui.ICellObserver;
 import gui.ISetter;
-import gui.ITurnObserver;
+import gui.IGameModelObserver;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -12,35 +14,36 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import player.PlayerColor;
 
-public class CellDeleteSetter extends Parent implements ISetter, ITurnObserver {
+public class CellDeleteSetter extends Parent implements ISetter, IGameModelObserver, ICellObserver {
 
     private ICellSetterObserver aObserver;
-    private ITurnObservable aObservable;
-    private Cell aCell;
+    private IGameModelObservable aObservable;
+    private ICellObservable aCellObservable;
     protected final Button aButton = new Button("Kill");
 
-    public CellDeleteSetter(ICellSetterObserver pObserver, Cell pCell, ITurnObservable pObservable) {
+    public CellDeleteSetter(ICellSetterObserver pObserver, ICellObservable pCellObservable, IGameModelObservable pObservable) {
         aObserver = pObserver;
         aObservable = pObservable;
-        aCell = pCell;
+        aCellObservable = pCellObservable;
         aButton.setVisible(setVisibility());
         VBox vbox = new VBox(aButton);
         getChildren().add(vbox);
 
         aButton.setOnAction(handleSet());
         aObservable.addObserver(this);
+        aCellObservable.addObserver(this);
     }
 
     @Override
     public EventHandler<ActionEvent> handleSet() {return e -> {
       // kill the cell
-      aObserver.makeDeleteMove(aCell);
+      aObserver.makeDeleteMove((Cell) aCellObservable);
     };}
 
     boolean setVisibility() {
         // Only cells that are not white and not of own color
-        PlayerColor currentCellColor = aCell.getState();
-        PlayerColor currentPlayerColor = aObserver.returnCurrentPlayer().getColor();
+        PlayerColor currentCellColor = aCellObservable.getState();
+        PlayerColor currentPlayerColor = aObservable.returnCurrentPlayer().getColor();
         return currentCellColor != PlayerColor.WHITE && currentPlayerColor != currentCellColor;
     }
 
@@ -53,4 +56,13 @@ public class CellDeleteSetter extends Parent implements ISetter, ITurnObserver {
 
     @Override
     public void stateCanCreateChanged() {}
+
+    @Override
+    public void currentPlayerChanged() {}
+
+    @Override
+    public void stateChanged() {
+        // when the cell changes its state, recalculate if you need to show button
+        aButton.setVisible(setVisibility());
+    }
 }

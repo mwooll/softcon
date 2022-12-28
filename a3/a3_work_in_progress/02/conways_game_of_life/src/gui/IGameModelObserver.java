@@ -1,7 +1,8 @@
 package gui;
 
-public interface ITurnObserver {
+public interface IGameModelObserver {
 
+    void currentPlayerChanged();
     void stateCanDeleteChanged();
     void stateCanCreateChanged();
 

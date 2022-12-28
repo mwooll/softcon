@@ -1,18 +1,18 @@
 package gui.fifthStage;
 
-import gamemodel.ITurnObservable;
+import gamemodel.IGameModelObservable;
 import gui.IContinue;
-import gui.ITurnObserver;
+import gui.IGameModelObserver;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
-public class turnContinue extends Parent implements IContinue, ITurnObserver {
+public class turnContinue extends Parent implements IContinue, IGameModelObserver {
 
-    protected final ITurnObservable aObservable;
+    protected final IGameModelObservable aObservable;
     protected final Button aButton;
 
-    public turnContinue(ITurnObservable pObservable) {
+    public turnContinue(IGameModelObservable pObservable) {
         aObservable = pObservable;
 
         aButton = new Button("You killed and created a cell. Go through generation.");
@@ -47,4 +47,7 @@ public class turnContinue extends Parent implements IContinue, ITurnObserver {
             setVisibility();
         }
     }
+
+    @Override
+    public void currentPlayerChanged() {}
 }

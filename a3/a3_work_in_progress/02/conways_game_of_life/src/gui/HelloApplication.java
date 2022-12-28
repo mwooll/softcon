@@ -3,11 +3,7 @@ package gui;
 import cell.*;
 
 import gamemodel.GameModel;
-import gamemodel.Turn;
-import gui.fifthStage.CellCreateSetter;
-import gui.fifthStage.CellObserver;
-import gui.fifthStage.CellDeleteSetter;
-import gui.fifthStage.turnContinue;
+import gui.fifthStage.*;
 import gui.firstStage.*;
 import gui.secondStage.*;
 import gui.thirdStage.*;
@@ -268,7 +264,9 @@ public class HelloApplication extends Application {
 
         public FifthStage(GUIInitializer pInitializer) {
             aGameModel = new GameModel(pInitializer, new GameParser());
-            List<Player> aPlayers = aGameModel.getPlayers();
+            List<Player> aPlayers = aGameModel.returnPlayers();
+            Player aCurrentPlayer = aGameModel.returnCurrentPlayer();
+            Grid aGrid = aGameModel.returnGrid();
 
             VBox aRoot = new VBox();
 
@@ -286,29 +284,21 @@ public class HelloApplication extends Application {
             );
             aRoot.getChildren().add(labelExplanation);
 
-            // Create a turn, fetch the current player and grid
+            // Play the first turn
             aGameModel.playTurn();
-            Turn currentTurn = aGameModel.getCurrentTurn();
-            Grid currentGrid = currentTurn.returnCurrentGrid();
-            Player currentPlayer = currentTurn.returnCurrentPlayer();
-            int currentTurnNumber = currentTurn.returnCurrentTurnNumber();
 
             // Add Label with current player and which turn it is
-            Label labelTurn = new Label();
-            labelTurn.setText(String.format("Player %s with Color %s  -  Turn Number %s",
-                    currentPlayer.getName(),
-                    currentPlayer.getColor().getColorName(),
-                    currentTurnNumber));
-            aRoot.getChildren().add(labelTurn);
+            IGameModelObserver turnLabelObserver = new TurnLabelObserver(aGameModel);
+            aRoot.getChildren().add((Parent) turnLabelObserver);
 
-            // Create the drawn Grid, add Cell observers, Add Cell Delete Setters
+            // Draw the grid
             GridPane aGridPane = new GridPane();
-            int row_ct = 1;
+            int row_ct = 2;
             int col_ct = 0;
-            for (Cell c : currentGrid.getIterator()) {
+            for (Cell c : aGrid.getIterator()) {
                 ICellObserver cObserver = new CellObserver(c);
-                ISetter cDeleteSetter = new CellDeleteSetter(currentTurn, c, currentTurn);
-                ISetter cCreateSetter = new CellCreateSetter(currentTurn, c, currentTurn);
+                ISetter cDeleteSetter = new CellDeleteSetter(aGameModel, c, aGameModel);
+                ISetter cCreateSetter = new CellCreateSetter(aGameModel, c, aGameModel);
                 if (col_ct%aGameModel.aWidth == 0) {
                     row_ct++;
                     col_ct = 0;
@@ -322,28 +312,53 @@ public class HelloApplication extends Application {
                 col_ct ++;
             }
 
-            // Add Button telling if the moves have taken place or not
-            IContinue turnContinue = new turnContinue(currentTurn);
+            // Add Button telling if the moves of the players turn have taken place or not
+            IContinue turnContinue = new turnContinue(aGameModel);
             aRoot.getChildren().add((Parent) turnContinue);
             // Fetch the turnContinue button, calculate generation
             Button turnContinueButton = turnContinue.getButton();
             turnContinueButton.setOnAction((t) -> {
                 System.out.println("do generation action!!!");
-                currentGrid.generateNextGeneration();
-                for (Player p : aPlayers) {
-                    if (aGameModel.playerHasLost(p)) {
-                        System.out.println(String.format("Player %s has lost! GAME OVER", p.getName()));
-                        this.close();
-                        // todo: Create final stage where you show the final grid and proclaim the winner.
-                    }
+                aGrid.generateNextGeneration();
+                if (aGameModel.hasAPlayerLost()) {
+                    String whoWon = aGameModel.determineWinner();
+                    System.out.println(whoWon);
+                    this.close();
+                    // todo: Create final stage where you show the final grid and proclaim the winner.
                 }
                 aGameModel.playTurn();
-                Turn newTurn = aGameModel.getCurrentTurn();
-                Grid newGrid = newTurn.returnCurrentGrid();
-                Player newCurrentPlayer = newTurn.returnCurrentPlayer();
-                int newCurrentTurnNumber = currentTurn.returnCurrentTurnNumber();
-                currentTurn.refreshTurn(newCurrentPlayer, newGrid, newCurrentTurnNumber);
             });
+
+//            // play the game for as long as nobody lost
+//            // Check if anybody lost, if so end this stage
+//            if (aGameModel.hasAPlayerLost()) {
+//                // get the string of the player who lost and go to next stage
+//                String whoWon = aGameModel.determineWinner();
+//                // todo: Go to final stage ending the game
+//            }
+//
+//            // Add Button telling if the moves have taken place or not
+//            IContinue turnContinue = new turnContinue(currentTurn);
+//            aRoot.getChildren().add((Parent) turnContinue);
+//            // Fetch the turnContinue button, calculate generation
+//            Button turnContinueButton = turnContinue.getButton();
+//            turnContinueButton.setOnAction((t) -> {
+//                System.out.println("do generation action!!!");
+//                currentGrid.generateNextGeneration();
+//                for (Player p : aPlayers) {
+//                    if (aGameModel.playerHasLost(p)) {
+//                        System.out.println(String.format("Player %s has lost! GAME OVER", p.getName()));
+//                        this.close();
+//                        // todo: Create final stage where you show the final grid and proclaim the winner.
+//                    }
+//                }
+//                aGameModel.playTurn();
+//                Turn newTurn = aGameModel.getCurrentTurn();
+//                Grid newGrid = newTurn.returnCurrentGrid();
+//                Player newCurrentPlayer = newTurn.returnCurrentPlayer();
+//                int newCurrentTurnNumber = currentTurn.returnCurrentTurnNumber();
+//                currentTurn.refreshTurn(newCurrentPlayer, newGrid, newCurrentTurnNumber);
+//            });
 
 
             // Add Grid to VBox aRoot
