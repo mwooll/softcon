@@ -1,4 +1,4 @@
-package gui.fifthStage;
+package gui.playGame;
 
 import cell.Cell;
 import cell.ICellObservable;
@@ -14,14 +14,14 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import player.PlayerColor;
 
-public class CellDeleteSetter extends Parent implements ISetter, IGameModelObserver, ICellObserver {
+public class CellCreateSetter extends Parent implements ISetter, IGameModelObserver, ICellObserver {
 
     private ICellSetterObserver aObserver;
     private IGameModelObservable aObservable;
     private ICellObservable aCellObservable;
-    protected final Button aButton = new Button("Kill");
+    protected final Button aButton = new Button("Create");
 
-    public CellDeleteSetter(ICellSetterObserver pObserver, ICellObservable pCellObservable, IGameModelObservable pObservable) {
+    public CellCreateSetter(ICellSetterObserver pObserver, ICellObservable pCellObservable, IGameModelObservable pObservable) {
         aObserver = pObserver;
         aObservable = pObservable;
         aCellObservable = pCellObservable;
@@ -36,26 +36,23 @@ public class CellDeleteSetter extends Parent implements ISetter, IGameModelObser
 
     @Override
     public EventHandler<ActionEvent> handleSet() {return e -> {
-      // kill the cell
-      aObserver.makeDeleteMove((Cell) aCellObservable);
+        // kill the cell
+        aObserver.makeBirthMove((Cell) aCellObservable);
     };}
 
     boolean setVisibility() {
-        // Only cells that are not white and not of own color
-        PlayerColor currentCellColor = aCellObservable.getState();
-        PlayerColor currentPlayerColor = aObservable.returnCurrentPlayer().getColor();
-        return currentCellColor != PlayerColor.WHITE && currentPlayerColor != currentCellColor;
+        return aCellObservable.getState() == PlayerColor.WHITE;
     }
 
     @Override
-    public void stateCanDeleteChanged() {
-        if (aObservable.getStatusCellDeleted()) {
+    public void stateCanDeleteChanged() {}
+
+    @Override
+    public void stateCanCreateChanged() {
+        if (aObservable.getStatusCellCreated()) {
             aButton.setVisible(false);
         }
     }
-
-    @Override
-    public void stateCanCreateChanged() {}
 
     @Override
     public void currentPlayerChanged() {

@@ -18,4 +18,6 @@ public interface InitializerObservable {
 
     boolean cellsAreSet();
 
+    boolean maxCellsReached();
+
 }

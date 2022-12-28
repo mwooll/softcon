@@ -1,4 +1,4 @@
-package gui.thirdStage;
+package gui.chooseGridsize;
 
 import initializer.IInitializerSetterObserver;
 

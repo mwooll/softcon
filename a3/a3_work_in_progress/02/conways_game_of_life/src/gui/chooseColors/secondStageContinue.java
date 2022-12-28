@@ -1,4 +1,4 @@
-package gui.secondStage;
+package gui.chooseColors;
 
 import gui.AbstractContinue;
 import initializer.InitializerObservable;

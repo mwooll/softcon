@@ -1,11 +1,9 @@
-package gui.firstStage;
+package gui.chooseNames;
 
-import gamemodel.*;
 import gui.*;
 import initializer.InitializerObservable;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import player.PlayerColor;
 

@@ -1,4 +1,4 @@
-package gui.fifthStage;
+package gui.playGame;
 
 import cell.ICellObservable;
 import gui.ICellObserver;

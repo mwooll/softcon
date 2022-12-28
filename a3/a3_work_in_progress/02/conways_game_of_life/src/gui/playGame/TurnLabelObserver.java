@@ -1,12 +1,10 @@
-package gui.fifthStage;
+package gui.playGame;
 
 import gamemodel.IGameModelObservable;
 import gui.IGameModelObserver;
-import initializer.InitializerObservable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import player.Player;
 
 public class TurnLabelObserver extends Parent implements IGameModelObserver {

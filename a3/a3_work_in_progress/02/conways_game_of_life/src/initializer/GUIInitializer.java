@@ -1,5 +1,6 @@
 package initializer;
 
+import cell.Cell;
 import cell.Grid;
 import gui.IInitializerObserver;
 import parser.IParser;
@@ -16,7 +17,7 @@ import java.util.stream.Stream;
 public abstract class GUIInitializer implements InitializerObservable, IInitializerSetterObserver {
 
     private final int MIN_SIZE = 10;
-    private final int MAX_SIZE = 40;
+    private final int MAX_SIZE = 20;
     private final int N_PLAYERS = 2;
     private final List<Player> aPlayers = Stream.generate(Player::new).limit(N_PLAYERS).collect(Collectors.toList());
     protected Grid aInitialGrid;
@@ -34,6 +35,7 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
     private final IParser aParser;
 
     public GUIInitializer(IParser pParser) {
+
         aParser = pParser;
     }
 
@@ -105,8 +107,12 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
     }
     @Override
     public boolean cellsAreSet() {
-        return (aCellsChosen >= MIN_CELLS_CHOOSE) && (aCellsChosen <= MAX_CELLS_CHOOSE);
-    };
+        return aCellsChosen >= MIN_CELLS_CHOOSE;
+    }
+    @Override
+    public boolean maxCellsReached(){
+        return aCellsChosen <= MAX_CELLS_CHOOSE;
+    }
 
 
 
@@ -200,8 +206,13 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
         }
     }
     @Override
-    public void setCellChosen() {
+    public void chooseCell(Cell pCell) {
+        // add one to the count of already chosen cells
         aCellsChosen += 1;
+
+        // set state to black for the chosen cell
+        pCell.instantBirth(PlayerColor.BLACK);
+
         for (IInitializerObserver observer : aObservers) {
             observer.cellIsChosen();
             observer.setVisibility();
@@ -229,12 +240,40 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
     public boolean validateHeight(String pHeight) {return aParser.validateHeight(MAX_SIZE, MIN_SIZE, pHeight);}
 
 
+    public void createEmptyStartingGrid() {
+        aInitialGrid = new Grid(aGridW, aGridH);
+    }
 
-    public Grid createStartingConfiguration() {
-        // create Grid with aHeight, aWidth
-        // set a random set of cells to a non-white color
-        // return Grid
-        return null;
+    public void createStartingConfiguration() {
+        // Create a grid double the size of the current initial grid
+        Grid tmpGrid = new Grid(aGridW*2, aGridH);
+
+        // Fetch the player colors
+        List<Player> tmpPlayers = getPlayers();
+        PlayerColor pc1 = tmpPlayers.get(0).getColor();
+        PlayerColor pc2 = tmpPlayers.get(1).getColor();
+
+        // For each Cell that is not white in current initial grid, create two coloured cells, one per player
+        int ct = 0;
+        int row = 0;
+        for (Cell c : aInitialGrid.getIterator()) {
+
+            // get col
+            int col = ct%aGridW;
+
+            if (ct > 0 && ct%aGridW == 0) {row += 1;}
+
+            if (c.getState() != PlayerColor.WHITE) {
+                // Set the two cells to the two colors
+                tmpGrid.getCell(row, col).instantBirth(pc1);
+                tmpGrid.getCell(row, (aGridW*2-1)-col).instantBirth(pc2);
+            }
+
+            ct++;
+        }
+
+        aInitialGrid = tmpGrid;
+
     }
 
 }

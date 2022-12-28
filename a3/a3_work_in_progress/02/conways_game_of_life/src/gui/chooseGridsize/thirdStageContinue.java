@@ -1,4 +1,4 @@
-package gui.thirdStage;
+package gui.chooseGridsize;
 
 import gui.AbstractContinue;
 import initializer.InitializerObservable;

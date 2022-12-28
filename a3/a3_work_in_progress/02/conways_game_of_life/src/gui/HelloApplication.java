@@ -3,11 +3,11 @@ package gui;
 import cell.*;
 
 import gamemodel.GameModel;
-import gui.fifthStage.*;
-import gui.firstStage.*;
-import gui.secondStage.*;
-import gui.thirdStage.*;
-import gui.fourthStage.*;
+import gui.playGame.*;
+import gui.chooseNames.*;
+import gui.chooseColors.*;
+import gui.chooseGridsize.*;
+import gui.createInitialConfig.*;
 
 import initializer.GUIInitializer;
 import javafx.application.Application;
@@ -25,7 +25,6 @@ import parser.InitializerParser;
 import player.Player;
 import player.PlayerColor;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -35,11 +34,11 @@ public class HelloApplication extends Application {
     static final int WIDTH = 600;
     static final int MARGIN_OUTER = 10;
 
-    public static class FirstStage extends Stage {
+    public static class ChooseNames extends Stage {
 
         private final GUIInitializer aInitializer;
 
-        public FirstStage(GUIInitializer pInitializer) {
+        public ChooseNames(GUIInitializer pInitializer) {
 
             aInitializer = pInitializer;
 
@@ -77,7 +76,7 @@ public class HelloApplication extends Application {
 
 //            continueButton.setOnAction(t -> System.out.println("Continue to second stage"));
             continueButton.setOnAction((t) -> {
-                new SecondStage(aInitializer);
+                new ChooseColors(aInitializer);
                 this.close();
             });
 
@@ -85,11 +84,11 @@ public class HelloApplication extends Application {
 
     }
 
-    public static class SecondStage extends Stage {
+    public static class ChooseColors extends Stage {
 
         private final GUIInitializer aInitializer;
 
-        public SecondStage(GUIInitializer pInitializer) {
+        public ChooseColors(GUIInitializer pInitializer) {
 
             aInitializer = pInitializer;
 
@@ -129,7 +128,7 @@ public class HelloApplication extends Application {
 
 //            continueButton.setOnAction(t -> System.out.println("Continue to third stage"));
             continueButton.setOnAction((t) -> {
-                new ThirdStage(aInitializer);
+                new ChooseGridsize(aInitializer);
                 this.close();
             });
 
@@ -137,11 +136,11 @@ public class HelloApplication extends Application {
 
     }
 
-    public static class ThirdStage extends Stage {
+    public static class ChooseGridsize extends Stage {
 
         private final GUIInitializer aInitializer;
 
-        public ThirdStage(GUIInitializer pInitializer) {
+        public ChooseGridsize(GUIInitializer pInitializer) {
 
             aInitializer = pInitializer;
 
@@ -158,7 +157,7 @@ public class HelloApplication extends Application {
             // Add label explaining
             Label labelExplanation = new Label();
             labelExplanation.setText(
-                    String.format("Min size %s, Max size %s", aInitializer.getMinGridSize(), aInitializer.getMaxGridSize())
+                    String.format("Chose the size of the gird PER PLAYER. The final Grid will be double that size.\nMin size %s, Max size %s", aInitializer.getMinGridSize(), aInitializer.getMaxGridSize())
             );
             aRoot.add(labelExplanation, 0, 0);
 
@@ -186,7 +185,7 @@ public class HelloApplication extends Application {
 
 //            continueButton.setOnAction(t -> System.out.println("Continue to fourth stage"));
             continueButton.setOnAction((t) -> {
-                new FourthStage(aInitializer);
+                new CreateInitialConfig(aInitializer);
                 this.close();
             });
 
@@ -194,11 +193,11 @@ public class HelloApplication extends Application {
 
     }
 
-    public static class FourthStage extends Stage {
+    public static class CreateInitialConfig extends Stage {
 
         private final GUIInitializer aInitializer;
 
-        public FourthStage(GUIInitializer pInitializer) {
+        public CreateInitialConfig(GUIInitializer pInitializer) {
 
             aInitializer = pInitializer;
 
@@ -212,7 +211,7 @@ public class HelloApplication extends Application {
             this.setTitle("Choosing initial grid configuration");
 
             // Create the grid with empty cells
-            aInitializer.createStartingConfiguration();
+            aInitializer.createEmptyStartingGrid();
             Grid aInitialGrid = aInitializer.getGrid();
 
                     // Add label explaining
@@ -223,15 +222,13 @@ public class HelloApplication extends Application {
             aRoot.getChildren().add(labelExplanation);
 
 
-
-
             // Draw the grid
             GridPane aGridPane = new GridPane();
             int row_ct = 1;
             int col_ct = 0;
             for (Cell c : aInitialGrid.getIterator()) {
                 ICellObserver cObserver = new CellObserver(c);
-//                ISetter cChooseSetter = new CellChooseSetter(c);
+                ISetter cChooseSetter = new CellChooseSetter(aInitializer, c, aInitializer);
                 if (col_ct%aInitialGrid.getWidth() == 0) {
                     row_ct++;
                     col_ct = 0;
@@ -239,32 +236,14 @@ public class HelloApplication extends Application {
                 aGridPane.add((Parent) cObserver, col_ct, row_ct);
 
                 // For each cell, place a vbox with two setters in there
-//                VBox vbox = new VBox((Parent) cChooseSetter);
-//                aGridPane.add(vbox, col_ct, row_ct);
+                VBox vbox = new VBox((Parent) cChooseSetter);
+                aGridPane.add(vbox, col_ct, row_ct);
 
                 col_ct ++;
             }
 
             // Add Grid to VBox aRoot
             aRoot.getChildren().add(aGridPane);
-
-
-
-
-//            // Printer for debugging
-//            Grid currentInitialGrid = aInitializer.getGrid();
-//            String tmpString = "";
-//            int ct = 1;
-//            for (Cell c : currentInitialGrid.getIterator()) {
-//                tmpString += c.getState().getColorName();
-//                if (ct%currentInitialGrid.getWidth() == 0) {
-//                    tmpString += "\n";
-//                } else {
-//                    tmpString += " ";
-//                }
-//                ct ++;
-//            }
-//            System.out.println(tmpString);
 
 
             // Create Continue Button
@@ -279,18 +258,19 @@ public class HelloApplication extends Application {
 
 //            continueButton.setOnAction(t -> System.out.println("Continue to fifth stage"));
             continueButton.setOnAction((t) -> {
-                new FifthStage(aInitializer);
+                aInitializer.createStartingConfiguration();
+                new PlayGame(aInitializer);
                 this.close();
             });
         }
 
     }
 
-    public static class FifthStage extends Stage {
+    public static class PlayGame extends Stage {
 
         private final GameModel aGameModel;
 
-        public FifthStage(GUIInitializer pInitializer) {
+        public PlayGame(GUIInitializer pInitializer) {
             aGameModel = new GameModel(pInitializer, new GameParser());
             Grid aGrid = aGameModel.returnGrid();
 
@@ -313,7 +293,7 @@ public class HelloApplication extends Application {
             // Play the first turn, end game directly if someone has lost already by faulty starting config
             if (aGameModel.hasAPlayerLost()) {
                 this.close();
-                new FinalStage(aGameModel);
+                new GameOver(aGameModel);
             }
             aGameModel.playTurn();
 
@@ -351,7 +331,7 @@ public class HelloApplication extends Application {
                 System.out.println("do generation action!!!");
                 aGrid.generateNextGeneration();
                 if (aGameModel.hasAPlayerLost()) {
-                    new FinalStage(aGameModel);
+                    new GameOver(aGameModel);
                     this.close();
                 }
                 aGameModel.playTurn();
@@ -370,11 +350,11 @@ public class HelloApplication extends Application {
 
     }
 
-    public static class FinalStage extends Stage {
+    public static class GameOver extends Stage {
 
         private final GameModel aGameModel;
 
-        public FinalStage(GameModel pGameModel) {
+        public GameOver(GameModel pGameModel) {
             aGameModel = pGameModel;
             Grid aGrid = aGameModel.returnGrid();
 
@@ -441,7 +421,7 @@ public class HelloApplication extends Application {
 //            }
 
             @Override
-            public Grid createStartingConfiguration() {
+            public void createStartingConfiguration() {
                     Grid tmpGrid = new Grid(aGridW,aGridH);
 
 //                    // Add for both players some coloured cells
@@ -461,14 +441,13 @@ public class HelloApplication extends Application {
 //                    tmpGrid.getCell(7,4).instantBirth(pc2);
 
                     aInitialGrid = tmpGrid;
-                    return null;
 
             }
         }
-        GUIInitializer guiInit = new testGUIInitializer(initParser) {};
-//        GUIInitializer guiInit = new GUIInitializer(initParser) {};
+//        GUIInitializer guiInit = new testGUIInitializer(initParser) {};
+        GUIInitializer guiInit = new GUIInitializer(initParser) {};
 
-        new FirstStage(guiInit);
+        new ChooseNames(guiInit);
 //        new FifthStage(guiInit);
 
     }

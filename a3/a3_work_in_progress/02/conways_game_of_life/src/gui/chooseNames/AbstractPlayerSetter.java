@@ -1,4 +1,4 @@
-package gui.firstStage;
+package gui.chooseNames;
 
 import gui.ISetter;
 import initializer.IInitializerSetterObserver;

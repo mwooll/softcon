@@ -48,7 +48,7 @@ public class Grid {
     }
 
     /**
-     * Iterators must be implemented as nested classes within grid.$
+     * Iterators must be implemented as nested classes within grid.
      * Goal: Provide each Grid instance with a method to return an Iterator<Cell> object which can be used by
      * the client code
      * GridIteratorBase provides default functionality TOP_LEFT_TO_BOTTOM_RIGHT. Can be overridden by subclasses.

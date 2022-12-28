@@ -1,5 +1,6 @@
 package initializer;
 
+import cell.Cell;
 import player.PlayerColor;
 
 public interface IInitializerSetterObserver {
@@ -18,6 +19,6 @@ public interface IInitializerSetterObserver {
 
     void setGridDimension(int pValue, String pIdentifier);
 
-    void setCellChosen();
+    void chooseCell(Cell pCell);
 
 }
