@@ -1,5 +1,7 @@
 package player;
 
+import java.util.Comparator;
+
 public class Player {
     private String aName;
     private PlayerColor aColor;
@@ -18,6 +20,15 @@ public class Player {
     public Player() {
         aName = "";
         aColor = PlayerColor.WHITE;
+    }
+
+    public static Comparator<Player> nameComparator() {
+        return new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        };
     }
 
     public void setName(String pName) {aName = pName;}

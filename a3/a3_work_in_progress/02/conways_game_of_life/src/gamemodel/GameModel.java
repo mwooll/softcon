@@ -12,7 +12,6 @@ import java.util.List;
 
 public class GameModel {
 
-
     public final int aHeight;
     public final int aWidth;
     private List<Player> aPlayers = new ArrayList<>();
