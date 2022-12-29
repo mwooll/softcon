@@ -64,7 +64,7 @@ public class GameOfLife extends Application {
             aRoot.add((Parent) ps1, 0, 3);
 
             // Create Continue Button
-            IContinue cont = new firstStageContinue(aInitializer);
+            IContinue cont = new chooseNamesContinue(aInitializer);
             aRoot.add((Parent) cont, 0, 4);
 
             this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
@@ -116,7 +116,7 @@ public class GameOfLife extends Application {
             }
 
             // Create Continue Button
-            IContinue cont = new secondStageContinue(aInitializer);
+            IContinue cont = new chooseColorsContinue(aInitializer);
             aRoot.add((Parent) cont, 0, tmpRowCt + 1);
 
             this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
@@ -173,7 +173,7 @@ public class GameOfLife extends Application {
             aRoot.add((Parent) gs1, 0, 4);
 
             // Create Continue Button
-            IContinue cont = new thirdStageContinue(aInitializer);
+            IContinue cont = new chooseGridsizeContinue(aInitializer);
             aRoot.add((Parent) cont, 0, 5);
 
             this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
@@ -249,7 +249,7 @@ public class GameOfLife extends Application {
 
 
             // Create Continue Button
-            IContinue cont = new fourthStageContinue(aInitializer);
+            IContinue cont = new createInitialConfigContinue(aInitializer);
             aRoot.getChildren().add((Parent) cont);
 
             // Fetch the continue button, continue to second stage

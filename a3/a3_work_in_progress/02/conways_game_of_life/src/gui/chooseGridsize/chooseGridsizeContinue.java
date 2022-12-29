@@ -3,9 +3,9 @@ package gui.chooseGridsize;
 import gui.AbstractContinue;
 import initializer.InitializerObservable;
 
-public class thirdStageContinue extends AbstractContinue {
+public class chooseGridsizeContinue extends AbstractContinue {
 
-    public thirdStageContinue(InitializerObservable pObservable) {
+    public chooseGridsizeContinue(InitializerObservable pObservable) {
         super(pObservable);
     }
 

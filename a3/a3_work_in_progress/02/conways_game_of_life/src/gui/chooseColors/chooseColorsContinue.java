@@ -3,9 +3,9 @@ package gui.chooseColors;
 import gui.AbstractContinue;
 import initializer.InitializerObservable;
 
-public class secondStageContinue extends AbstractContinue {
+public class chooseColorsContinue extends AbstractContinue {
 
-    public secondStageContinue(InitializerObservable pObservable) {
+    public chooseColorsContinue(InitializerObservable pObservable) {
         super(pObservable);
     }
 

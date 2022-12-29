@@ -3,10 +3,10 @@ package gui.chooseNames;
 import gui.AbstractContinue;
 import initializer.InitializerObservable;
 
-public class firstStageContinue extends AbstractContinue {
+public class chooseNamesContinue extends AbstractContinue {
 
 
-    public firstStageContinue(InitializerObservable pObservable) {
+    public chooseNamesContinue(InitializerObservable pObservable) {
         super(pObservable);
     }
 

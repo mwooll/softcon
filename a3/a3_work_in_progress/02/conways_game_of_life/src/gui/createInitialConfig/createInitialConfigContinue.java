@@ -3,9 +3,9 @@ package gui.createInitialConfig;
 import gui.AbstractContinue;
 import initializer.InitializerObservable;
 
-public class fourthStageContinue extends AbstractContinue {
+public class createInitialConfigContinue extends AbstractContinue {
 
-    public fourthStageContinue(InitializerObservable pObservable) {
+    public createInitialConfigContinue(InitializerObservable pObservable) {
         super(pObservable);
     }
 
