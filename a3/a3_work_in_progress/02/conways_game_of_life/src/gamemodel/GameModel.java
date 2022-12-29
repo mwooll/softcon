@@ -23,11 +23,10 @@ public class GameModel implements IGameModelObservable, ICellSetterObserver {
 
     private boolean aCellDeleted;
     private boolean aCellCreated;
-    private final IParser aParser;
 
     private final List<IGameModelObserver> aObservers = new ArrayList<>();
 
-    public GameModel(GUIInitializer pInitializer, IParser pParser) {
+    public GameModel(GUIInitializer pInitializer) {
 
         // Get information from the initializer regarding ...
 
@@ -37,9 +36,6 @@ public class GameModel implements IGameModelObservable, ICellSetterObserver {
 
         // A Grid of the chosen dimensions with the defined cells activated (symmetric for both players)
         aGrid = pInitializer.getGrid();
-
-        // A Parser which validates input during the game
-        aParser = pParser;
 
         // From the received Grid, set the dimension, needed for the GUI drawing
         aHeight = aGrid.getHeight();

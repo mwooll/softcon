@@ -2,6 +2,7 @@ package gamemodel;
 
 import cell.Grid;
 import initializer.GUIInitializer;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import parser.IParser;
 import parser.InitializerParser;
@@ -11,12 +12,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameModelTest {
 
-    @Test
-    public void testCreation() {
+    GameModel gm;
+
+    @BeforeEach
+    public void setup() {
         IParser parser = new InitializerParser();
         GUIInitializer dummyinit = new GameModelTestInitializer(parser);
-        GameModel gm = new GameModel(dummyinit, parser);
+        gm = new GameModel(dummyinit);
+    }
 
+    @Test
+    public void testCreation() {
         assertFalse(gm.hasAPlayerLost());
         assertEquals(0, gm.returnCurrentTurnNumber());
         assertFalse(gm.getStatusCellCreated());
@@ -25,9 +31,6 @@ class GameModelTest {
 
     @Test
     public void testCreationNoWinnerYet() {
-        IParser parser = new InitializerParser();
-        GUIInitializer dummyinit = new GameModelTestInitializer(parser);
-        GameModel gm = new GameModel(dummyinit, parser);
 
         assertEquals("Nobody lost yet.", gm.determineWinner());
 
@@ -35,9 +38,7 @@ class GameModelTest {
 
     @Test
     public void testCreationGrid() {
-        IParser parser = new InitializerParser();
-        GUIInitializer dummyinit = new GameModelTestInitializer(parser);
-        GameModel gm = new GameModel(dummyinit, parser);
+
         Grid g = gm.returnGrid();
 
         assertEquals(2, g.getNumberOfMatchingCells(PlayerColor.BLUE));
@@ -47,9 +48,6 @@ class GameModelTest {
 
     @Test
     public void testCreationNoCurrentPlayerAssigned() {
-        IParser parser = new InitializerParser();
-        GUIInitializer dummyinit = new GameModelTestInitializer(parser);
-        GameModel gm = new GameModel(dummyinit, parser);
 
         assertNull(gm.returnCurrentPlayer());
 
@@ -58,9 +56,6 @@ class GameModelTest {
 
     @Test
     public void testPlayTurnPlayerOrder() {
-        IParser parser = new InitializerParser();
-        GUIInitializer dummyinit = new GameModelTestInitializer(parser);
-        GameModel gm = new GameModel(dummyinit, parser);
 
         gm.playTurn();
 
@@ -72,9 +67,7 @@ class GameModelTest {
 
     @Test
     public void testPlayTurn() {
-        IParser parser = new InitializerParser();
-        GUIInitializer dummyinit = new GameModelTestInitializer(parser);
-        GameModel gm = new GameModel(dummyinit, parser);
+
         Grid g = gm.returnGrid();
 
         gm.playTurn();
@@ -87,9 +80,7 @@ class GameModelTest {
 
     @Test
     public void testPlayTurnMultiple() {
-        IParser parser = new InitializerParser();
-        GUIInitializer dummyinit = new GameModelTestInitializer(parser);
-        GameModel gm = new GameModel(dummyinit, parser);
+
         Grid g = gm.returnGrid();
 
         gm.playTurn();
@@ -104,9 +95,7 @@ class GameModelTest {
 
     @Test
     public void testGameOver() {
-        IParser parser = new InitializerParser();
-        GUIInitializer dummyinit = new GameModelTestInitializer(parser);
-        GameModel gm = new GameModel(dummyinit, parser);
+
         Grid g = gm.returnGrid();
 
         gm.playTurn();
@@ -122,9 +111,7 @@ class GameModelTest {
 
     @Test
     public void testGameOverTie() {
-        IParser parser = new InitializerParser();
-        GUIInitializer dummyinit = new GameModelTestInitializer(parser);
-        GameModel gm = new GameModel(dummyinit, parser);
+
         Grid g = gm.returnGrid();
 
         gm.playTurn();

@@ -106,15 +106,12 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
 
         // assume the player name can be set, has been checked by the parser
 
-        System.out.println(String.format("Setting name Player %s to %s", pIndex+1, pPlayerName));
-
         aPlayers.get(pIndex).setName(pPlayerName);
         for (IInitializerObserver observer : aObservers) {
             observer.nameIsSet(pPlayerName, pIndex);
             observer.setVisibility();
         }
 
-        System.out.println(getCurrentPlayerNames());
     }
     @Override
     public void setPlayerColor(PlayerColor pPlayerColor, String pPlayerName) {
@@ -133,8 +130,6 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
             observer.setVisibility();
         }
 
-        System.out.println(String.format("Setting color Player %s to %s", pPlayerName, pPlayerColor.getColorName()));
-
     }
     @Override
     public void setGridDimension(int pValue, String pIdentifier) {
@@ -144,8 +139,6 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
                 observer.heightIsSet(pValue);
                 observer.setVisibility();
             }
-
-            System.out.println(String.format("Set height to %s", aGridH));
 
         }
 
@@ -157,18 +150,12 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
                 observer.setVisibility();
             }
 
-            System.out.println(String.format("Set width to %s", aGridW));
-
         }
     }
     @Override
     public void chooseCell(Cell pCell) {
         // add one to the count of already chosen cells
         aCellsChosen += 1;
-
-        if (aCellsChosen == 8) {
-            System.out.println("BREAK!");
-        }
 
         // set state to black for the chosen cell
         pCell.instantBirth(PlayerColor.BLACK);

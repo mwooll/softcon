@@ -19,7 +19,6 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
-import parser.GameParser;
 import parser.IParser;
 import parser.InitializerParser;
 import player.Player;
@@ -274,7 +273,7 @@ public class GameOfLife extends Application {
         private final GameModel aGameModel;
 
         public PlayGame(GUIInitializer pInitializer) {
-            aGameModel = new GameModel(pInitializer, new GameParser());
+            aGameModel = new GameModel(pInitializer);
             Grid aGrid = aGameModel.returnGrid();
 
             VBox aRoot = new VBox();
@@ -331,7 +330,6 @@ public class GameOfLife extends Application {
             // Fetch the turnContinue button, calculate generation
             Button turnContinueButton = turnContinue.getButton();
             turnContinueButton.setOnAction((t) -> {
-                System.out.println("do generation action!!!");
                 aGrid.generateNextGeneration();
                 if (aGameModel.hasAPlayerLost()) {
                     new GameOver(aGameModel);
