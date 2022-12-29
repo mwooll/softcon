@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 public abstract class GUIInitializer implements InitializerObservable, IInitializerSetterObserver {
 
     private final int MIN_SIZE = 5;
-    private final int MAX_SIZE = 500;
+    private final int MAX_SIZE = 25;
     private final int N_PLAYERS = 2;
     private final List<Player> aPlayers = Stream.generate(Player::new).limit(N_PLAYERS).collect(Collectors.toList());
     protected Grid aInitialGrid;
@@ -95,7 +95,7 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
     }
     @Override
     public boolean maxCellsReached(){
-        return aCellsChosen <= MAX_CELLS_CHOOSE;
+        return aCellsChosen < MAX_CELLS_CHOOSE;
     }
 
 
@@ -166,6 +166,10 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
     public void chooseCell(Cell pCell) {
         // add one to the count of already chosen cells
         aCellsChosen += 1;
+
+        if (aCellsChosen == 8) {
+            System.out.println("BREAK!");
+        }
 
         // set state to black for the chosen cell
         pCell.instantBirth(PlayerColor.BLACK);
