@@ -28,10 +28,10 @@ import player.PlayerColor;
 import java.util.List;
 
 
-public class HelloApplication extends Application {
+public class GameOfLife extends Application {
 
-    static final int HEIGHT = 400;
-    static final int WIDTH = 600;
+    static final int HEIGHT = 800;
+    static final int WIDTH = 1200;
     static final int MARGIN_OUTER = 10;
 
     public static class ChooseNames extends Stage {
@@ -44,7 +44,7 @@ public class HelloApplication extends Application {
 
             GridPane aRoot = new GridPane();
 
-            aRoot.setGridLinesVisible(true);
+            aRoot.setGridLinesVisible(false);
             aRoot.setStyle("-fx-background-color: white");
             aRoot.setHgap(MARGIN_OUTER);
             aRoot.setVgap(MARGIN_OUTER);
@@ -94,7 +94,7 @@ public class HelloApplication extends Application {
 
             GridPane aRoot = new GridPane();
 
-            aRoot.setGridLinesVisible(true);
+            aRoot.setGridLinesVisible(false);
             aRoot.setStyle("-fx-background-color: white");
             aRoot.setHgap(MARGIN_OUTER);
             aRoot.setVgap(MARGIN_OUTER);
@@ -146,7 +146,7 @@ public class HelloApplication extends Application {
 
             GridPane aRoot = new GridPane();
 
-            aRoot.setGridLinesVisible(true);
+            aRoot.setGridLinesVisible(false);
             aRoot.setStyle("-fx-background-color: white");
             aRoot.setHgap(MARGIN_OUTER);
             aRoot.setVgap(MARGIN_OUTER);
@@ -214,10 +214,13 @@ public class HelloApplication extends Application {
             aInitializer.createEmptyStartingGrid();
             Grid aInitialGrid = aInitializer.getGrid();
 
-                    // Add label explaining
+            // Add label explaining
             Label labelExplanation = new Label();
             labelExplanation.setText(
-                    String.format("Choose initial grid configuration. The complete grid will be two times what you see now\nBoth players will have the same mirrored configuration.")
+                    String.format("""
+                            Choose initial grid configuration.The complete grid will consist of two times what you see now.
+                            Both players will have the same mirrored configuration.
+                            Choose min %s and max %s cells.""", aInitializer.getMinCellsChoose(), aInitializer.getMaxCellsChoose())
             );
             aRoot.getChildren().add(labelExplanation);
 

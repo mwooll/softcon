@@ -16,8 +16,8 @@ import java.util.stream.Stream;
 
 public abstract class GUIInitializer implements InitializerObservable, IInitializerSetterObserver {
 
-    private final int MIN_SIZE = 10;
-    private final int MAX_SIZE = 20;
+    private final int MIN_SIZE = 5;
+    private final int MAX_SIZE = 500;
     private final int N_PLAYERS = 2;
     private final List<Player> aPlayers = Stream.generate(Player::new).limit(N_PLAYERS).collect(Collectors.toList());
     protected Grid aInitialGrid;
@@ -26,11 +26,7 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
     private int aCellsChosen = 0;
     protected int aGridH = -1;
     protected int aGridW = -1;
-
     private final List<IInitializerObserver> aObservers = new ArrayList<>();
-//    private final List<IPlayerObserver> aPlayerObservers = new ArrayList<>();
-//    private final List<IGridObserver> aGridObservers = new ArrayList<>();
-//    private final List<IContinue> aContinueObservers = new ArrayList<>();
 
     private final IParser aParser;
 
@@ -62,24 +58,12 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
     }
     public int getMinGridSize() {return MIN_SIZE;}
     public int getMaxGridSize() {return MAX_SIZE;}
+    public int getMinCellsChoose() {return MIN_CELLS_CHOOSE;}
+    public int getMaxCellsChoose() {return MAX_CELLS_CHOOSE;}
 
 
     @Override
     public void addObserver(IInitializerObserver pObserver) {aObservers.add(pObserver);}
-//    @Override
-//    public void addPlayerObserver(IPlayerObserver pPlayerObserver) {
-//        aPlayerObservers.add(pPlayerObserver);
-//    }
-//    @Override
-//    public void addGridObserver(IGridObserver pGridObserver) {
-//        aGridObservers.add(pGridObserver);
-//    }
-//    @Override
-//    public void addContinueObserver(IContinue pContinueObserver) {
-//        aContinueObservers.add(pContinueObserver);
-//    }
-
-
 
     @Override
     public boolean playerNamesSet() {
@@ -130,12 +114,6 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
             observer.nameIsSet(pPlayerName, pIndex);
             observer.setVisibility();
         }
-//        for (IPlayerObserver observer : aPlayerObservers) {
-//            observer.nameIsSet(pPlayerName, pIndex);
-//        }
-//        for (IContinue observer : aContinueObservers) {
-//            observer.setVisibility();
-//        }
 
         System.out.println(getCurrentPlayerNames());
     }
@@ -156,13 +134,6 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
             observer.setVisibility();
         }
 
-//        for (IPlayerObserver observer : aPlayerObservers) {
-//            observer.colorIsSet(pPlayerColor, pPlayerName);
-//        }
-//        for (IContinue observer : aContinueObservers) {
-//            observer.setVisibility();
-//        }
-
         System.out.println(String.format("Setting color Player %s to %s", pPlayerName, pPlayerColor.getColorName()));
 
     }
@@ -175,13 +146,6 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
                 observer.setVisibility();
             }
 
-//            for (IGridObserver observer : aGridObservers) {
-//                observer.heightIsSet(pValue);
-//            }
-//            for (IContinue observer : aContinueObservers) {
-//                observer.setVisibility();
-//            }
-
             System.out.println(String.format("Set height to %s", aGridH));
 
         }
@@ -193,13 +157,6 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
                 observer.widthIsSet(pValue);
                 observer.setVisibility();
             }
-
-//            for (IGridObserver observer : aGridObservers) {
-//                observer.widthIsSet(pValue);
-//            }
-//            for (IContinue observer : aContinueObservers) {
-//                observer.setVisibility();
-//            }
 
             System.out.println(String.format("Set width to %s", aGridW));
 

@@ -8,7 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import player.PlayerColor;
 
 import java.util.List;
@@ -30,17 +32,21 @@ public class AbstractColorSetter extends Parent implements ISetter {
         aObserver = pObserver;
         aName = pName;
 
-        aLabel.setText(String.format("Color Player %s", aName));
+        aLabel.setText(String.format("Color Player %s :  ", aName));
 
-        final HBox hBox = new HBox(aLabel, aComboBox);
-        getChildren().add(hBox);
+        BorderPane bp = new BorderPane();
+        bp.setLeft(aLabel);
+        bp.setRight(aComboBox);
+        getChildren().add(bp);
+//        final HBox hBox = new HBox(aLabel, aComboBox);
+//        getChildren().add(hBox);
 
         aComboBox.setOnAction(handleSet());
 
     }
 
     @Override
-    public EventHandler<ActionEvent> handleSet() {return actionevent -> {
+    public EventHandler<ActionEvent> handleSet() {return e -> {
 
         String tmpColorName = aComboBox.getValue();
 
@@ -50,8 +56,6 @@ public class AbstractColorSetter extends Parent implements ISetter {
                 aObserver.setPlayerColor(pc, aName);
             }
         }
-
-
     };}
 
 

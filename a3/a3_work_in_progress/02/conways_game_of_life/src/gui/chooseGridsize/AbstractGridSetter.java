@@ -25,7 +25,7 @@ public class AbstractGridSetter extends Parent implements ISetter {
         aObserver = pObserver;
         aIdentifier = pIdentifier;
 
-        aLabelButton.setText(String.format("%s %s", aDefaultText, pIdentifier));
+        aLabelButton.setText(String.format("%s %s :  ", aDefaultText, pIdentifier));
 
         final HBox hBox = new HBox(aLabel, aLabelButton, aTextField, aButton);
 

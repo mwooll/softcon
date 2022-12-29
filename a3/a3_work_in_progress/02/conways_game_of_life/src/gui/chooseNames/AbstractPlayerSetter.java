@@ -26,7 +26,7 @@ public abstract class AbstractPlayerSetter extends Parent implements ISetter {
         aIndex = pIndex;
         aDefaultText = DEFAULT_TEXT;
 
-        aCurrentText = String.format("%s %s ", aDefaultText, aIndex + 1);
+        aCurrentText = String.format("%s %s :  ", aDefaultText, aIndex + 1);
         aLabel.setText(aCurrentText);
 
         final HBox hbox = new HBox(aLabel, aTextField, aButton);
