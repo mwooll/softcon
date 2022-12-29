@@ -1,11 +1,11 @@
 package gui.chooseColors;
 
 import gui.AbstractContinue;
-import initializer.InitializerObservable;
+import initializer.IInitializerObservable;
 
 public class chooseColorsContinue extends AbstractContinue {
 
-    public chooseColorsContinue(InitializerObservable pObservable) {
+    public chooseColorsContinue(IInitializerObservable pObservable) {
         super(pObservable);
     }
 

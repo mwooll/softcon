@@ -1,7 +1,7 @@
 package gui.chooseGridsize;
 
 import gui.IInitializerObserver;
-import initializer.InitializerObservable;
+import initializer.IInitializerObservable;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -9,11 +9,11 @@ import player.PlayerColor;
 
 public class GridObserver extends Parent implements IInitializerObserver {
 
-    private final InitializerObservable aObservable;
+    private final IInitializerObservable aObservable;
     private String aIdentifier;
     private final Text text = new Text();
 
-    public GridObserver(InitializerObservable pObservable, String pIdentifier) {
+    public GridObserver(IInitializerObservable pObservable, String pIdentifier) {
 
         aObservable = pObservable;
         aIdentifier = pIdentifier;

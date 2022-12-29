@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class GUIInitializer implements InitializerObservable, IInitializerSetterObserver {
+public abstract class GUIInitializer implements IInitializerObservable, IInitializerSetterObserver {
 
     private final int MIN_SIZE = 5;
     private final int MAX_SIZE = 25;

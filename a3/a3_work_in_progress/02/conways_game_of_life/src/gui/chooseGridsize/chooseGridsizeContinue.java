@@ -1,11 +1,11 @@
 package gui.chooseGridsize;
 
 import gui.AbstractContinue;
-import initializer.InitializerObservable;
+import initializer.IInitializerObservable;
 
 public class chooseGridsizeContinue extends AbstractContinue {
 
-    public chooseGridsizeContinue(InitializerObservable pObservable) {
+    public chooseGridsizeContinue(IInitializerObservable pObservable) {
         super(pObservable);
     }
 

@@ -1,6 +1,6 @@
 package gui;
 
-import initializer.InitializerObservable;
+import initializer.IInitializerObservable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -8,10 +8,10 @@ import player.PlayerColor;
 
 public class AbstractContinue extends Parent implements IContinue, IInitializerObserver {
 
-    protected final InitializerObservable aObservable;
+    protected final IInitializerObservable aObservable;
     protected final Button aButton;
 
-    public AbstractContinue(InitializerObservable pObservable) {
+    public AbstractContinue(IInitializerObservable pObservable) {
 
         aObservable = pObservable;
 

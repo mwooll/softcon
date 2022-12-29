@@ -1,12 +1,12 @@
 package gui.chooseNames;
 
 import gui.AbstractContinue;
-import initializer.InitializerObservable;
+import initializer.IInitializerObservable;
 
 public class chooseNamesContinue extends AbstractContinue {
 
 
-    public chooseNamesContinue(InitializerObservable pObservable) {
+    public chooseNamesContinue(IInitializerObservable pObservable) {
         super(pObservable);
     }
 

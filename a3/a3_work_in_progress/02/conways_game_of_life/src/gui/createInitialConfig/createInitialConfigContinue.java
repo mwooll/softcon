@@ -1,11 +1,11 @@
 package gui.createInitialConfig;
 
 import gui.AbstractContinue;
-import initializer.InitializerObservable;
+import initializer.IInitializerObservable;
 
 public class createInitialConfigContinue extends AbstractContinue {
 
-    public createInitialConfigContinue(InitializerObservable pObservable) {
+    public createInitialConfigContinue(IInitializerObservable pObservable) {
         super(pObservable);
     }
 

@@ -6,7 +6,7 @@ import gui.ICellObserver;
 import gui.IInitializerObserver;
 import gui.ISetter;
 import initializer.IInitializerSetterObserver;
-import initializer.InitializerObservable;
+import initializer.IInitializerObservable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -17,11 +17,11 @@ import player.PlayerColor;
 public class CellChooseSetter extends Parent implements ISetter, IInitializerObserver, ICellObserver {
 
     private IInitializerSetterObserver aObserver;
-    private InitializerObservable aObservable;
+    private IInitializerObservable aObservable;
     private ICellObservable aCellObservable;
     protected final Button aButton = new Button("Add");
 
-    public CellChooseSetter(IInitializerSetterObserver pObserver, ICellObservable pCellObservable, InitializerObservable pObservable) {
+    public CellChooseSetter(IInitializerSetterObserver pObserver, ICellObservable pCellObservable, IInitializerObservable pObservable) {
         aObserver = pObserver;
         aObservable = pObservable;
         aCellObservable = pCellObservable;

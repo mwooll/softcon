@@ -5,10 +5,10 @@ import player.PlayerColor;
 
 public class GUIObserverTest implements IInitializerObserver {
 
-    public InitializerObservable aObservable;
+    public IInitializerObservable aObservable;
     public int COUNT;
 
-    public GUIObserverTest(InitializerObservable pObservable) {
+    public GUIObserverTest(IInitializerObservable pObservable) {
         aObservable = pObservable;
         aObservable.addObserver(this);
     }

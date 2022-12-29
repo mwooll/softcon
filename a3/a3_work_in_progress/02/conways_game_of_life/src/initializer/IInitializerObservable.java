@@ -2,7 +2,7 @@ package initializer;
 
 import gui.*;
 
-public interface InitializerObservable {
+public interface IInitializerObservable {
 
     void addObserver(IInitializerObserver pObserver);
 

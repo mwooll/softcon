@@ -1,7 +1,7 @@
 package gui.chooseNames;
 
 import gui.*;
-import initializer.InitializerObservable;
+import initializer.IInitializerObservable;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -9,12 +9,12 @@ import player.PlayerColor;
 
 public class PlayerObserver extends Parent implements IInitializerObserver {
 
-    private final InitializerObservable aObservable;
+    private final IInitializerObservable aObservable;
     private final int aIndex;
     private String aDefaultText = "Name Player";
     private final Text text = new Text();
 
-    public PlayerObserver(InitializerObservable pObservable, int pIndex) {
+    public PlayerObserver(IInitializerObservable pObservable, int pIndex) {
 
         aObservable = pObservable;
         aIndex = pIndex;
