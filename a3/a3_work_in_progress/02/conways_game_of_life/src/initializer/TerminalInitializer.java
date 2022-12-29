@@ -167,6 +167,7 @@ public class TerminalInitializer implements Initializer{
         return null;
     }
 
+    @Override
     public Cell chooseCell(Grid pGrid) {
         while(true) {
             aPrintStream.println("Enter the coordinates of a starting cell e.g. 4,2");

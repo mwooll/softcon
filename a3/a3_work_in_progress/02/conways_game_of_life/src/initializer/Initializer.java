@@ -1,5 +1,6 @@
 package initializer;
 
+import cell.Cell;
 import cell.Grid;
 import player.Player;
 
@@ -12,6 +13,8 @@ public interface Initializer {
     int chooseGridDimensionHeight(int pMaxHeight, int pMinHeight);
 
     int chooseGridDimensionWidth(int pMaxWidth, int pMinWidth);
+
+    Cell chooseCell(Grid pGrid);
 
     Grid createStartingConfiguration();
 
