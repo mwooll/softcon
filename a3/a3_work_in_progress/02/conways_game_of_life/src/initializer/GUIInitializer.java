@@ -31,7 +31,6 @@ public abstract class GUIInitializer implements InitializerObservable, IInitiali
     private final IParser aParser;
 
     public GUIInitializer(IParser pParser) {
-
         aParser = pParser;
     }
 

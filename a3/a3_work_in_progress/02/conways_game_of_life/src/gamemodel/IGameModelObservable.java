@@ -7,7 +7,6 @@ public interface IGameModelObservable {
 
     void addObserver(IGameModelObserver pObserver);
 
-    boolean getCurrentPlayerHasChanged();
     boolean getStatusCellDeleted();
     boolean getStatusCellCreated();
 

@@ -1,24 +1,20 @@
 package gamemodel;
 
 import cell.Grid;
-import gui.IInitializerObserver;
 import initializer.GUIInitializer;
 import parser.IParser;
 import player.PlayerColor;
 
-import java.util.Collections;
-import java.util.List;
-
-public class dummyGUIInitializer extends GUIInitializer {
+public class GameModelTestInitializer extends GUIInitializer {
 
     int H = 3;
     int W = 3;
-    String pN1 = "a";
-    String pN2 = "b";
+    String pN1 = "b";
+    String pN2 = "a";
     PlayerColor pC1 = PlayerColor.BLUE;
     PlayerColor pC2 = PlayerColor.RED;
 
-    public dummyGUIInitializer(IParser pParser) {
+    public GameModelTestInitializer(IParser pParser) {
         super(pParser);
 
         // set player names, colors, and the gridsize

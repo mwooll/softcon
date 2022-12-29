@@ -83,25 +83,29 @@ public class GameModel implements IGameModelObservable, ICellSetterObserver {
         int firstPlayerCellsLeft = aGrid.getNumberOfMatchingCells(aPlayers.get(0).getColor());
         int secondPlayerCellsLeft = aGrid.getNumberOfMatchingCells(aPlayers.get(1).getColor());
 
+        if (firstPlayerCellsLeft > 0 && secondPlayerCellsLeft > 0) {
+            return "Nobody lost yet.";
+        }
+
         if (firstPlayerCellsLeft == 0 && secondPlayerCellsLeft == 0) {
             return "It's a tie, both players lost.";
         } else if (secondPlayerCellsLeft > 0) {
             Player firstPlayer = aPlayers.get(0);
-            return String.format("Player 1 - %s with Color %s - lost.", firstPlayer.getName(), firstPlayer.getColor().getColorName());
+            return String.format("Player %s with Color %s lost.", firstPlayer.getName(), firstPlayer.getColor().getColorName());
         } else {
             Player secondPlayer = aPlayers.get(1);
-            return String.format("Player 2 - %s with Color %s - lost.", secondPlayer.getName(), secondPlayer.getColor().getColorName());
+            return String.format("Player %s with Color %s lost.", secondPlayer.getName(), secondPlayer.getColor().getColorName());
         }
     }
 
 
 
     public Grid returnGrid() {return aGrid;}
-
     @Override
     public Player returnCurrentPlayer() {
         return aCurrentPlayer;
     }
+    @Override
     public int returnCurrentTurnNumber() {return aTurnNumber;}
 
 
@@ -128,11 +132,6 @@ public class GameModel implements IGameModelObservable, ICellSetterObserver {
     @Override
     public void addObserver(IGameModelObserver pObserver) {
         aObservers.add(pObserver);
-    }
-
-    @Override
-    public boolean getCurrentPlayerHasChanged() {
-        return false;
     }
 
     @Override
