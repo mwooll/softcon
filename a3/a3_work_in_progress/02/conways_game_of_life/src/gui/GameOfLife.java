@@ -14,6 +14,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -200,6 +201,8 @@ public class GameOfLife extends Application {
 
             aInitializer = pInitializer;
 
+            ScrollPane sp = new ScrollPane();
+
             VBox aRoot = new VBox();
 
             aRoot.setStyle("-fx-background-color: white");
@@ -255,7 +258,8 @@ public class GameOfLife extends Application {
             // Fetch the continue button, continue to second stage
             Button continueButton = cont.getButton();
 
-            this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
+            sp.setContent(aRoot);
+            this.setScene(new Scene(sp, WIDTH, HEIGHT));
             this.show();
 
 //            continueButton.setOnAction(t -> System.out.println("Continue to fifth stage"));
@@ -275,6 +279,8 @@ public class GameOfLife extends Application {
         public PlayGame(GUIInitializer pInitializer) {
             aGameModel = new GameModel(pInitializer);
             Grid aGrid = aGameModel.returnGrid();
+
+            ScrollPane sp = new ScrollPane();
 
             VBox aRoot = new VBox();
 
@@ -343,7 +349,8 @@ public class GameOfLife extends Application {
 
             // only show if not over already
             if (!aGameModel.hasAPlayerLost()) {
-                this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
+                sp.setContent(aRoot);
+                this.setScene(new Scene(sp, WIDTH, HEIGHT));
                 this.show();
             }
 
@@ -358,6 +365,8 @@ public class GameOfLife extends Application {
         public GameOver(GameModel pGameModel) {
             aGameModel = pGameModel;
             Grid aGrid = aGameModel.returnGrid();
+
+            ScrollPane sp = new ScrollPane();
 
             VBox aRoot = new VBox();
 
@@ -392,7 +401,8 @@ public class GameOfLife extends Application {
             // Add Grid to VBox aRoot
             aRoot.getChildren().add(aGridPane);
 
-            this.setScene(new Scene(aRoot, WIDTH, HEIGHT));
+            sp.setContent(aRoot);
+            this.setScene(new Scene(sp, WIDTH, HEIGHT));
             this.show();
 
         }

@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 public abstract class GUIInitializer implements IInitializerObservable, IInitializerSetterObserver {
 
     private final int MIN_SIZE = 5;
-    private final int MAX_SIZE = 25;
+    private final int MAX_SIZE = 50;
     private final int N_PLAYERS = 2;
     private final List<Player> aPlayers = Stream.generate(Player::new).limit(N_PLAYERS).collect(Collectors.toList());
     protected Grid aInitialGrid;
