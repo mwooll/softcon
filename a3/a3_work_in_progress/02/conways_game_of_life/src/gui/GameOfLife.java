@@ -414,13 +414,9 @@ public class GameOfLife extends Application {
     public void start(Stage stage) {
 
         IParser initParser = new InitializerParser();
-
-
-//        GUIInitializer guiInit = new testGUIInitializer(initParser) {};
         GUIInitializer guiInit = new GUIInitializer(initParser) {};
 
         new ChooseNames(guiInit);
-//        new FifthStage(guiInit);
 
     }
 
