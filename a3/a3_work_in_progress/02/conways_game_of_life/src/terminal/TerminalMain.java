@@ -66,10 +66,10 @@ public class TerminalMain {
     }
 
     public void setup() {
-        Player firstPlayer = new Player("A", PlayerColor.ORANGE);
-        Player secondPlayer = new Player("Z", PlayerColor.GREEN);
-        Player[] pPlayers = {secondPlayer, firstPlayer};
-        //Player[] pPlayers = initializePlayers();
+//        Player firstPlayer = new Player("A", PlayerColor.ORANGE);
+//        Player secondPlayer = new Player("Z", PlayerColor.GREEN);
+//        Player[] pPlayers = {secondPlayer, firstPlayer};
+        Player[] pPlayers = initializePlayers();
 
         sortedPlayers = orderPlayers(pPlayers);
         aGrid = initializeGrid(sortedPlayers);
