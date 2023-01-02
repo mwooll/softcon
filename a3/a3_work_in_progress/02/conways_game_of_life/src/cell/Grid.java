@@ -130,18 +130,6 @@ public class Grid {
 
     public Iterable<Cell> getIteratorReversed() {
 
-//        // Anonymous class fails
-//        new GridIteratorBase() {
-//
-//            // Why the fuck does that not work? Is it the anonymous class?
-//            // aGrid.stream().flatMap(x -> x.stream()).forEach(cell -> flatGrid.add(cell));
-//
-//            // This doesnt work eiterh...
-//            // List<List<Cell>> currentGrid = aGrid;
-//            // currentGrid
-//
-//        }
-
         return new GridIteratorReversed();
 
     }
