@@ -95,9 +95,6 @@ public class TerminalInitializer implements Initializer{
     }
 
     @Override
-    public Grid createStartingConfiguration() { return null; }
-
-    @Override
     public Grid tacticalStartingConfiguration(int gridWidth, int gridHeight, Player choosingPlayer, Player otherPlayer) {
         aPrintStream.println(choosingPlayer.getName() + " gets to choose the starting configuration.");
         Grid aGrid = new Grid(gridWidth, gridHeight);

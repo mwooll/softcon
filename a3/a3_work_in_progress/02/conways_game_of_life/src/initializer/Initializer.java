@@ -16,7 +16,5 @@ public interface Initializer {
 
     Cell chooseCell(Grid pGrid);
 
-    Grid createStartingConfiguration();
-
     Grid tacticalStartingConfiguration(int gridWidth, int gridHeight, Player choosingPlayer, player.Player otherPlayer);
 }

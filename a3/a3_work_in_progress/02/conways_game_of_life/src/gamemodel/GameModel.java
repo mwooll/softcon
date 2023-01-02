@@ -5,7 +5,6 @@ import cell.Grid;
 import gui.IGameModelObserver;
 import initializer.GUIInitializer;
 import move.Moves;
-import parser.IParser;
 import player.Player;
 import player.PlayerColor;
 
