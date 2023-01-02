@@ -36,7 +36,7 @@ public abstract class GUIInitializer implements IInitializerObservable, IInitial
 
     /**
      * Return a list of all Players
-     * @return AS A LIST
+     * @return List of Players
      */
     public List<Player> getPlayers() {
         List<Player> tmpList = new ArrayList<>();

@@ -38,8 +38,6 @@ public class AbstractColorSetter extends Parent implements ISetter {
         bp.setLeft(aLabel);
         bp.setRight(aComboBox);
         getChildren().add(bp);
-//        final HBox hBox = new HBox(aLabel, aComboBox);
-//        getChildren().add(hBox);
 
         aComboBox.setOnAction(handleSet());
 

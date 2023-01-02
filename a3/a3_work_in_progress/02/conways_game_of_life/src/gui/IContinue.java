@@ -4,8 +4,8 @@ import javafx.scene.control.Button;
 
 public interface IContinue {
 
-    public void setVisibility();
+    void setVisibility();
 
-    public Button getButton();
+    Button getButton();
 
 }
