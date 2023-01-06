@@ -40,5 +40,5 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+!Design patterns and Principle/Design Patterns/main/**/build/
+!Design patterns and Principle/Design Patterns/test/**/build/
